@@ -1,17 +1,21 @@
 module Barney
 
-  module Share
+  class Share
+
+    def initialize
+      @shared = []
+    end
 
     # @param [Array<Symbol>]
     def share(var)
-      (@shared ||= []) << var
+      @shared << var  
     end
 
-    def shared_fork(&blk)
+    def fork(&blk)
       pipes = []
       @shared.size.times { pipes << IO.pipe }
       binding     = blk.binding
-      process_id  = fork do
+      process_id  = Kernel.fork do
         blk.call
         pipes.each_with_index do |arr, i|
           arr[0].close  
