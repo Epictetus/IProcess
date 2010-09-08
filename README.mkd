@@ -17,6 +17,7 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
     #!/usr/bin/env ruby
     require('barney')
+
     obj = Barney::Share.new
     obj.share(:a)
     a = 5
