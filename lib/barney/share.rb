@@ -16,6 +16,7 @@ module Barney
     # @param  [Proc]          Accepts a block or Proc object.
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork(&blk)
+      raise(ArgumentError, "A block or Proc object is expected") unless block_given?
       all_pipes   = Array.new(@shared.size) { IO.pipe }  
       binding     = blk.binding
       process_id  = Kernel.fork do
