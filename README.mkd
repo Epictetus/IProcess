@@ -16,17 +16,11 @@ This library is *highly* experimental right now.
 Okay, now that we've got that out of the way, let's see what using Barney is like.
 
     #!/usr/bin/env ruby
-
-    extend Barney::Share
-    share :a
-
-    a = 1
-
-    shared_fork do 
-        a = 2
-    end
-
-    puts a # 2
-
+    require('barney')
+    obj = Barney::Share.new
+    obj.share(:a)
+    a = 5
+    obj.fork { a = 6 }
+    puts a # output is 6.
 
 The API is definitely not set in stone, and a stable release won't be made for a while.
