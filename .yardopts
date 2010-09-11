@@ -1,0 +1,7 @@
+-m markdown
+--no-private
+--readme README.md
+--hide-void-return
+--no-cache
+
+
