@@ -11,18 +11,22 @@ module Barney
 
     # The share method marks a variable or constant to be shared between two processes. 
     #  
-    # @param  [Array<Symbol>] Accepts an Array of Symbol objects. 
-    # @return [Array]         Returns an Array object.
+    # @param  [Array<Symbol>] Variable   Accepts an Array of Symbol objects. 
+    # @return [Array]                    Returns an Array object.
     def share(var)
       @shared << var  
     end
 
-    # This method can will spawn a new child process.  
-    # 
+    # This method will spawn a new child process.  
     # It can be treated like the Kernel.fork method, but a block or Proc object is a 
     # required argument.
     # 
-    # @param  [Proc]          Accepts a block or Proc object.
+    # @param  [Proc]  Proc    Accepts a block or Proc object that will be executed in a child 
+    #                         process.
+    # 
+    # @raise  [ArgumentError] It will raise an ArgumentError if a block or Proc object isn't 
+    #                         supplied as an argument. 
+    #                         
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork(&blk)
       raise(ArgumentError, "A block or Proc object is expected") unless block_given?
@@ -40,8 +44,7 @@ module Barney
       process_id
     end
 
-    # This method synchronizes data between the parent and child process.
-    #
+    # This method synchronizes data between the parent and child process.  
     # This method will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 

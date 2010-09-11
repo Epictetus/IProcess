@@ -85,6 +85,20 @@ suite('Barney') do
           @ret == [ 2,3 ]
         end
 
+        exercise('When a child process sleeps for 5 seconds and the parent process does not wait.') do
+          obj = Barney::Share.new
+          obj.share(:a)
+          a = 2
+          process_id = obj.fork { sleep(5); a = 10 }
+          Process.detach(process_id)
+          obj.synchronize
+          @ret = a
+        end
+
+        verify('The changes to the shared variable still appear after a call to #synchronize.') do
+          @ret == 10
+        end
+
       end
 
     end
