@@ -26,7 +26,7 @@ module Barney
         blk.call
         @communicators.each_with_index do |pipes, i|
           pipes[0].close  
-          pipes[1].write(Marshal.dump(eval("#{@shared[i]}", binding)))
+          pipes[1].write(Marshal.dump(eval("#{@shared[i]}", @context)))
           pipes[1].close
         end
       end
