@@ -21,7 +21,9 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
     obj = Barney::Share.new
     obj.share(:a)
     a = 5
-    obj.fork { a = 6 }
+    pid = obj.fork { a = 6 }
+    Process.wait(pid)
+    obj.synchronize
     puts a # output is 6.
 
 The API is definitely not set in stone, and a stable release won't be made for a while.
