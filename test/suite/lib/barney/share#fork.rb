@@ -5,13 +5,13 @@ suite('Barney') do
       suite('Return values.') do
       
         exercise('When #fork has finished executing.') do
-          obj = Barney::Share.new
-          @ret = obj.fork { }
-          Process.wait(@ret)
+          obj         = Barney::Share.new
+          @process_id = obj.fork { }
+          Process.wait(@process_id)
         end
 
         verify('It returns the Process ID of the spawned process.') do
-          @ret.class == Fixnum
+          @process_id.class == Fixnum
         end
 
       end
@@ -39,10 +39,11 @@ suite('Barney') do
           obj = Barney::Share.new
           obj.share(:a)
           a = 1
-          pid = obj.fork do
+          process_id = obj.fork do
             a = 2
           end
-          Process.wait(pid)
+          Process.wait(process_id)
+          obj.synchronize
           @ret = a
         end
 
@@ -54,10 +55,11 @@ suite('Barney') do
           obj = Barney::Share.new
           obj.share(:a)
           a = "abc"
-          pid = obj.fork do
+          process_id = obj.fork do
             a.sub!('a', 'b')
           end
-          Process.wait(pid)
+          Process.wait(process_id)
+          obj.synchronize
           @ret = a
         end
 
@@ -70,11 +72,17 @@ suite('Barney') do
           obj.share(:a)
           obj.share(:b)
           a = b = 1
-          obj.fork do
+          process_id = obj.fork do
             a = 2
             b = 3
           end
+          Process.wait(process_id)
+          obj.synchronize
           @ret = [a, b]
+        end
+
+        verify('Changes made to the local variables are present after reassignment.') do
+          @ret == [ 2,3 ]
         end
 
       end
