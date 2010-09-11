@@ -11,7 +11,7 @@ module Barney
 
     # The share method marks a variable or constant to be shared between two processes. 
     #  
-    # @param  [Array<Symbol>] Variable   Accepts a variable amount of Symbol objects.
+    # @param  [Symbol]        Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]            Returns a list of all variables that are being shared.
     def share(*variables)
       @shared = @shared | variables
