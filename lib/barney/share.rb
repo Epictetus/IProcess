@@ -33,6 +33,8 @@ module Barney
       process_id
     end
 
+    # This method synchronizes data between the parent and child process.
+    # @return [void]
     def synchronize 
       @communicators.each_with_index do |pipes,i|
         pipes[1].close
