@@ -4,7 +4,9 @@ module Barney
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
-      @shared = []
+      @shared        = []
+      @communicators = nil
+      @context       = nil
     end
 
     # @param  [Array<Symbol>] Accepts an Array of Symbol objects. 
@@ -17,24 +19,27 @@ module Barney
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork(&blk)
       raise(ArgumentError, "A block or Proc object is expected") unless block_given?
-      all_pipes   = Array.new(@shared.size) { IO.pipe }  
-      binding     = blk.binding
-      process_id  = Kernel.fork do
+
+      @communicators = Array.new(@shared.size) { IO.pipe }  
+      @context       = blk.binding
+      process_id     = Kernel.fork do
         blk.call
-        all_pipes.each_with_index do |pipes, i|
+        @communicators.each_with_index do |pipes, i|
           pipes[0].close  
           pipes[1].write(Marshal.dump(eval("#{@shared[i]}", binding)))
           pipes[1].close
         end
       end
+      process_id
+    end
 
-      all_pipes.each_with_index do |pipes,i|
+    def synchronize 
+      @communicators.each_with_index do |pipes,i|
         pipes[1].close
         Barney.value_from_child = Marshal.load(pipes[0].read)
         pipes[0].close
-        eval("#{@shared[i]} = Barney.value_from_child", binding)
+        eval("#{@shared[i]} = Barney.value_from_child", @context)
       end
-      process_id
     end
 
   end
