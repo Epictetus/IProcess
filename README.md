@@ -1,7 +1,6 @@
 ## Barney
 
 Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
-This library is *highly* experimental right now.
 
 ## Limitations
 
@@ -49,4 +48,5 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
     puts "#{@a} and #{b}"
 
-The API is definitely not set in stone, and a stable release won't be made for a while.
+The API is definitely not set in stone. 0.1.0 is planned for release as a gem soon.  
+I'm following SemVer as my versioning policy (http://www.semver.org)
