@@ -2,6 +2,13 @@ module Barney
 
   class Share
 
+    class << self
+      # Serves as a temporary holder for the latest value read from the child process. 
+      # @api    private   
+      # @return [void]
+      attr_accessor :value
+    end
+
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
       @shared        = []
@@ -50,9 +57,9 @@ module Barney
     def synchronize 
       @communicators.each_with_index do |pipes,i|
         pipes[1].close
-        Barney.value_from_child = Marshal.load(pipes[0].read)
+        Barney::Share.value = Marshal.load(pipes[0].read)
         pipes[0].close
-        eval("#{@shared[i]} = Barney.value_from_child", @context)
+        eval("#{@shared[i]} = Barney::Share.value", @context)
       end
     end
 
