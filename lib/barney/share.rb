@@ -2,22 +2,6 @@ module Barney
 
   class Share
 
-    @mutex = Mutex.new
-    
-    class << self
-
-      # @return [Mutex] An instance of Mutex.
-      # @api    private
-      def lock
-        @mutex
-      end
-
-      # @return [void]
-      # @api private 
-      attr_accessor :value_from_child
-
-    end
-
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
       @shared        = []
@@ -30,9 +14,7 @@ module Barney
     # @param  [Symbol]        Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]            Returns a list of all variables that are being shared.
     def share(*variables)
-      Barney::Share.lock.synchronize do 
-        @shared = @shared | variables 
-      end
+      @shared = @shared | variables
     end
 
     # This method will spawn a new child process.  
@@ -49,12 +31,9 @@ module Barney
     def fork(&blk)
       raise(ArgumentError, "A block or Proc object is expected") unless block_given?
 
-      Barney::Share.lock.synchronize do 
-        @communicators = Array.new(@shared.size) { IO.pipe }  
-        @context       = blk.binding
-      end
-
-      process_id       = Kernel.fork do
+      @communicators = Array.new(@shared.size) { IO.pipe }  
+      @context       = blk.binding
+      process_id     = Kernel.fork do
         blk.call
         @communicators.each_with_index do |pipes, i|
           pipes[0].close  
@@ -69,13 +48,11 @@ module Barney
     # This method will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
-      Barney::Share.lock.synchronize do
-        @communicators.each_with_index do |pipes,i|
-          pipes[1].close
-          Barney::Share.value_from_child = Marshal.load(pipes[0].read)
-          pipes[0].close
-          eval("#{@shared[i]} = Barney::Share.value_from_child", @context)
-        end
+      @communicators.each_with_index do |pipes,i|
+        pipes[1].close
+        Barney.value_from_child = Marshal.load(pipes[0].read)
+        pipes[0].close
+        eval("#{@shared[i]} = Barney.value_from_child", @context)
       end
     end
 
