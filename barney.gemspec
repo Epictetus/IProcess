@@ -4,7 +4,7 @@ $LOAD_PATH.unshift('./lib')
 require('barney')
 
 Gem::Specification.new do |s|
-  s.name         = "Barney"
+  s.name         = "barney"
   s.version      = Barney::VERSION
   s.authors      = ["Robert Gleeson"]
   s.email        = "rob@flowof.info"
