@@ -2,11 +2,22 @@ module Barney
 
   class Share
 
+    @mutex = Mutex.new
+
     class << self
       # Serves as a temporary holder for the latest value read from the child process. 
+      #
       # @api    private   
       # @return [void]
       attr_accessor :value
+
+      # Serves as a lock when {Barney::Share.value} is being accessed by {Barney::Share#synchronize}
+      #
+      # @api    private
+      # @return [Mutex] 
+      def mutex
+        @mutex
+      end
     end
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
@@ -56,10 +67,12 @@ module Barney
     # @return [void]
     def synchronize 
       @communicators.each_with_index do |pipes,i|
-        pipes[1].close
-        Barney::Share.value = Marshal.load(pipes[0].read)
-        pipes[0].close
-        eval("#{@shared[i]} = Barney::Share.value", @context)
+        Barney::Share.mutex.synchronize do
+          pipes[1].close
+          Barney::Share.value = Marshal.load(pipes[0].read)
+          pipes[0].close
+          eval("#{@shared[i]} = Barney::Share.value", @context)
+        end
       end
     end
 
