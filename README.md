@@ -2,13 +2,17 @@
 
 Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
 
-## Limitations
+## Sharable objects
+Behind the scenes, Barney is using Marshal to send data between processes.  
+Any object that can be dumped through Marshal.dump can be shared.  
+This excludes anonymous modules, anonymous classes, Proc objects, and possibly some other objects I
+cannot think of.
 
-* Behind the scenes, Barney is using Marshal to serialize ruby objects, and therefore suffers from
-  the downfalls of Marshal itself. Proc objects, Binding objects, Anonymous classes, 
-  and Anonymous modules, cannot be shared.
+## Thread safety
 
-* Barney is not thread-safe. I plan to change this in the future.
+Barney is thread-safe as long as one instance of Barney::Share is used per-thread.  
+There is a mutex lock in place, but it only concerns Barney::Share#synchronize, where data is shared
+among all instances of Barney::Share.
 
 ## Examples
 
@@ -19,10 +23,10 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
     #!/usr/bin/env ruby
     require('barney')
 
+    a = 2+3
+
     obj = Barney::Share.new
     obj.share(:a)
-    a = 5
-
     pid = obj.fork { a = 6 }
     Process.wait(pid)
     obj.synchronize
@@ -34,11 +38,11 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
     #!/usr/bin/env ruby
     require('barney')
 
+    @a = 1+1
+    b  = 2+2
+
     obj = Barney::Share.new
     obj.share(:@a, :b) 
-
-    @a = 2
-    b  = 4
     pid = obj.fork do
         @a = 123
         b  = 456
@@ -46,7 +50,7 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
     Process.wait(pid)
     obj.synchronize
 
-    puts "#{@a} and #{b}"
+    puts "#{@a} and #{b}" # output is "123 and 456"
 
 The API is definitely not set in stone. 0.1.0 is planned for release as a gem soon.  
 I'm following SemVer as my versioning policy (http://www.semver.org)
