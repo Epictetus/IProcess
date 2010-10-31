@@ -57,4 +57,4 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
       gem install barney
 
 The repository has a gemspec you can build and install from, too.
-I'm following SemVer as my versioning policy [Semantic Versioning](http://www.semver.org)
+I'm following the [Semantic Versioning](http://www.semver.org) policy.
