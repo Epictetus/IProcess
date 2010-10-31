@@ -48,5 +48,9 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
     puts "#{@a} and #{b}"
 
-The API is definitely not set in stone. 0.1.0 is planned for release as a gem soon.  
-I'm following SemVer as my versioning policy (http://www.semver.org)
+## Install
+
+      gem install barney
+
+The repository has a gemspec you can build and install from, too.
+I'm following SemVer as my versioning policy [Semantic Versioning](http://www.semver.org)
