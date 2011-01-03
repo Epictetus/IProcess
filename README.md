@@ -1,4 +1,4 @@
-## Barney
+ ![Barney Picture](http://ompldr.org/vNnUwNA)
 
 Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
 
