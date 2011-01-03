@@ -41,6 +41,7 @@ module Barney
       variables.map(&:to_sym).each do |variable|
         @shared.delete variable
       end
+      @shared
     end
 
     # Serves as a method to spawn a new child process.  
