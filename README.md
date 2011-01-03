@@ -20,14 +20,14 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 **Example A**
 
     #!/usr/bin/env ruby
-    require('barney')
+    require 'barney'
 
     a = 2+3
 
     obj = Barney::Share.new
-    obj.share(:a)
+    obj.share :a
     pid = obj.fork { a = 6 }
-    Process.wait(pid)
+    Process.wait pid
     obj.synchronize
     
     puts a # output is 6.
@@ -35,18 +35,18 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 **Example B**
 
     #!/usr/bin/env ruby
-    require('barney')
+    require 'barney'
 
     @a = 1+1
     b  = 2+2
 
     obj = Barney::Share.new
-    obj.share(:@a, :b) 
+    obj.share :@a, :b
     pid = obj.fork do
         @a = 123
         b  = 456
     end
-    Process.wait(pid)
+    Process.wait pid
     obj.synchronize
 
     puts "#{@a} and #{b}" # output is "123 and 456"
