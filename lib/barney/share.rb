@@ -30,7 +30,7 @@ module Barney
       @shared = @shared | variables
     end
 
-    # Serves as a method to spawn a new child process.
+    # Serves as a method to spawn a new child process.  
     # It can be treated like the Kernel.fork method, but a block or Proc object is a required argument.
     # @param  [Proc]  Proc    Accepts a block or Proc object that will be executed in a child 
     #                         process.
