@@ -43,8 +43,8 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
     obj = Barney::Share.new
     obj.share :@a, :b
     pid = obj.fork do
-        @a = 123
-        b  = 456
+      @a = 123
+      b  = 456
     end
     Process.wait pid
     obj.synchronize
