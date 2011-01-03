@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary      = "Barney tries to make the sharing of data between processes as easy and natural as possible."
   s.description  = s.summary
 
-  s.files        = [ 'ChangeLog', *Dir.glob("lib/**/**") ]
+  s.files        = [ 'README.md', 'ChangeLog', *Dir.glob("lib/**/**") ]
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
   s.rubyforge_project = '[none]'
