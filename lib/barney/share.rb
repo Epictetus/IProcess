@@ -25,7 +25,7 @@ module Barney
       @context       = nil
     end
 
-    # Serves as a method to mark variable or constant that is to be shared between two processes. 
+    # Serves as a method to mark a variable or constant to be shared between two processes. 
     # @param  [Symbol] Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
