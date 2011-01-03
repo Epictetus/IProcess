@@ -1,3 +1,4 @@
 2011-01-03  Robert Gleeson <rob@flowof.info> v0.2.0
 
+  * Add Barney::Share#unshare.
 	* Add Barney::Share#shared. 

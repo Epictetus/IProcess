@@ -34,6 +34,15 @@ module Barney
       @shared = @shared | variables
     end
 
+    # Serves as a method to remove a variable or constant from being shared between two processes.
+    # @param  [Symbol] Variable Accepts a variable amount of Symbol objects.
+    # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
+    def unshare *variables
+      variables.each do |variable|
+        @shared.delete variable
+      end
+    end
+
     # Serves as a method to spawn a new child process.  
     # It can be treated like the Kernel.fork method, but a block or Proc object is a required argument.
     # @param  [Proc]  Proc    Accepts a block or Proc object that will be executed in a child 
