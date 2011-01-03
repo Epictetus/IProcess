@@ -19,5 +19,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = '>= 1.3.6'
 
   s.add_development_dependency 'yard'
+  s.add_development_dependency 'bluecloth' # for yard+markdown.
   s.add_development_dependency 'riot'
+ 
 end
