@@ -6,14 +6,12 @@ module Barney
 
     class << self
       # Serves as a temporary holder for the latest value read from the child process. 
-      #
-      # @api    private   
+      # @api private   
       # @return [void]
       attr_accessor :value
 
       # Serves as a lock when {Barney::Share.value} is being accessed by {Barney::Share#synchronize}
-      #
-      # @api    private
+      # @api private
       # @return [Mutex] 
       def mutex
         @mutex
@@ -27,18 +25,15 @@ module Barney
       @context       = nil
     end
 
-    # The share method marks a variable or constant to be shared between two processes. 
-    #  
-    # @param  [Symbol]        Variable   Accepts a variable amount of Symbol objects.
-    # @return [Array<Symbol>]            Returns a list of all variables that are being shared.
+    # Serves as a method to mark variable or constant that is to be shared between two processes. 
+    # @param  [Symbol] Variable   Accepts a variable amount of Symbol objects.
+    # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share(*variables)
       @shared = @shared | variables
     end
 
-    # This method will spawn a new child process.  
-    # It can be treated like the Kernel.fork method, but a block or Proc object is a 
-    # required argument.
-    # 
+    # Serves as a method to spawn a new child process.
+    # It can be treated like the Kernel.fork method, but a block or Proc object is a required argument.
     # @param  [Proc]  Proc    Accepts a block or Proc object that will be executed in a child 
     #                         process.
     # 
@@ -62,8 +57,8 @@ module Barney
       process_id
     end
 
-    # This method synchronizes data between the parent and child process.  
-    # This method will block until the spawned child process has exited. 
+    # Serves as a method that synchronizes data between the parent and child process.  
+    # It will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
       @communicators.each_with_index do |pipes,i|
