@@ -10,7 +10,7 @@ module Barney
       # @return [void]
       attr_accessor :value
 
-      # Serves as a lock when {Barney::Share.value} is being accessed by {Barney::Share#synchronize}
+      # Serves as a lock when {Barney::Share.value Barney::Share.value} is being accessed by {Barney::Share#synchronize}
       # @api private
       # @return [Mutex] 
       attr_reader :mutex
