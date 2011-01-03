@@ -20,7 +20,7 @@ module Barney
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
-      @shared        = []
+      @shared        = Array.new
       @communicators = nil
       @context       = nil
     end
@@ -28,7 +28,7 @@ module Barney
     # Serves as a method to mark variable or constant that is to be shared between two processes. 
     # @param  [Symbol] Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
-    def share(*variables)
+    def share *variables
       @shared = @shared | variables
     end
 
@@ -41,8 +41,8 @@ module Barney
     #                         supplied as an argument. 
     #                         
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
-    def fork(&blk)
-      raise(ArgumentError, "A block or Proc object is expected") unless block_given?
+    def fork &blk
+      raise ArgumentError, "A block or Proc object is expected" unless block_given?
 
       @communicators = Array.new(@shared.size) { IO.pipe }  
       @context       = blk.binding
@@ -50,7 +50,7 @@ module Barney
         blk.call
         @communicators.each_with_index do |pipes, i|
           pipes[0].close  
-          pipes[1].write(Marshal.dump(eval("#{@shared[i]}", @context)))
+          pipes[1].write Marshal.dump(eval("#{@shared[i]}", @context))
           pipes[1].close
         end
       end
@@ -64,9 +64,9 @@ module Barney
       @communicators.each_with_index do |pipes,i|
         Barney::Share.mutex.synchronize do
           pipes[1].close
-          Barney::Share.value = Marshal.load(pipes[0].read)
+          Barney::Share.value = Marshal.load pipes[0].read
           pipes[0].close
-          eval("#{@shared[i]} = Barney::Share.value", @context)
+          eval "#{@shared[i]} = Barney::Share.value", @context
         end
       end
     end
