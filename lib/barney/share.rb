@@ -31,14 +31,14 @@ module Barney
     # @param  [Symbol] Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
-      @shared = @shared | variables
+      @shared = @shared | variables.map(&:to_sym)
     end
 
     # Serves as a method to remove a variable or constant from being shared between two processes.
     # @param  [Symbol] Variable Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
     def unshare *variables
-      variables.each do |variable|
+      variables.map(&:to_sym).each do |variable|
         @shared.delete variable
       end
     end
