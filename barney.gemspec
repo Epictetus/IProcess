@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary      = "Barney tries to make the sharing of data between processes as easy and natural as possible."
   s.description  = s.summary
 
-  s.files        = Dir.glob "lib/**/**"
+  s.files        = [ 'ChangeLog', *Dir.glob("lib/**/**") ]
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
   s.rubyforge_project = '[none]'
@@ -20,6 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'yard'
   s.add_development_dependency 'bluecloth' # for yard+markdown.
-  s.add_development_dependency 'riot'
- 
+  s.add_development_dependency 'riot' 
 end
