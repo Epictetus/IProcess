@@ -13,9 +13,7 @@ module Barney
       # Serves as a lock when {Barney::Share.value} is being accessed by {Barney::Share#synchronize}
       # @api private
       # @return [Mutex] 
-      def mutex
-        @mutex
-      end
+      attr_reader :mutex
     end
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
