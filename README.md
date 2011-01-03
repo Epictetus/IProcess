@@ -51,6 +51,13 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
     puts "#{@a} and #{b}" # output is "123 and 456"
 
+### Documentation
+
+**API**  
+
+* [0.2.0](http://rubydoc.info/gems/barney/0.2.0)
+* [0.1.0](http://rubydoc.info/gems/barney/0.1.0)
+
 ### Install
 
       gem install barney
