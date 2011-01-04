@@ -82,6 +82,7 @@ module Barney
         end
       end
     end
+    alias_method :sync, :synchronize
 
   end
 
