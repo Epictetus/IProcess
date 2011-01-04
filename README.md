@@ -38,14 +38,14 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
       
       puts message * $times # output is 'boobooboo'.
    
-### Documentation
+## Documentation
 
 **API**  
 
 * [0.2.0](http://rubydoc.info/gems/barney/0.2.0)
 * [0.1.0](http://rubydoc.info/gems/barney/0.1.0)
 
-### Install
+## Install
 
       gem install barney
 
