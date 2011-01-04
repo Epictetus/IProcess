@@ -18,6 +18,7 @@ module Barney
 
     # Returns a list of all variables or constants being shared for this instance of {Barney::Share Barney::Share}.
     # @return [Array<Symbol>] 
+    attr_reader :shared
     def shared; @shared.keys; end
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
