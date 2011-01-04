@@ -18,20 +18,22 @@ module Barney
 
     # Returns a list of all variables or constants being shared for this instance of {Barney::Share Barney::Share}.
     # @return [Array<Symbol>] 
-    attr_reader :shared
+    def shared; @shared.keys; end
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
-      @shared        = Array.new
-      @communicators = nil
-      @context       = nil
+      @shared  = Hash.new
+      @context = nil
     end
 
     # Serves as a method to mark a variable or constant to be shared between two processes. 
     # @param  [Symbol] Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
-      @shared = @shared | variables.map(&:to_sym)
+      variables.map(&:to_sym).each do |variable|
+        @shared.store variable, IO.pipe
+      end
+      @shared.keys
     end
 
     # Serves as a method to remove a variable or constant from being shared between two processes.
@@ -41,7 +43,7 @@ module Barney
       variables.map(&:to_sym).each do |variable|
         @shared.delete variable
       end
-      @shared
+      @shared.keys
     end
 
     # Serves as a method to spawn a new child process.  
@@ -56,13 +58,12 @@ module Barney
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
 
-      @communicators = Array.new(@shared.size) { IO.pipe }  
       @context       = blk.binding
       process_id     = Kernel.fork do
         blk.call
-        @communicators.each_with_index do |pipes, i|
+        @shared.each do |variable, pipes|
           pipes[0].close  
-          pipes[1].write Marshal.dump(eval("#{@shared[i]}", @context))
+          pipes[1].write Marshal.dump(eval("#{variable}", @context))
           pipes[1].close
         end
       end
@@ -73,12 +74,12 @@ module Barney
     # It will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
-      @communicators.each_with_index do |pipes,i|
+      @shared.each do |variable, pipes|
         Barney::Share.mutex.synchronize do
           pipes[1].close
           Barney::Share.value = Marshal.load pipes[0].read
           pipes[0].close
-          eval "#{@shared[i]} = Barney::Share.value", @context
+          eval "#{variable} = Barney::Share.value", @context
         end
       end
     end
