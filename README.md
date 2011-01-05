@@ -42,6 +42,7 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
 **API**  
 
+* [master (git)](http://rubydoc.info/github/robgleeson/Barney/master/)
 * [0.2.0](http://rubydoc.info/gems/barney/0.2.0)
 * [0.1.0](http://rubydoc.info/gems/barney/0.1.0)
 
