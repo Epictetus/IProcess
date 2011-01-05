@@ -7,7 +7,7 @@ module Barney
     class << self
       # Serves as a temporary holder for the latest value read from the child process. 
       # @api private   
-      # @return [Object]
+      # @return [Object] Returns Object or subclass of.
       attr_accessor :value
 
       # Serves as a lock when {Barney::Share.value Barney::Share.value} is being accessed by {Barney::Share#synchronize}
