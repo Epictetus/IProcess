@@ -5,8 +5,8 @@ module Barney
     @mutex = Mutex.new
 
     class << self
-      # Serves as a temporary holder for the latest value read from the child process. 
-      # @api private   
+      # Serves as a temporary holder for the latest value read from the child process.
+      # @api private
       # @return [Object] Returns Object or subclass of.
       attr_accessor :value
 
