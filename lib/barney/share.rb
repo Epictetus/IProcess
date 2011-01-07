@@ -20,6 +20,10 @@ module Barney
     # @return [Array<Symbol>] 
     attr_reader :shared
     def shared; @shared.keys; end
+  
+    # Serves as a method that tells you the Process ID of the last forked child process.
+    # @return [Fixnum] Returns the Process ID as a Fixnum.
+    attr_reader :pid
 
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
@@ -58,9 +62,9 @@ module Barney
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
-
-      @context       = blk.binding
-      process_id     = Kernel.fork do
+      
+      @context = blk.binding
+      @pid     = Kernel.fork do
         blk.call
         @shared.each do |variable, pipes|
           pipes[0].close  
@@ -68,7 +72,7 @@ module Barney
           pipes[1].close
         end
       end
-      process_id
+      @pid
     end
 
     # Serves as a method that synchronizes data between the parent and child process.  
