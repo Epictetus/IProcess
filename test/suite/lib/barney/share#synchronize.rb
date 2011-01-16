@@ -57,7 +57,8 @@ context('Barney::Share') do
         pid = obj.fork  { $times = 4 }
         pid2 = obj.fork { $times = 5 }
         pid3 = obj.fork { $times = 6 }
-        
+        obj.sync
+
         Process.wait pid
         Process.wait pid2
         Process.wait pid3
