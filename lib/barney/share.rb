@@ -63,7 +63,7 @@ module Barney
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
 
-      share *@shared.keys
+      share *@shared.keys if @pid
 
       @context = blk.binding
       @pid     = Kernel.fork do
