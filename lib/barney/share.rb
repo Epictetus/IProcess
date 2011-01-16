@@ -29,8 +29,6 @@ module Barney
     def initialize
       @shared  = Hash.new
       @context = nil
-      @fork_id = 0
-      @sync_id = 0
     end
 
     # Serves as a method to mark a variable or constant to be shared between two processes. 
@@ -38,9 +36,7 @@ module Barney
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
       variables.map(&:to_sym).each do |variable|
-        history = @shared[variable]
-        @shared.store variable, { @fork_id => IO.pipe }
-        @shared[variable].merge! history unless history.nil?
+        @shared.store variable, IO.pipe 
       end
       @shared.keys
     end
@@ -67,18 +63,17 @@ module Barney
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
 
+      share *@shared.keys
+
       @context = blk.binding
       @pid     = Kernel.fork do
         blk.call
         @shared.each do |variable, pipes| 
-          pipes[@fork_id][0].close  
-          pipes[@fork_id][1].write Marshal.dump(eval("#{variable}", @context))
-          pipes[@fork_id][1].close
+          pipes[0].close  
+          pipes[1].write Marshal.dump(eval("#{variable}", @context))
+          pipes[1].close
         end
       end
-
-      @fork_id += 1
-      share *@shared.keys
 
       @pid
     end
@@ -89,13 +84,12 @@ module Barney
     def synchronize 
       @shared.each do |variable, pipes|
         Barney::Share.mutex.synchronize do
-          pipes[@sync_id][1].close
-          Barney::Share.value = Marshal.load pipes[@sync_id][0].read
-          pipes[@sync_id][0].close
+          pipes[1].close
+          Barney::Share.value = Marshal.load pipes[0].read
+          pipes[0].close
           eval "#{variable} = Barney::Share.value", @context
         end
       end
-      @sync_id += 1
     end
     alias_method :sync, :synchronize
 
