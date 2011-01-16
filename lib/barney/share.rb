@@ -100,12 +100,6 @@ module Barney
     end
     alias_method :sync, :synchronize
 
-    def pipes_closed?
-      @shared.any? do |variable,pipes|
-        pipes[0].closed? || pipes[1].closed?
-      end
-    end
-
   end
 
 end
