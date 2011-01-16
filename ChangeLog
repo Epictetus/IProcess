@@ -1,7 +1,7 @@
 2011-01-16  Robert Gleeson <rob@flowof.info> v0.3.1
 
 * Bug Fix(See GH-Issue 1)
-* Process ID is available at Barney::Share#pid.
+* Add Barney::Share#pid.
 
 2011-01-04  Robert Gleeson <rob@flowof.info> v0.2.0
 
