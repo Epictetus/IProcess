@@ -54,30 +54,15 @@ context('Barney::Share') do
         obj = Barney::Share.new
         obj.share :$times
 
-        pid = obj.fork do
-          $times = 4
-        end
-
-        pid2 = obj.fork do
-          $times = 5
-        end
-
-        pid3 = obj.fork do
-          $times = 6
-        end
-
-        Process.wait pid
-        obj.sync
-        a = $times
-        Process.wait pid2
-        obj.sync
-        b = $times
-
-        Process.wait pid3
-        obj.sync
-        c = $times
+        pid = obj.fork  { $times = 4 }
+        pid2 = obj.fork { $times = 5 }
+        pid3 = obj.fork { $times = 6 }
         
-        a == 4 && b == 5 && c == 6
+        Process.wait pid
+        Process.wait pid2
+        Process.wait pid3
+        
+        $times == 6
       end
 
     end
