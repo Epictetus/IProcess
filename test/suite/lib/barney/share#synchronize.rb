@@ -46,6 +46,40 @@ context('Barney::Share') do
         a == 4 && b == 5
       end
 
+      asserts 'that multiple subprocesses can be spawned, with variables modified in each, and the results remain ' +
+              'consistent (See GH Issue 1)' do
+
+        $times  = 2
+
+        obj = Barney::Share.new
+        obj.share :$times
+
+        pid = obj.fork do
+          $times = 4
+        end
+
+        pid2 = obj.fork do
+          $times = 5
+        end
+
+        pid3 = obj.fork do
+          $times = 6
+        end
+
+        Process.wait pid
+        obj.sync
+        a = $times
+        Process.wait pid2
+        obj.sync
+        b = $times
+
+        Process.wait pid3
+        obj.sync
+        c = $times
+        
+        a == 4 && b == 5 && c == 6
+      end
+
     end
 
   end
