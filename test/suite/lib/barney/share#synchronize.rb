@@ -62,8 +62,22 @@ context('Barney::Share') do
         Process.wait pid
         Process.wait pid2
         Process.wait pid3
-        
         $times == 6
+      end
+
+      asserts 'that #history provides the correct history' do
+        a = {}
+
+        obj = Barney::Share.new
+        obj.share :a
+      
+        pid1 = obj.fork { a.merge! :foo => 'a' }
+        pid2 = obj.fork { a.merge! :bar => 'b' }
+        pid3 = obj.fork { a.merge! :baz => 'c' }
+
+        obj.sync
+        ret = obj.history.values.inject({}) { |memo,a| memo.merge! a[:a] }
+        ret == { :foo => 'a', :bar => 'b', :baz => 'c' }
       end
 
     end
