@@ -1,6 +1,7 @@
  ![Barney Picture](http://ompldr.org/vNnUwNA)
 
 Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
+Barney is developed against Ruby 1.9.1 or later. I'm not knowingly supporting earlier versions of Ruby.
 
 ## Sharable objects
 Behind the scenes, Barney is using Marshal to send data between processes.  
@@ -18,7 +19,7 @@ among all instances of Barney::Share.
 
 Okay, now that we've got that out of the way, let's see what using Barney is like.
 
-**Example A**
+**Basic**
 
       #!/usr/bin/env ruby
       require 'barney'
@@ -38,6 +39,31 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
       
       puts message * $times # output is 'boobooboo'.
    
+**Jobs**
+
+A little bit more complicated.. 
+
+      #/usr/bin/env ruby
+      require 'barney'
+
+      results = {}
+      pids    = []
+
+      obj = Barney::Share.new
+      obj.share :results
+
+      [1,2,3].each do |e|
+        pids << obj.fork do 
+          results.merge!(e => e)
+        end
+      end
+
+      pids.each { |pid| Process.wait(pid) }
+      obj.sync
+
+      obj.history.values.inject(results) { |memo, history| results.merge!(history[:results]) }
+      puts results.inspect # { 1 => 1, 2 => 2, 3 => 3 }
+
 ## Documentation
 
 **API**  
