@@ -61,7 +61,10 @@ A little bit more complicated..
       pids.each { |pid| Process.wait(pid) }
       obj.sync
 
-      obj.history.values.inject() { |history| results.merge!(history[:results]) }
+      obj.history.values.each do |history| 
+        results.merge! history[:results]
+      end
+
       puts results.inspect # { 1 => 1, 2 => 2, 3 => 3 }
 
 ## Documentation
