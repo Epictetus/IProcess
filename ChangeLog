@@ -1,3 +1,7 @@
+2011-02-12  Robert Gleeson <rob@flowof.info> v0.4.0
+
+* Add Barney::Share#history. 
+
 2011-01-16  Robert Gleeson <rob@flowof.info> v0.3.1
 
 * Bug Fix(See GH-Issue 1)

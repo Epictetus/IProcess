@@ -25,10 +25,16 @@ module Barney
     # @return [Fixnum] Returns the Process ID as a Fixnum.
     attr_reader :pid
 
+    # Serves as a method to provide a history of changes made in multiple forks for a single instance of {Barney::Share}.
+    # @return [{ Fixnum => { Symbol => Object }}] Fixnum represents sequence, Symbol the variable, and Object its value. 
+    attr_reader :history
+    
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
       @shared  = Hash.new
       @context = nil
+      @history = {}
+      @seq     = 0
     end
 
     # Serves as a method to mark a variable or constant to be shared between two processes. 
@@ -36,7 +42,7 @@ module Barney
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
       variables.map(&:to_sym).each do |variable|
-        @shared.store variable, IO.pipe 
+        @shared.store variable, (@shared[variable] || {}).merge({ @seq => IO.pipe })
       end
       @shared.keys
     end
@@ -68,13 +74,14 @@ module Barney
       @context = blk.binding
       @pid     = Kernel.fork do
         blk.call
-        @shared.each do |variable, pipes| 
-          pipes[0].close  
-          pipes[1].write Marshal.dump(eval("#{variable}", @context))
-          pipes[1].close
+        @shared.each do |variable, hash|
+          hash[@seq][0].close  
+          hash[@seq][1].write Marshal.dump(eval("#{variable}", @context))
+          hash[@seq][1].close
         end
       end
-
+      
+      @seq += 1
       @pid
     end
 
@@ -82,12 +89,15 @@ module Barney
     # It will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
-      @shared.each do |variable, pipes|
+      @shared.each do |variable, hash|
         Barney::Share.mutex.synchronize do
-          pipes[1].close
-          Barney::Share.value = Marshal.load pipes[0].read
-          pipes[0].close
-          eval "#{variable} = Barney::Share.value", @context
+          hash.each do |seq, pipes|
+            pipes[1].close
+            Barney::Share.value = Marshal.load pipes[0].read
+            pipes[0].close
+            object = eval "#{variable} = Barney::Share.value", @context 
+            @history.merge!({ seq => { variable => object } })
+          end
         end
       end
     end
