@@ -8,7 +8,9 @@ context 'Barney::Share' do
     end
 
     asserts 'that #shared returns a list of variables being shared.' do 
-      topic == [ :a, :b, :c ] 
+      [:a, :b, :c].all? do |variable|
+        topic.include? variable
+      end
     end
 
   end
