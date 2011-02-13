@@ -38,10 +38,26 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
       obj.sync
       
       puts message * $times # output is 'boobooboo'.
-   
-**Jobs**
+ 
+**Sequential Jobs**
+      
+      #!/usr/bin/env ruby
+      require 'barney'
 
-A little bit more complicated.. 
+      a = "12"
+
+      obj = Barney::Share.new
+      obj.share :a
+
+      3.upto(4).each do |i|
+        pid = obj.fork { a << i.to_s }
+        obj.sync
+        Process.wait pid
+      end
+
+      a # => "1234"
+
+**Paralell Jobs**
 
       #/usr/bin/env ruby
       require 'barney'
