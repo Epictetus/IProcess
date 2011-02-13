@@ -91,11 +91,11 @@ module Barney
     def synchronize 
       @shared.each do |variable, hash|
         Barney::Share.mutex.synchronize do
-          hash.each do |seq, pipes|
-            unless pipes[0].closed? || pipes[1].closed?
-              pipes[1].close
-              Barney::Share.value = Marshal.load pipes[0].read
-              pipes[0].close
+          0.upto(@seq) do |seq|
+            unless hash[seq].nil? || hash[seq][0].closed? || hash[seq][1].closed?
+              hash[seq][1].close
+              Barney::Share.value = Marshal.load hash[seq][0].read
+              hash[seq][0].close
               object = eval "#{variable} = Barney::Share.value", @context 
               @history.merge!({ seq => { variable => object } })
             end
