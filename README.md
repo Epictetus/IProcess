@@ -76,6 +76,13 @@ A little bit more complicated..
 * [0.2.0](http://rubydoc.info/gems/barney/0.2.0)
 * [0.1.0](http://rubydoc.info/gems/barney/0.1.0)
 
+## License
+
+Barney is released under the LGPL.  
+You are free to **use** this library in free or commercial software, and license that software however you want, 
+but as soon as you modify the library itself, 
+you must share your changes under the same license. :)
+
 ## Install
 
       gem install barney
