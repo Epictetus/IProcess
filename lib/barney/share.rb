@@ -97,7 +97,7 @@ module Barney
               Barney::Share.value = Marshal.load hash[seq][0].read
               hash[seq][0].close
               object = eval "#{variable} = Barney::Share.value", @context 
-              @history.merge!({ seq => { variable => object } })
+              @history[seq] = { variable => object }
             end
           end
         end
