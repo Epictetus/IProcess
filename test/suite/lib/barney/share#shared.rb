@@ -1,16 +1,10 @@
-context 'Barney::Share' do
-  context '#shared' do
-  
-    setup do 
+describe Barney::Share do
+  describe '#shared' do
+
+    it 'should return a list of shared variables' do 
       obj = Barney::Share.new
       obj.share :a, :b, :c
-      obj.shared
-    end
-
-    asserts 'that #shared returns a list of variables being shared.' do 
-      [:a, :b, :c].all? do |variable|
-        topic.include? variable
-      end
+      assert_equal true, [:a, :b, :c].all? { |variable| obj.shared.include? variable }
     end
 
   end

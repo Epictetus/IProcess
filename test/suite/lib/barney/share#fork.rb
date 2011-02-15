@@ -1,34 +1,18 @@
-context('Barney::Share') do
-  context('#fork') do
-    
-    context('Return values.') do
+describe Barney::Share do
+  describe '#fork' do
 
-      setup do
-        process_id = Barney::Share.new.fork { }
-      end
-
-      asserts("that the Process ID(PID) of the spawned child process is returned on success.") do
-        topic.class == Fixnum
-      end
-
+    it 'should return the Process ID(PID) is on success.' do
+      pid = Barney::Share.new.fork { }
+      Process.wait pid
+      assert_equal Fixnum, pid.class
     end
 
-    context("raises") do
-
-      setup do
-        begin
-          Barney::Share.new.fork 
-        rescue ArgumentError => e
-          true
-        end
+    it 'should raise an ArgumentError without a block or Proc.' do
+      assert_raises ArgumentError do
+        Barney::Share.new.fork
       end
-
-      asserts('that an ArgumentError is raised when a Proc object or block is not supplied.') do
-        topic == true
-      end
-    
     end
-
+    
   end
 end
 
