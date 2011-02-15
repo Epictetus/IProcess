@@ -21,5 +21,4 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'yard'
   s.add_development_dependency 'bluecloth' # for yard+markdown.
-  s.add_development_dependency 'riot' 
 end
