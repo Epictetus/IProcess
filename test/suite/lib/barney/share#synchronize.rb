@@ -41,12 +41,12 @@ describe Barney::Share do
       pid = @object.fork  { $times = 4 }
       pid2 = @object.fork { $times = 5 }
       pid3 = @object.fork { $times = 6 }
-      @object.sync
 
       Process.wait pid
       Process.wait pid2
       Process.wait pid3
-      
+      @object.sync
+
       assert_equal 6, $times
     end
 

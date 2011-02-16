@@ -8,7 +8,8 @@ describe Barney::Share do
       object.share :hash
 
       [1,2,3].each do |e|
-        object.fork { hash.merge! e => e }
+        pid = object.fork { hash.merge! e => e }
+        Process.wait pid
       end
 
       object.sync
