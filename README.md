@@ -51,8 +51,8 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
       3.upto(4).each do |i|
         pid = obj.fork { a << i.to_s }
-        obj.sync
         Process.wait pid
+        obj.sync
       end
 
       a # => "1234"
@@ -74,7 +74,7 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
         end
       end
 
-      pids.each { |pid| Process.wait(pid) }
+      pids.each { |pid| Process.wait pid }
       obj.sync
 
       obj.history.each_value do |history| 
