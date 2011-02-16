@@ -1,10 +1,15 @@
+2011-02-16  Robert Gleeson <rob@flowof.info> v0.4.1
+
+* Add http://www.gem-testers.org support.
+* Rewrite test suite using 'minitest'.
+
 2011-02-12  Robert Gleeson <rob@flowof.info> v0.4.0
 
 * Add Barney::Share#history. 
 
 2011-01-16  Robert Gleeson <rob@flowof.info> v0.3.1
 
-* Bug Fix(See GH-Issue 1)
+* Solve Github Issue #1.
 * Add Barney::Share#pid.
 
 2011-01-04  Robert Gleeson <rob@flowof.info> v0.2.0
