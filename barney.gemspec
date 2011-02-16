@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description  = s.summary
 
   s.files        = [ 'Rakefile', 'LICENSE', '.yardopts', 'README.md', 'ChangeLog', '.gemtest', *Dir.glob("lib/**/**") ]
-  s.test_files   = Dir.glob "test/**/**"
+  s.test_files   = Dir.glob "test/**/*.rb"
 
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
