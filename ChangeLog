@@ -1,3 +1,7 @@
+2011-02-19  Robert Gleeson <rob@flowof.info> v0.5.0
+
+* Write a more efficient Barney::Share#sync method.
+
 2011-02-16  Robert Gleeson <rob@flowof.info> v0.4.1
 
 * Add http://www.gem-testers.org support.
