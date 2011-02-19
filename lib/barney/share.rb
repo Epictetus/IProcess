@@ -91,8 +91,8 @@ module Barney
     def synchronize 
       @shared.each do |variable, hash|
         Barney::Share.mutex.synchronize do
-          0.upto(@seq) do |seq|
-            unless hash[seq].nil? || hash[seq][0].closed? || hash[seq][1].closed?
+          0.upto(@seq-1) do |seq|
+           unless hash[seq][0].closed? || hash[seq][1].closed?
               hash[seq][1].close
               Barney::Share.value = Marshal.load hash[seq][0].read
               hash[seq][0].close
