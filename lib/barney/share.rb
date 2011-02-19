@@ -92,13 +92,12 @@ module Barney
       @shared.each do |variable, hash|
         Barney::Share.mutex.synchronize do
           0.upto(@seq-1) do |seq|
-           unless hash[seq][0].closed? || hash[seq][1].closed?
-              hash[seq][1].close
-              Barney::Share.value = Marshal.load hash[seq][0].read
-              hash[seq][0].close
-              object = eval "#{variable} = Barney::Share.value", @context 
-              @history[seq] = { variable => object }
-            end
+            hash[seq][1].close
+            Barney::Share.value = Marshal.load hash[seq][0].read
+            hash[seq][0].close
+            object = eval "#{variable} = Barney::Share.value", @context 
+            @history[seq] = { variable => object }
+            hash.delete seq
           end
         end
       end
