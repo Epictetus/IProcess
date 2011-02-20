@@ -74,10 +74,10 @@ module Barney
       @context = blk.binding
       @pid     = Kernel.fork do
         blk.call
-        @shared.each do |variable, hash|
-          hash[@seq][0].close  
-          hash[@seq][1].write Marshal.dump(eval("#{variable}", @context))
-          hash[@seq][1].close
+        @shared.each do |variable, pipes|
+          pipes[@seq][0].close  
+          pipes[@seq][1].write Marshal.dump(eval("#{variable}", @context))
+          pipes[@seq][1].close
         end
       end
       
@@ -89,16 +89,16 @@ module Barney
     # It will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
-      @shared.each do |variable, hash|
+      @shared.each do |variable, pipes|
         Barney::Share.mutex.synchronize do
           0.upto(@seq-1) do |seq|
             unless hash[seq].nil?
-              hash[seq][1].close
-              Barney::Share.value = Marshal.load hash[seq][0].read
-              hash[seq][0].close
+              pipes[seq][1].close
+              Barney::Share.value = Marshal.load pipes[seq][0].read
+              pipes[seq][0].close
               object = eval "#{variable} = Barney::Share.value", @context 
               @history[seq] = { variable => object }
-              hash.delete seq
+              pipes.delete seq
             end
           end
         end
