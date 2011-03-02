@@ -96,10 +96,7 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
 ## License
 
-Barney is released under the LGPL.  
-You are free to **use** this library in free or commercial software, and license that software however you want, 
-but as soon as you modify the library itself, 
-you must share your changes under the same license. :)
+Barney is released under the Lesser GPL(LGPL).  
 
 ## Install
 
