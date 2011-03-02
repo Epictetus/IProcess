@@ -1,7 +1,7 @@
 describe Barney::Share do
   describe '#fork' do
 
-    it 'should return the Process ID(PID) is on success.' do
+    it 'should return the Process ID(PID) on success.' do
       pid = Barney::Share.new.fork { }
       Process.wait pid
       assert_equal Fixnum, pid.class
