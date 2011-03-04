@@ -88,8 +88,8 @@ module Barney
     # It will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
-      @shared.each do |variable, data|
-        Barney::Share.mutex.synchronize do
+      Barney::Share.mutex.synchronize do
+        @shared.each do |variable, data|
           data.each do |seq, pipes|
             pipes[1].close
             Barney::Share.value = Marshal.load pipes[0].read
