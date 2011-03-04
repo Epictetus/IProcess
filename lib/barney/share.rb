@@ -99,7 +99,7 @@ module Barney
             Barney::Share.value = Marshal.load stream.in.read
             stream.in.close
             object = eval "#{variable} = Barney::Share.value", @context 
-            @history[stream.seq] = (@history[stream.seq] || {}).merge({ variable => object })
+            @history[stream.seq] = (@history[stream.seq] || {}).merge!({ variable => object })
           end
           array.clear
         end
