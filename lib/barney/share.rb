@@ -2,6 +2,8 @@ module Barney
 
   class Share
 
+    StreamPair = Struct.new :seq, :in, :out
+
     @mutex = Mutex.new
 
     class << self
@@ -42,7 +44,9 @@ module Barney
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
       variables.map(&:to_sym).each do |variable|
-        @shared.store variable, (@shared[variable] || {}).merge({ @seq => IO.pipe })
+        if (@shared[variable].nil?) || (not @shared[variable].find { |struct| struct.seq == @seq })
+          @shared.store variable, (@shared[variable] || []) << StreamPair.new(@seq, *IO.pipe)
+        end
       end
       @shared.keys
     end
@@ -73,10 +77,11 @@ module Barney
       @context = blk.binding
       @pid     = Kernel.fork do
         blk.call
-        @shared.each do |variable, pipes|
-          pipes[@seq][0].close  
-          pipes[@seq][1].write Marshal.dump(eval("#{variable}", @context))
-          pipes[@seq][1].close
+        @shared.each do |variable, array|
+          stream = array[-1]
+          stream.in.close  
+          stream.out.write Marshal.dump(eval("#{variable}", @context))
+          stream.out.close
         end
       end
       
@@ -89,15 +94,15 @@ module Barney
     # @return [void]
     def synchronize 
       Barney::Share.mutex.synchronize do
-        @shared.each do |variable, data|
-          data.each do |seq, pipes|
-            pipes[1].close
-            Barney::Share.value = Marshal.load pipes[0].read
-            pipes[0].close
+        @shared.each do |variable, array|
+          array.each do |stream|
+            stream.out.close
+            Barney::Share.value = Marshal.load stream.in.read
+            stream.in.close
             object = eval "#{variable} = Barney::Share.value", @context 
-            @history[seq] = (@history[seq] || {}).merge({ variable => object })
-            pipes.delete seq
+            @history[stream.seq] = (@history[stream.seq] || {}).merge({ variable => object })
           end
+          array.clear
         end
       end
     end
