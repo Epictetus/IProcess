@@ -96,7 +96,7 @@ module Barney
             Barney::Share.value = Marshal.load pipes[seq][0].read
             pipes[seq][0].close
             object = eval "#{variable} = Barney::Share.value", @context 
-            @history[seq] = { variable => object }
+            @history[seq] = (@history[seq] || {}).merge({ variable => object })
             pipes.delete seq
           end
         end
