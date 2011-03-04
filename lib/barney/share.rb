@@ -89,11 +89,9 @@ module Barney
     # It will block until the spawned child process has exited. 
     # @return [void]
     def synchronize 
-      sequence = @shared.values.map(&:keys).flatten
-      min, max = sequence.min, sequence.max
-
       @shared.each do |variable, pipes|
         Barney::Share.mutex.synchronize do
+          min, max = pipes.keys.min, pipes.keys.max
           min.upto max do |seq|
             pipes[seq][1].close
             Barney::Share.value = Marshal.load pipes[seq][0].read

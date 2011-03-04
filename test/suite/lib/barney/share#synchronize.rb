@@ -50,6 +50,16 @@ describe Barney::Share do
       assert_equal 6, $times
     end
 
+    it 'should fix Github Issue #2' do
+      a,b = 4,5
+      @object.share :a
+      @object.fork { }
+      Process.wait @object.pid
+      @object.share :b 
+      @object.fork { b = 6 }
+      @object.sync # will raise NoMethodError if fails. 
+    end
+
   end
 end
   

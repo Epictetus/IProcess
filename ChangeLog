@@ -1,10 +1,6 @@
-2011-03-02  Robert Gleeson <rob@flowof.info>
+2011-03-04  Robert Gleeson <rob@flowof.info> v0.5.0
 
-* Barney::Share#sync only iterates over pipes that exist.
-
-2011-02-19  Robert Gleeson <rob@flowof.info> v0.5.0
-
-* Write a more efficient Barney::Share#sync method.
+* Write a more efficient and easier to understand Barney::Share#sync method. 
 
 2011-02-16  Robert Gleeson <rob@flowof.info> v0.4.1
 
