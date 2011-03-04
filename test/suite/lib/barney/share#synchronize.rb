@@ -60,6 +60,15 @@ describe Barney::Share do
       @object.sync # will raise NoMethodError if fails. 
     end
 
+    it 'should fix GitHub Issue #3' do
+      a,b = 4,5
+      @object.share :a, :b
+      @object.fork { }
+      Process.wait @object.pid
+      @object.sync
+      assert_equal({ 0 => { :a => 4, :b => 5 } }, @object.history)
+    end
+
   end
 end
   
