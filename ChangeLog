@@ -1,6 +1,8 @@
 2011-03-04  Robert Gleeson <rob@flowof.info> v0.6.0
 
-* Iterate via .each (may break 1.8 support, because it relies on an ordered hash)
+* Objects returned by IO.pipe and the current sequence is enclosed in a Struct referenced by StreamPair. 
+* @shared stores instances of StreamPair in an Array.
+* No longer store objects returned by IO.pipe and the current sequence in a Hash.
 
 2011-03-04  Robert Gleeson <rob@flowof.info> v0.5.0
 
