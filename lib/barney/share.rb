@@ -68,7 +68,6 @@ module Barney
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
-
       share *@shared.keys if @pid
 
       @context = blk.binding
