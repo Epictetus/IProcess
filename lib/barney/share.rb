@@ -3,7 +3,6 @@ module Barney
   class Share
 
     StreamPair = Struct.new :seq, :in, :out
-
     @mutex = Mutex.new
 
     class << self
