@@ -37,9 +37,9 @@ module Barney
     
     # @return [Barney::Share] Returns an instance of Barney::Share.
     def initialize
-      @shared  = Hash.new
-      @context = nil
+      @shared  = {}
       @history = {}
+      @context = nil
       @seq     = 0
     end
 
