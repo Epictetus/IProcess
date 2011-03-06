@@ -2,6 +2,9 @@ module Barney
 
   class Share
 
+    # @attr [Fixnum] seq The associated sequence number. 
+    # @attr [IO] in      The pipe which is used to read data.       
+    # @attr [IO] out     The pipe which is used to write data.
     # @api private
     StreamPair = Struct.new :seq, :in, :out
 
