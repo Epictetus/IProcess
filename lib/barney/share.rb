@@ -41,6 +41,7 @@ module Barney
       @history = {}
       @context = nil
       @seq     = 0
+      yield self if block_given? 
     end
 
     # Serves as a method to mark a variable or constant to be shared between two processes. 

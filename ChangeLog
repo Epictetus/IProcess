@@ -1,3 +1,7 @@
+2011-03-14  Robert Gleeson <rob@flowof.info> v0.7.0
+
+* Barney::Share#initialize yields a block.  
+
 2011-03-04  Robert Gleeson <rob@flowof.info> v0.6.0
 
 * Store instances of StreamPair in an array. 
