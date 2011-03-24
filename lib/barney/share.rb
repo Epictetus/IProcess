@@ -83,8 +83,8 @@ module Barney
       @context = blk.binding
       @pid     = Kernel.fork do
         blk.call
-        @shared.each do |variable, array|
-          stream = array[-1]
+        @shared.each do |variable, history|
+          stream = history[-1]
           stream.in.close  
           stream.out.write Marshal.dump(eval("#{variable}", @context))
           stream.out.close
@@ -100,15 +100,15 @@ module Barney
     # @return [void]
     def synchronize 
       Barney::Share.mutex.synchronize do
-        @shared.each do |variable, array|
-          array.each do |stream|
+        @shared.each do |variable, history|
+          history.each do |stream|
             stream.out.close
             Barney::Share.value = Marshal.load stream.in.read
             stream.in.close
             object = eval "#{variable} = Barney::Share.value", @context 
             @history[stream.seq] = (@history[stream.seq] || {}).merge!({ variable => object })
           end
-          array.clear
+          history.clear
         end
       end
     end
