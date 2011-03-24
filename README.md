@@ -1,7 +1,7 @@
  ![Barney Picture](http://ompldr.org/vNnUwNA)
 
 Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
-Barney is developed against Ruby 1.9.1 or later. I'm not knowingly supporting earlier versions of Ruby.
+Barney is developed to run on Ruby 1.9.1 or later, but it may work on earlier versions of Ruby as well.
 
 ## Sharable objects
 Behind the scenes, Barney is using Marshal to send data between processes.  
