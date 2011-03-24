@@ -11,12 +11,12 @@ module Barney
     @mutex = Mutex.new
 
     class << self
-      # Serves as a temporary holder for the latest value read from the child process.
+      # Returns the latest value read from a spawned child process. 
       # @api private
-      # @return [Object] Returns Object or subclass of.
+      # @return [Object]
       attr_accessor :value
 
-      # Serves as a lock when {Barney::Share.value Barney::Share.value} is being accessed by {Barney::Share#synchronize}
+      # Returns a Mutex that is used when {Barney::Share.value Barney::Share.value} is being accessed by {Barney::Share#synchronize}
       # @api private
       # @return [Mutex] 
       attr_reader :mutex
@@ -27,15 +27,16 @@ module Barney
     attr_reader :shared
     def shared; @shared.keys; end
   
-    # Serves as a method that tells you the Process ID of the last forked child process.
-    # @return [Fixnum] Returns the Process ID as a Fixnum.
+    # Returns the Process ID of the last forked child process.
+    # @return [Fixnum]
     attr_reader :pid
 
-    # Serves as a method to provide a history of changes made in multiple forks for a single instance of {Barney::Share}.
-    # @return [{ Fixnum => { Symbol => Object }}] Fixnum represents sequence, Symbol the variable, and Object its value. 
+    # Returns a history of changes made in multiple forks for a single instance of {Barney::Share}.
+    # @return [Hash<Fixnum, Hash<Symbol, Object>>] Fixnum represents sequence, Symbol the variable, and Object its value.
     attr_reader :history
     
-    # @return [Barney::Share] Returns an instance of Barney::Share.
+    # @yieldparam [Barney::Share] self Yields an instance of {Barney::Share}.
+    # @return [Barney::Share]
     def initialize
       @shared  = {}
       @history = {}
