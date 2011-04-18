@@ -3,85 +3,56 @@
 Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
 Barney is developed to run on Ruby 1.9.1 or later, but it may work on earlier versions of Ruby as well.
 
-## Sharable objects
-Behind the scenes, Barney is using Marshal to send data between processes.  
-Any object that can be dumped through Marshal.dump can be shared.  
-This excludes anonymous modules, anonymous classes, Proc objects, and possibly some other objects I
-cannot think of.
+## Limitations
 
-## Thread safety
+* Sharable objects  
+  Behind the scenes, Barney is using Marshal to send data between processes.  
+  Any object that can be dumped through Marshal.dump can be shared.  
+  This excludes anonymous modules, anonymous classes, Proc objects, and possibly some other objects I
+  cannot think of.
 
-Barney is thread-safe as long as one instance of Barney::Share is used per-thread.  
-There is a mutex lock in place, but it only concerns Barney::Share#synchronize, where data is shared
-among all instances of Barney::Share.
+* Thread safety  
+  Barney is thread-safe as long as one instance of Barney::Share is used per-thread.  
+  There is a mutex lock in place, but it only concerns Barney::Share#synchronize, where data is shared
+  among all instances of Barney::Share.
 
 ## Examples
 
-Okay, now that we've got that out of the way, let's see what using Barney is like.
+Okay, now that we've got that out of the way, let's see what using Barney is like:  
+(The [Samples](https://github.com/robgleeson/barney/tree/develop/samples) directory has more examples …)
 
 **Basic**
 
       #!/usr/bin/env ruby
       require 'barney'
 
-      message = 'foo'
-      $times  = 2
 
       obj = Barney::Share.new
-      obj.share :message, :$times    
+      obj.share :message
+      message = 'Hello, '
+
       pid = obj.fork do 
-        message.sub! 'f', 'b'
-        $times += 1
+        message << 'World!'
       end
 
       Process.wait pid
       obj.sync
       
-      puts message * $times # output is 'boobooboo'.
- 
-**Sequential Jobs**
-      
-      #!/usr/bin/env ruby
-      require 'barney'
+      puts message # 'Hello, World!' 
 
-      a = "12"
 
-      obj = Barney::Share.new
-      obj.share :a
+## Install
 
-      3.upto(4).each do |i|
-        pid = obj.fork { a << i.to_s }
-        Process.wait pid
-        obj.sync
-      end
+RubyGems.org
+      gem install barney
 
-      a # => "1234"
+Github
+      git clone git://github.com/robgleeson/barney.git
+      cd barney
+      gem build *.gemspec
+      gem install *.gem
 
-**Paralell Jobs**
-
-      #/usr/bin/env ruby
-      require 'barney'
-
-      results = {}
-      pids    = []
-
-      obj = Barney::Share.new
-      obj.share :results
-
-      [1,2,3].each do |e|
-        pids << obj.fork do 
-          results.merge!(e => e)
-        end
-      end
-
-      pids.each { |pid| Process.wait pid }
-      obj.sync
-
-      obj.history.each_value do |history| 
-        results.merge! history[:results]
-      end
-
-      puts results.inspect # => { 1 => 1, 2 => 2, 3 => 3 }
+I'm following the [Semantic Versioning](http://www.semver.org) policy.  
 
 ## Documentation
 
@@ -95,13 +66,9 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 * [0.4.0](http://rubydoc.info/gems/barney/0.4.0)
 * …
 
+
 ## License
 
 Barney is released under the Lesser GPL(LGPL).  
 
-## Install
 
-      gem install barney
-
-The repository has a gemspec you can build and install from, too.
-I'm following the [Semantic Versioning](http://www.semver.org) policy.
