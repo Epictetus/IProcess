@@ -61,12 +61,16 @@ describe Barney::Share do
     end
 
     it 'should fix GitHub Issue #3' do
-      a,b = 4,5
-      @object.share :a, :b
+      x = 4
+      y = 5
+
+      @object.share :x, :y
       @object.fork { }
       Process.wait @object.pid
       @object.sync
-      assert_equal({ 0 => { :a => 4, :b => 5 } }, @object.history)
+
+      assert_equal 4, @object.history[0].value
+      assert_equal 5, @object.history[1].value
     end
 
   end
