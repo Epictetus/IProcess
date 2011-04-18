@@ -27,9 +27,8 @@ module Barney
 
     # Returns a list of all variables or constants being shared for this instance of {Barney::Share Barney::Share}.
     # @return [Array<Symbol>] 
-    attr_reader :shared
-    def shared; @shared.keys; end
-  
+    attr_reader :variables
+
     # Returns the Process ID of the last forked process.
     # @return [Fixnum]
     attr_reader :pid
@@ -40,9 +39,10 @@ module Barney
     # @yieldparam [Barney::Share] self Yields an instance of {Barney::Share}.
     # @return [Barney::Share]
     def initialize
-      @shared  = {}
-      @history = []
-      @context = nil
+      @shared    = Hash.new { |h,k| h[k] = [] }
+      @variables = []
+      @history   = []
+      @context   = nil
       yield self if block_given? 
     end
 
@@ -50,18 +50,15 @@ module Barney
     # @param  [Symbol] Variable   Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
-      variables.map(&:to_sym).each do |variable|
-        @shared.store variable, (@shared[variable] || []) << StreamPair.new(*IO.pipe)
-      end
-      @shared.keys
+      @variables.push *variables.map(&:to_sym)
     end
 
     # Serves as a method to remove a variable or constant from being shared between two processes.
     # @param  [Symbol] Variable Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
     def unshare *variables
-      variables.map(&:to_sym).each { |variable| @shared.delete variable }
-      @shared.keys
+      variables.map(&:to_sym).each { |variable| @variables.delete variable }
+      @variables
     end
 
     # Serves as a method to spawn a new child process.  
@@ -75,7 +72,7 @@ module Barney
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
-      share *@shared.keys if @pid
+      spawn_pipes
 
       @context = blk.binding
       @pid     = Kernel.fork do
@@ -104,11 +101,22 @@ module Barney
             value = eval "#{variable} = Barney::Share.value", @context 
             @history.push HistoryItem.new variable.to_sym, value
           end
-          history.clear
         end
       end
     end
     alias_method :sync, :synchronize
+
+    private
+
+    def spawn_pipes
+      @shared.keep_if do |variable|
+        @variables.member? variable
+      end
+
+      @variables.each do |variable|
+        @shared[variable].push StreamPair.new *IO.pipe
+      end
+    end
 
   end
 
