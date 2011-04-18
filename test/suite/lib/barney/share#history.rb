@@ -1,19 +1,21 @@
 describe Barney::Share do
   describe '#history' do
 
-    it 'should confirm #history provides the correct history' do
-      hash = {}
-      expected = { 0 => { :hash => { 1 => 1 } }, 1 => { :hash => { 2 => 2 } }, 2 => { :hash => { 3 => 3 } } }
+    it 'should provide the correct history.' do     
       object = Barney::Share.new
-      object.share :hash
+      object.share :shared
+      shared = ""
 
-      [1,2,3].each do |e|
-        pid = object.fork { hash.merge! e => e }
+      %w(a b c).each do |e|
+        pid = object.fork { shared << e }
         Process.wait pid
       end
 
       object.sync
-      assert_equal expected, object.history
+
+      history = object.history
+      assert_equal true, history.all? { |item| item.variable == :shared }
+      assert_equal "abc", history.map { |item| item.value }.join 
     end
 
   end
