@@ -2,11 +2,14 @@ module Barney
 
   class Share
 
-    # @attr [Fixnum] seq The associated sequence number. 
     # @attr [IO] in      The pipe which is used to read data.       
     # @attr [IO] out     The pipe which is used to write data.
     # @api private
-    StreamPair = Struct.new :seq, :in, :out
+    StreamPair = Struct.new :in, :out
+
+    # @attr [Symbol] variable The variable name.
+    # @attr [Object] value    The value of the variable.
+    HistoryItem = Struct.new :variable, :value
 
     @mutex = Mutex.new
 
@@ -27,21 +30,19 @@ module Barney
     attr_reader :shared
     def shared; @shared.keys; end
   
-    # Returns the Process ID of the last forked child process.
+    # Returns the Process ID of the last forked process.
     # @return [Fixnum]
     attr_reader :pid
 
-    # Returns a history of changes made in multiple forks for a single instance of {Barney::Share}.
-    # @return [Hash<Fixnum, Hash<Symbol, Object>>] Fixnum represents sequence, Symbol the variable, and Object its value.
+    # @return [Array<HistoryItem>]
     attr_reader :history
     
     # @yieldparam [Barney::Share] self Yields an instance of {Barney::Share}.
     # @return [Barney::Share]
     def initialize
       @shared  = {}
-      @history = {}
+      @history = []
       @context = nil
-      @seq     = 0
       yield self if block_given? 
     end
 
@@ -50,9 +51,7 @@ module Barney
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
       variables.map(&:to_sym).each do |variable|
-        if (@shared[variable].nil?) || (not @shared[variable].find { |struct| struct.seq == @seq })
-          @shared.store variable, (@shared[variable] || []) << StreamPair.new(@seq, *IO.pipe)
-        end
+        @shared.store variable, (@shared[variable] || []) << StreamPair.new(*IO.pipe)
       end
       @shared.keys
     end
@@ -61,9 +60,7 @@ module Barney
     # @param  [Symbol] Variable Accepts a variable amount of Symbol objects.
     # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
     def unshare *variables
-      variables.map(&:to_sym).each do |variable|
-        @shared.delete variable
-      end
+      variables.map(&:to_sym).each { |variable| @shared.delete variable }
       @shared.keys
     end
 
@@ -90,8 +87,7 @@ module Barney
           stream.out.close
         end
       end
-      
-      @seq += 1
+
       @pid
     end
 
@@ -105,8 +101,8 @@ module Barney
             stream.out.close
             Barney::Share.value = Marshal.load stream.in.read
             stream.in.close
-            object = eval "#{variable} = Barney::Share.value", @context 
-            @history[stream.seq] = (@history[stream.seq] || {}).merge!({ variable => object })
+            value = eval "#{variable} = Barney::Share.value", @context 
+            @history.push HistoryItem.new variable.to_sym, value
           end
           history.clear
         end
