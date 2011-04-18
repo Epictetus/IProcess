@@ -43,10 +43,12 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
 
 ## Install
 
-RubyGems.org
+RubyGems.org  
+
       gem install barney
 
-Github
+Github  
+
       git clone git://github.com/robgleeson/barney.git
       cd barney
       gem build *.gemspec
