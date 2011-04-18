@@ -16,10 +16,10 @@ describe Barney::Share do
       assert_equal 5, @a
     end
     
-    it 'should confirm a shared variable is removed from #shared.' do
+    it 'should confirm a shared variable is removed from #variables.' do
       @object.share :@a
       @object.unshare :@a
-      assert_equal true, @object.shared.empty?
+      assert_equal true, @object.variables.empty?
     end
 
  end

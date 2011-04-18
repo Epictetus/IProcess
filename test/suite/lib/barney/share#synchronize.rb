@@ -51,12 +51,17 @@ describe Barney::Share do
     end
 
     it 'should fix Github Issue #2' do
-      a,b = 4,5
-      @object.share :a
+      x = 4
+      y = 5
+
+      @object.share :x
       @object.fork { }
       Process.wait @object.pid
-      @object.share :b 
+
+      @object.share :y 
       @object.fork { b = 6 }
+      Process.wait @object.pid
+
       @object.sync # will raise NoMethodError if fails. 
     end
 
