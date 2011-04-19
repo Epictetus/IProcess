@@ -1,27 +1,33 @@
 describe Barney::Share do
+  
   describe '#unshare' do
 
     before do
-      @a      = 5
-      @object = Barney::Share.new
+      @instance = Barney::Share.new
     end
 
-    it 'should confirm a variable can be unshared before a subprocess is spawned.' do
-      @object.share :@a
-      @object.unshare :@a 
-      pid = @object.fork { @a = 6 }
+    it 'should assert a variable can be unshared before a subprocess is spawned.' do
+      x = 5
+
+      @instance.share :x
+      @instance.unshare :x 
+      pid = @instance.fork do 
+        x = 6 
+      end
       Process.wait pid
-      @object.sync
+      @instance.sync
       
-      assert_equal 5, @a
+      assert_equal 5, x
     end
     
-    it 'should confirm a shared variable is removed from #variables.' do
-      @object.share :@a
-      @object.unshare :@a
-      assert_equal true, @object.variables.empty?
+    it 'should assert a shared variable is removed from #variables.' do
+      x = 5
+      @instance.share :x
+      @instance.unshare :x
+      assert_equal true, @instance.variables.empty?
     end
 
  end
+
 end
 

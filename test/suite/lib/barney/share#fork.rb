@@ -1,4 +1,5 @@
 describe Barney::Share do
+  
   describe '#fork' do
 
     it 'should return the Process ID(PID) on success.' do
@@ -14,5 +15,6 @@ describe Barney::Share do
     end
     
   end
+
 end
 

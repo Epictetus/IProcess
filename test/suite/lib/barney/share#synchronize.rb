@@ -1,51 +1,63 @@
 describe Barney::Share do
+  
   describe '#sync' do
     
     before do 
-      @object = Barney::Share.new
+      @instance = Barney::Share.new
     end
 
-    it 'should confirm a variable can be synced.' do
-      a = 5
-      @object.share :a
-      pid = @object.fork { a = 6 }
+    it 'should assert a variable can be synced.' do
+      x = 5
+
+      @instance.share :x
+      pid = @instance.fork do
+        x = 6 
+      end
       Process.wait pid
-      @object.sync 
-      assert_equal 6, a
+      @instance.sync 
+      
+      assert_equal 6, x
     end
 
-    it 'should confirm a variable can  be synced after mutation' do  
-      a = 'abc'
-      @object.share :a
-      pid = @object.fork { a.sub! 'a','b' }
+    it 'should assert a variable can  be synced after mutation' do  
+      message = 'foo'
+
+      @instance.share :message
+      pid = @instance.fork { message.sub! 'foo','bar' }
       Process.wait pid
-      @object.sync
-      assert_equal 'bbc', a
+      @instance.sync
+
+      assert_equal 'bar', message
     end
 
-    it 'should confirm two variables can be synced.' do      
-      a,b = 10,20
-      @object.share :a,:b
-      pid = @object.fork { a,b = 4,5 }
-      Process.wait pid
-      @object.sync
+    it 'should assert two variables can be synced.' do      
+      x = 10
+      y = 20
 
-      assert_equal 4, a
-      assert_equal 5, b
+      @instance.share :x, :y
+      pid = @instance.fork do
+        x -= 1
+        y -= 1
+      end
+      Process.wait pid
+      @instance.sync
+
+      assert_equal 9 , x
+      assert_equal 19, y
     end
 
     it 'should fix Github Issue #1' do
       $times  = 2
-      @object.share :$times
+      @instance.share :$times
 
-      pid = @object.fork  { $times = 4 }
-      pid2 = @object.fork { $times = 5 }
-      pid3 = @object.fork { $times = 6 }
+      pid  = @instance.fork { $times = 4 }
+      pid2 = @instance.fork { $times = 5 }
+      pid3 = @instance.fork { $times = 6 }
 
       Process.wait pid
       Process.wait pid2
       Process.wait pid3
-      @object.sync
+      @instance.sync
 
       assert_equal 6, $times
     end
@@ -54,30 +66,31 @@ describe Barney::Share do
       x = 4
       y = 5
 
-      @object.share :x
-      @object.fork { }
-      Process.wait @object.pid
+      @instance.share :x
+      @instance.fork { }
+      Process.wait @instance.pid
 
-      @object.share :y 
-      @object.fork { b = 6 }
-      Process.wait @object.pid
+      @instance.share :y 
+      @instance.fork { b = 6 }
+      Process.wait @instance.pid
 
-      @object.sync # will raise NoMethodError if fails. 
+      @instance.sync # will raise NoMethodError if fails. 
     end
 
     it 'should fix GitHub Issue #3' do
       x = 4
       y = 5
 
-      @object.share :x, :y
-      @object.fork { }
-      Process.wait @object.pid
-      @object.sync
+      @instance.share :x, :y
+      @instance.fork { }
+      Process.wait @instance.pid
+      @instance.sync
 
-      assert_equal 4, @object.history[0].value
-      assert_equal 5, @object.history[1].value
+      assert_equal 4, @instance.history[0].value
+      assert_equal 5, @instance.history[1].value
     end
 
   end
+
 end
   
