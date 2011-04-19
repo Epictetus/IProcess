@@ -61,6 +61,7 @@ I'm following the [Semantic Versioning](http://www.semver.org) policy.
 **API**  
 
 * [master (git)](http://rubydoc.info/github/robgleeson/Barney/master/)
+* [0.8.0](http://rubydoc.info/gems/barney/0.8.0/)
 * [0.7.0](http://rubydoc.info/gems/barney/0.7.0)
 * [0.6.0](http://rubydoc.info/gems/barney/0.6.0)
 * [0.5.0](http://rubydoc.info/gems/barney/0.5.0)
