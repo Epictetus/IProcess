@@ -99,7 +99,7 @@ module Barney
             Barney::Share.value = Marshal.load stream.in.read
             stream.in.close
             value = eval "#{variable} = Barney::Share.value", @context 
-            @history.push HistoryItem.new variable.to_sym, value
+            @history.push HistoryItem.new variable, value
           end
         end
       end
