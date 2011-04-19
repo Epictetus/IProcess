@@ -51,6 +51,7 @@ module Barney
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
       @variables.push *variables.map(&:to_sym)
+      @variables.uniq!
     end
 
     # Serves as a method to remove a variable or constant from being shared between two processes.

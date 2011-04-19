@@ -1,3 +1,8 @@
+2011-04-19  Robert Gleeson <rob@flowof.info> v0.8.1
+
+* Don't call #to_sym when it isn't required.
+* Don't allow @variables be populated with duplicates. (bugfix)
+
 2011-04-19  Robert Gleeson <rob@flowof.info> v0.8.0
 
 * Remove "seq" attribute from StreamPair.
