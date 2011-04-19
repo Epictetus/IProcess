@@ -27,6 +27,15 @@ describe Barney::Share do
       assert_equal true, @instance.variables.empty?
     end
 
+    it 'should assert a shared variable is removed from @shared' do
+      x = 5
+      @instance.share :x
+      @instance.unshare :x
+      @instance.fork { }
+      
+      assert true, @instance.instance_variable_get(:@shared).empty?
+    end
+
  end
 
 end
