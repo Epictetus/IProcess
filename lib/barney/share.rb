@@ -107,6 +107,8 @@ module Barney
 
     private
 
+    # Manages the creation and removal of pipes used for cross-process communcation.
+    # @api private
     def spawn_pipes
       @shared.keep_if do |variable|
         @variables.member? variable
