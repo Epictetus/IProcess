@@ -74,7 +74,7 @@ module Barney
       spawn_pipes
 
       @context = blk.binding
-      @pid     = Kernel.fork do
+      @pid = Kernel.fork do
         blk.call
         @shared.each do |variable, history|
           stream = history[-1]
