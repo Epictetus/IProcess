@@ -15,30 +15,25 @@ module Barney
 
     class << self
       # Returns the last value read from a spawned child process.
-      #
       # @api private
       # @return [Object]
       attr_accessor :value
 
       # Returns a Mutex that is used by the {Barney::Share#sync} method.
-      #
       # @api private
       # @return [Mutex] 
       attr_reader :mutex
     end
 
     # Returns a list of all variables or constants being shared for this instance of {Barney::Share Barney::Share}.
-    #
     # @return [Array<Symbol>] 
     attr_reader :variables
 
     # Returns the Process ID of the last forked process.
-    #
     # @return [Fixnum]
     attr_reader :pid
 
     # Returns an Array of {HistoryItem} objects.
-    #
     # @see HistoryItem
     # @return [Array<HistoryItem>]
     attr_reader :history
@@ -54,7 +49,6 @@ module Barney
     end
 
     # Marks a variable or constant to be shared between two processes. 
-    #
     # @param  [Symbol] Variable   Accepts the name(s) of the variables or constants you want to share.
     # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
     def share *variables
@@ -63,7 +57,6 @@ module Barney
     end
 
     # Removes a variable or constant from being shared between two processes.
-    #
     # @param  [Symbol] Variable Accepts the name(s) of the variables or constants you want to stop sharing.
     # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
     def unshare *variables
@@ -73,7 +66,6 @@ module Barney
 
     # Spawns a child process.  
     # It can be treated like the Kernel.fork method, but a block or Proc object is a required argument.
-    #
     # @param  [Proc]  Proc    Accepts a block or Proc object that will be executed in a child process.
     # @raise  [ArgumentError] Raises an ArgumentError if a block or Proc object isn't supplied.                        
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
@@ -97,7 +89,6 @@ module Barney
 
     # Synchronizes data between the parent and child process.  
     # It will block until the spawned child process has exited.
-    #
     # @return [void]
     def synchronize 
       Barney::Share.mutex.synchronize do
