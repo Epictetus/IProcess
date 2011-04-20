@@ -3,6 +3,7 @@
 --readme README.md
 --hide-void-return
 --no-cache
+--main README.md
 - 
 LICENSE
 ChangeLog
