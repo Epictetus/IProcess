@@ -98,7 +98,7 @@ module Barney
             Barney::Share.value = Marshal.load stream.in.read
             stream.in.close
             value = eval "#{variable} = Barney::Share.value", @context 
-            @history.push HistoryItem.new variable, value
+            @history.push HistoryItem.new(variable, value)
           end
         end
       end
@@ -113,7 +113,7 @@ module Barney
       end
 
       @variables.each do |variable|
-        @shared[variable].push StreamPair.new *IO.pipe
+        @shared[variable].push StreamPair.new(*IO.pipe)
       end
     end
 
