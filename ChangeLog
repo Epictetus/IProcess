@@ -1,6 +1,18 @@
 2011-04-21  Robert Gleeson <rob@flowof.info>
 
-	* ChangeLog: Change to GNU ChangeLog format.
+	* ChangeLog: 
+		Change to GNU ChangeLog format.
+
+	* lib/barney/share.rb: 
+		Don't lazy-delete objects from @streams.
+		Objects are removed from @streams during a call to #unshare now.
+	* lib/barney/share.rb: 
+		Add the member 'variable' to StreamPair.
+	* lib/barney/share.rb: 
+		Remove @shared.
+		Replaced by @streams, an Array of StreamPair objects.
+		
+	
 
 
 
