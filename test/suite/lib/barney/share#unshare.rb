@@ -31,7 +31,7 @@ describe Barney::Share do
       x = 5
       @instance.share :x 
       @instance.fork { }
-      assert_equal true, @instance.instance_variable_get(:@streams).first.variable == :x
+      assert_equal :x, @instance.instance_variable_get(:@streams).first.variable
       
       @instance.unshare :x
       @instance.fork { }
