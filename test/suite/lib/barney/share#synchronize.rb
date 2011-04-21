@@ -90,6 +90,16 @@ describe Barney::Share do
       assert_equal 5, @instance.history[1].value
     end
 
+    it 'should assert a IOError (Closed Stream) is not raised.' do
+      x = 5
+      pids = []
+      @instance.share :x
+      pids << @instance.fork { }
+      @instance.sync
+      pids << @instance.fork { }
+      pids.each { |pid| Process.wait pid }
+    end
+
   end
 
 end
