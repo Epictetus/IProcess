@@ -2,10 +2,11 @@ module Barney
 
   class Share
 
-    # @attr [IO] in      The pipe which is used to read data.       
-    # @attr [IO] out     The pipe which is used to write data.
+    # @attr [Symbol] variable The name of the variable associated with _in_, and _out_.
+    # @attr [IO]     in       The pipe which is used to read data.       
+    # @attr [IO]     out      The pipe which is used to write data.
     # @api private
-    StreamPair = Struct.new :in, :out
+    StreamPair = Struct.new :variable, :in, :out
 
     # @attr [Symbol] variable The variable name.
     # @attr [Object] value    The value of the variable.
@@ -41,7 +42,7 @@ module Barney
     # @yieldparam [Barney::Share] self Yields an instance of {Barney::Share}.
     # @return [Barney::Share]
     def initialize
-      @shared    = Hash.new { |h,k| h[k] = [] }
+      @streams   = []
       @variables = []
       @history   = []
       @context   = nil
@@ -60,7 +61,10 @@ module Barney
     # @param  [Symbol] Variable Accepts the name(s) of the variables or constants you want to stop sharing.
     # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
     def unshare *variables
-      variables.map(&:to_sym).each { |variable| @variables.delete variable }
+      variables.map(&:to_sym).each do |variable| 
+        @streams.delete_if { |stream| stream.variable == variable }
+        @variables.delete variable 
+      end
       @variables
     end
 
@@ -76,10 +80,9 @@ module Barney
       @context = blk.binding
       @pid = Kernel.fork do
         blk.call
-        @shared.each do |variable, history|
-          stream = history[-1]
+        @streams.each do |stream|
           stream.in.close  
-          stream.out.write Marshal.dump(eval("#{variable}", @context))
+          stream.out.write Marshal.dump(eval("#{stream.variable}", @context))
           stream.out.close
         end
       end
@@ -92,30 +95,25 @@ module Barney
     # @return [void]
     def synchronize 
       Barney::Share.mutex.synchronize do
-        @shared.each do |variable, history|
-          history.each do |stream|
-            stream.out.close
-            Barney::Share.value = Marshal.load stream.in.read
-            stream.in.close
-            value = eval "#{variable} = Barney::Share.value", @context 
-            @history.push HistoryItem.new(variable, value)
-          end
+        @streams.each do |stream|
+          stream.out.close
+          Barney::Share.value = Marshal.load stream.in.read
+          stream.in.close
+          value = eval "#{stream.variable} = Barney::Share.value", @context 
+          @history.push HistoryItem.new(stream.variable, value)
         end
+        @streams.clear
       end
     end
     alias_method :sync, :synchronize
 
     private
 
-    # Manages the creation and removal of pipes used for cross-process communcation.
+    # Manages the creation of pipes used for cross-process communcation.
     # @api private
     def spawn_pipes
-      @shared.keep_if do |variable|
-        @variables.member? variable
-      end
-
-      @variables.each do |variable|
-        @shared[variable].push StreamPair.new(*IO.pipe)
+      @variables.each do |variable| 
+        @streams.push StreamPair.new(variable, *IO.pipe)
       end
     end
 
