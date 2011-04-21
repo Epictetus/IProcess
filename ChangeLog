@@ -1,51 +1,7 @@
-2011-04-19  Robert Gleeson <rob@flowof.info> v0.8.1
+2011-04-21  Robert Gleeson <rob@flowof.info>
 
-* Don't call #to_sym when it isn't required.
-* Don't allow @variables be populated with duplicates. (bugfix)
-
-2011-04-19  Robert Gleeson <rob@flowof.info> v0.8.0
-
-* Remove "seq" attribute from StreamPair.
-* Banish @seq.
-* Add HistoryItem (subclass of Struct).
-* Share#history returns an Array of HistoryItem objects.
-* Share#shared is deprecated. Use Shared#variables instead.
+	* ChangeLog: Change to GNU ChangeLog format.
 
 
-2011-03-14  Robert Gleeson <rob@flowof.info> v0.7.0
 
-* Barney::Share#initialize yields a block.  
-
-2011-03-04  Robert Gleeson <rob@flowof.info> v0.6.0
-
-* Store instances of StreamPair in an array. 
-* Store sequence and pipe objects in a Struct referenced by StreamPair.  
-
-2011-03-04  Robert Gleeson <rob@flowof.info> v0.5.0
-
-* Solve Github Issue no. 3
-* Solve Github Issue no. 2
-* Write a more efficient and easier to understand Barney::Share#sync method. 
-
-2011-02-16  Robert Gleeson <rob@flowof.info> v0.4.1
-
-* Add http://www.gem-testers.org support.
-* Rewrite test suite using 'minitest'.
-
-2011-02-12  Robert Gleeson <rob@flowof.info> v0.4.0
-
-* Add Barney::Share#history. 
-
-2011-01-16  Robert Gleeson <rob@flowof.info> v0.3.1
-
-* Solve Github Issue no. 1.
-* Add Barney::Share#pid.
-
-2011-01-04  Robert Gleeson <rob@flowof.info> v0.2.0
-
-* Alias #synchronize as #sync. 
-
-2011-01-03  Robert Gleeson <rob@flowof.info> v0.2.0
-
-* Add Barney::Share#unshare.
-* Add Barney::Share#shared. 
+	
