@@ -111,6 +111,7 @@ module Barney
     private
 
     # Manages the creation of pipes used for cross-process communcation.
+    # @return [void] 
     # @api private
     def spawn_pipes
       @variables.each do |variable| 
