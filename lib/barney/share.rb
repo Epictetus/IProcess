@@ -65,6 +65,7 @@ module Barney
         @streams.delete_if { |stream| stream.variable == variable }
         @variables.delete variable 
       end
+
       @variables
     end
 
