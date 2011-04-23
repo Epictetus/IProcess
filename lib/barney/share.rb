@@ -55,6 +55,7 @@ module Barney
     def share *variables
       @variables.push *variables.map(&:to_sym)
       @variables.uniq!
+      @variables
     end
 
     # Removes a variable or constant from being shared between two processes.
@@ -65,6 +66,7 @@ module Barney
         @streams.delete_if { |stream| stream.variable == variable }
         @variables.delete variable 
       end
+
       @variables
     end
 
@@ -102,14 +104,16 @@ module Barney
           value = eval "#{stream.variable} = Barney::Share.value", @context 
           @history.push HistoryItem.new(stream.variable, value)
         end
-        @streams.clear
       end
+    
+      @streams.clear
     end
     alias_method :sync, :synchronize
 
     private
 
     # Manages the creation of pipes used for cross-process communcation.
+    # @return [void] 
     # @api private
     def spawn_pipes
       @variables.each do |variable| 
