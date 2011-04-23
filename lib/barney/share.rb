@@ -55,6 +55,7 @@ module Barney
     def share *variables
       @variables.push *variables.map(&:to_sym)
       @variables.uniq!
+      @variables
     end
 
     # Removes a variable or constant from being shared between two processes.
