@@ -102,8 +102,9 @@ module Barney
           value = eval "#{stream.variable} = Barney::Share.value", @context 
           @history.push HistoryItem.new(stream.variable, value)
         end
-        @streams.clear
       end
+    
+      @streams.clear
     end
     alias_method :sync, :synchronize
 
