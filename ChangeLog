@@ -1,7 +1,13 @@
 2011-04-25  Robert Gleeson <rob@flowof.info>
 
+	* test/suite/lib/barney.rb:
+		Add test suite for the 'Barney' module.
+
 	* lib/barney.rb: 
 		Add Barney.respond_to? 
+
+	* ChangeLog:
+		Record Releases.
 
 2011-04-23  Robert Gleeson <rob@flowof.info>
 
