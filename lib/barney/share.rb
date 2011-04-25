@@ -26,7 +26,7 @@ module Barney
       attr_reader :mutex
     end
 
-    # Returns a list of all variables or constants being shared for this instance of {Barney::Share Barney::Share}.
+    # Returns a list of all variables or constants being shared for an instance of {Barney::Share}.
     # @return [Array<Symbol>] 
     attr_reader :variables
 
@@ -50,8 +50,8 @@ module Barney
     end
 
     # Marks a variable or constant to be shared between two processes. 
-    # @param  [Symbol] Variable   Accepts the name(s) of the variables or constants you want to share.
-    # @return [Array<Symbol>]     Returns a list of all variables that are being shared.
+    # @param  [Symbol, #to_sym]  Variable  Accepts the name(s) of the variables or constants you want to share.
+    # @return [Array<Symbol>]              Returns a list of all variables that are being shared.
     def share *variables
       @variables.push *variables.map(&:to_sym)
       @variables.uniq!
@@ -59,8 +59,8 @@ module Barney
     end
 
     # Removes a variable or constant from being shared between two processes.
-    # @param  [Symbol] Variable Accepts the name(s) of the variables or constants you want to stop sharing.
-    # @return [Array<Symbol>]   Returns a list of the variables that are still being shared.
+    # @param  [Symbol, #to_sym] Variable  Accepts the name(s) of the variables or constants you want to stop sharing.
+    # @return [Array<Symbol>]             Returns a list of the variables that are still being shared.
     def unshare *variables
       variables.map(&:to_sym).each do |variable| 
         @streams.delete_if { |stream| stream.variable == variable }
@@ -104,9 +104,9 @@ module Barney
           value = eval "#{stream.variable} = Barney::Share.value", @context 
           @history.push HistoryItem.new(stream.variable, value)
         end
-      end
-    
-      @streams.clear
+
+        @streams.clear
+      end 
     end
     alias_method :sync, :synchronize
 
