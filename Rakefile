@@ -1,3 +1,4 @@
+desc 'Run test suite.'
 task :test do
   $LOAD_PATH.unshift './lib'
   require 'barney'
