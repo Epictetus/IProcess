@@ -23,7 +23,7 @@ Examples
 Okay, now that we've got that out of the way, let's see what using Barney is like:  
 (The [Samples](https://github.com/robgleeson/barney/tree/develop/samples) directory has more examples …)
 
-**OO style**
+**Barney::Share**
 
       #!/usr/bin/env ruby
       require 'barney'
@@ -42,7 +42,7 @@ Okay, now that we've got that out of the way, let's see what using Barney is lik
       puts message # 'Hello, World!' 
 
 
-**Module style** 
+**Barney (Module)** 
 
 The Barney module will forward requests onto an instance of Barney::Share, too:
 
