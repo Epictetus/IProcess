@@ -21,11 +21,11 @@ module Barney
       end
     end
 
-    # Ask superclass or an instance of {Barney::Share Barney::Share} does it respond to _meth_.
+    # Ask {Barney} does it respond to _meth_.
     #
-    # @param [String, Symbol, #to_sym] Name The method name.
-    # @param [Boolean] Scope Pass true to extend scope to include private methods.
-    # @return [Boolean] Return true if superclass or instance of {Barney::Share Barney::Share} responds to _meth_.
+    # @param  [String, Symbol, #to_sym] Name  The method name.
+    # @param  [Boolean]                 Scope Pass true to extend scope to include private methods.
+    # @return [Boolean]                       Return true if {Barney} can respond to _meth_.
     def respond_to? meth, with_private = false
       super || @proxy.respond_to?(meth, with_private)
     end
