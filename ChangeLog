@@ -2,6 +2,9 @@
 
 	* test/suite/lib/barney.rb:
 		Add test suite for the 'Barney' module.
+	
+	* lib/barney.rb: 
+		Docoument Barney.method_missing, and Barney.respond_to?
 
 	* lib/barney.rb: 
 		Add Barney.respond_to? 
