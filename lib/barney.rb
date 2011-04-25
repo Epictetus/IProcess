@@ -15,6 +15,10 @@ module Barney
       end
     end
 
+    def respond_to? meth, with_private = false
+     super || @proxy.respond_to?(meth, with_private)
+    end
+
   end
 
 end
