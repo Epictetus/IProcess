@@ -9,9 +9,6 @@ module Barney
 
     # Forward message to an instance of {Barney::Share Barney::Share}.
     #
-    # @param [String, Symbol, #to_sym] Name       The method name.
-    # @param [Object]                  Arguments  A variable amount of arguments. Optional.
-    # @param [Proc]                    Block      A block. Optional.
     # @see Barney::Share Barney::Share.
     def method_missing meth, *args, &blk
       if @proxy.respond_to? meth
