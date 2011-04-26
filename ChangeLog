@@ -18,7 +18,8 @@
 		Release 0.10.0
 
 	* lib/barney.rb:
-		The Barney module proxies requests onto a Barney::Share object.
+		Add Barney.method_missing …
+		Messages are passed onto an instance of Barney::Share. 
 
 	* lib/barney.rb README.md:
 		Release 0.9.1
