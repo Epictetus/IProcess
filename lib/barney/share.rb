@@ -77,8 +77,11 @@ module Barney
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork &blk
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
-      spawn_pipes
 
+      @variables.each do |variable| 
+        @streams.push StreamPair.new(variable, *IO.pipe)
+      end
+      
       @context = blk.binding
       @pid = Kernel.fork do
         blk.call
@@ -109,17 +112,6 @@ module Barney
       end 
     end
     alias_method :sync, :synchronize
-
-    private
-
-    # Manages the creation of pipes used for cross-process communcation.
-    # @return [void] 
-    # @api private
-    def spawn_pipes
-      @variables.each do |variable| 
-        @streams.push StreamPair.new(variable, *IO.pipe)
-      end
-    end
 
   end
 

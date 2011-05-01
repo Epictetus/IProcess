@@ -1,3 +1,8 @@
+2011-05-01  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/share.rb:
+		Remove Barney::Share#spawn_pipes (private method).
+
 2011-04-25  Robert Gleeson <rob@flowof.info>
 
 	* test/suite/lib/barney.rb:
