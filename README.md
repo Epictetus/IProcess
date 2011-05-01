@@ -1,7 +1,7 @@
- ![Barney Picture](http://ompldr.org/vNnUwNA)
+ ![Barney Picture](http://i.imgur.com/VblLQ.png)
 
-Barney tries to make the sharing of data between processes as easy and **natural** as possible.  
-Barney is developed to run on Ruby 1.9.1 or later, but it may work on earlier versions of Ruby as well.
+Barney makes the sharing of data between processes easy and _natural_ by providing a simple and easy to use DSL.  
+Barney is developed against Ruby 1.9.1 and later, but it may work on earlier versions of Ruby as well.
 
 Limitations  
 -----------
