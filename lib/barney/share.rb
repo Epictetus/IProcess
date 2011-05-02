@@ -75,16 +75,16 @@ module Barney
     # @param  [Proc]  Proc    Accepts a block or Proc object that will be executed in a child process.
     # @raise  [ArgumentError] Raises an ArgumentError if a block or Proc object isn't supplied.                        
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
-    def fork &blk
+    def fork &block
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
+      @context = block.binding
 
       @variables.each do |variable| 
         @streams.push StreamPair.new(variable, *IO.pipe)
       end
       
-      @context = blk.binding
       @pid = Kernel.fork do
-        blk.call
+        block.call
         @streams.each do |stream|
           stream.in.close  
           stream.out.write Marshal.dump(eval("#{stream.variable}", @context))
