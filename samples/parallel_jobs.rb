@@ -1,20 +1,21 @@
 #/usr/bin/env ruby
 require 'barney'
 
-str = ""
-pids = []
+Barney.share :message
+message = ""
+pids    = []
 
-obj = Barney::Share.new
-obj.share :str
-
-%w(a b c).each do |letter|
-  pids << obj.fork do 
-    str << letter
+%w(r u b y).each do |letter|
+  pids << Barney.fork do 
+    message << letter
   end
 end
 
-pids.each { |pid| Process.wait pid }
-obj.sync
+pids.each do |pid| 
+  Process.wait pid 
+end
 
-str = obj.history.map(&:value).join
-puts str # "abc"
+Barney.sync
+message = Barney.history.map(&:value).join
+
+p message # "ruby"
