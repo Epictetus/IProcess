@@ -19,45 +19,30 @@ Limitations
 Usage
 -----
 
-* "Barney" module   
-  The _Barney_ module forwards messages to an instance of _Barney::Share_: 
+    #!/usr/bin/env ruby
+    require 'barney'
 
-        #!/usr/bin/env ruby
-        require 'barney'
+    Barney.share :name
+    name = 'Robert'
 
-        Barney.share :name
-        name = 'Robert'
+    pid = Barney.fork do 
+      name.slice! 0..2
+    end
 
-        pid = Barney.fork do 
-          name.slice! 0..2
-        end
+    Process.wait pid
+    Barney.sync
 
-        Process.wait pid
-        Barney.sync
+    puts name # "Rob"
 
-        puts name # "Rob"
+* _More!_  
+  Check out the [samples](https://github.com/robgleeson/barney/tree/master/samples) directory or if you're looking 
+  for precise and detailed info, check out the API docs.
 
-* "Barney::Share" class    
-  The _Barney::Share_ class implements the DSL:
+* _Notes!_  
+  It's worth mentioning that the _Barney_ module is passing method calls to an instance of _Barney::Share_, 
+  where the DSL is implemented. If you prefer, or your situation requires, feel free to create instance(s) of 
+  _Barney::Share_ yourself.  
 
-        #!/usr/bin/env ruby
-        require 'barney'
-
-        obj = Barney::Share.new
-        obj.share :message
-        message = 'Hello, '
-
-        pid = obj.fork do 
-          message << 'World!'
-        end
-
-        Process.wait pid
-        obj.sync
-        
-        puts message # 'Hello, World!' 
-* More!  
-  Check out the [samples](https://github.com/robgleeson/barney/tree/master/samples) directory for more.  
-  I definitely recommend giving the API docs a look, too.
 
 Documentation
 --------------
