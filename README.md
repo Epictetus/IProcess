@@ -18,7 +18,6 @@ Limitations
 
 Usage
 -----
-The [samples](https://github.com/robgleeson/barney/tree/master/samples) directory has more samples.  
 
 * "Barney" module   
   The _Barney_ module forwards messages to an instance of _Barney::Share_: 
@@ -56,8 +55,9 @@ The [samples](https://github.com/robgleeson/barney/tree/master/samples) director
         obj.sync
         
         puts message # 'Hello, World!' 
-
- 
+* More!  
+  Check out the [samples](https://github.com/robgleeson/barney/tree/master/samples) directory for more.  
+  I definitely recommend giving the API docs a look, too.
 
 Documentation
 --------------
