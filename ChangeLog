@@ -1,5 +1,12 @@
 2011-04-23  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney/share.rb:
+		Fix a bug where Barney::Share#history could return unordered/incorrect data 
+		when subprocesses are spawned in parallel.
+
+	* lib/barney/share.rb: 
+		Release 0.10.0
+
 	* lib/barney/share.rb: 
 		Fix a bug where Barney::Share#share could return nil.
 		If there were no duplicates in @variables, `nil` would be returned.
