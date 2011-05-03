@@ -82,12 +82,12 @@ Documentation
 **API**  
 
 * [master (git)](http://rubydoc.info/github/robgleeson/barney/master/)
+* [0.11.0](http://rubydoc.info/gems/barney/0.11.0/)
 * [0.10.1](http://rubydoc.info/gems/barney/0.10.1/)  
 * [0.10.0](http://rubydoc.info/gems/barney/0.10.0/)
 * [0.9.1](http://rubydoc.info/gems/barney/0.9.1/)
 * [0.9.0](http://rubydoc.info/gems/barney/0.9.0/)
 * [0.8.1](http://rubydoc.info/gems/barney/0.8.1/)
-* [0.8.0](http://rubydoc.info/gems/barney/0.8.0/)
 * …
 
 
