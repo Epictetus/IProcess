@@ -1,5 +1,15 @@
 2011-05-03  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney.rb README.md ChangeLog:
+		Release 0.10.1
+
+	* lib/barney/share.rb:
+		Fix a bug where Barney::Share#history could return unordered/incorrect data 
+		when subprocesses are spawned in parallel.
+
+	* lib/barney/share.rb: 
+		Release 0.10.0
+
 	* lib/barney/share.rb: 
 		Rename @context to @scope.
 

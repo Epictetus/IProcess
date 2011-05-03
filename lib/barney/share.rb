@@ -90,13 +90,13 @@ module Barney
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
       @scope = block.binding
 
-      @variables.each do |variable| 
-        @streams.push StreamPair.new(variable, *IO.pipe)
+      tmp_streams = Array.new @variables.size do |index|
+        StreamPair.new @variables[index], *IO.pipe
       end
-      
+
       @pid = Kernel.fork do
         block.call
-        @streams.each do |stream|
+        tmp_streams.each do |stream|
           stream.in.close  
           stream.out.write Marshal.dump(eval("#{stream.variable}", @scope))
           stream.out.close
@@ -104,6 +104,7 @@ module Barney
       end
       
       @pids.push @pid
+      @streams.push *tmp_streams
       @pid
     end
 
