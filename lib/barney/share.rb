@@ -47,7 +47,7 @@ module Barney
       @history   = []
       @pids      = []
       @pid       = nil
-      @context   = nil
+      @scope     = nil
       yield self if block_given? 
     end
 
@@ -88,7 +88,7 @@ module Barney
     # @return [Fixnum]        Returns the Process ID(PID) of the spawned child process.  
     def fork &block
       raise ArgumentError, "A block or Proc object is expected" unless block_given?
-      @context = block.binding
+      @scope = block.binding
 
       @variables.each do |variable| 
         @streams.push StreamPair.new(variable, *IO.pipe)
@@ -98,7 +98,7 @@ module Barney
         block.call
         @streams.each do |stream|
           stream.in.close  
-          stream.out.write Marshal.dump(eval("#{stream.variable}", @context))
+          stream.out.write Marshal.dump(eval("#{stream.variable}", @scope))
           stream.out.close
         end
       end
@@ -115,7 +115,7 @@ module Barney
           stream.out.close
           Barney::Share.value = Marshal.load stream.in.read
           stream.in.close
-          value = eval "#{stream.variable} = Barney::Share.value", @context 
+          value = eval "#{stream.variable} = Barney::Share.value", @scope 
           @history.push HistoryItem.new(stream.variable, value)
         end
 

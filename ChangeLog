@@ -1,7 +1,11 @@
 2011-05-03  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/share.rb: 
+		Rename @context to @scope.
+
+	* lib/barney/share.rb: 
 		Add Barney::Share#wait_all.
+	
 
 2011-05-01  Robert Gleeson <rob@flowof.info>
 
