@@ -1,28 +1,10 @@
 2011-05-03  Robert Gleeson <rob@flowof.info>
 
-	* lib/barney.rb README.md ChangeLog:
-		Release 0.10.1
-
-	* lib/barney/share.rb:
-		Fix a bug where Barney::Share#history could return unordered/incorrect data 
-		when subprocesses are spawned in parallel.
-
-	* lib/barney/share.rb: 
-		Release 0.10.0
-
 	* lib/barney/share.rb: 
 		Rename @context to @scope.
 
 	* lib/barney/share.rb: 
 		Add Barney::Share#wait_all.
-	
-
-2011-05-01  Robert Gleeson <rob@flowof.info>
-
-	* lib/barney/share.rb:
-		Remove Barney::Share#spawn_pipes (private method).
-
-2011-04-25  Robert Gleeson <rob@flowof.info>
 
 	* test/suite/lib/barney.rb:
 		Add test suite for the 'Barney' module.
@@ -35,6 +17,17 @@
 
 	* ChangeLog:
 		Record Releases.
+
+	* lib/barney/share.rb:
+		Remove Barney::Share#spawn_pipes (private method).
+
+	* lib/barney.rb README.md ChangeLog:
+		Release 0.10.1
+
+	* lib/barney/share.rb:
+		Fix a bug where Barney::Share#history could return unordered/incorrect data 
+		when subprocesses are spawned in parallel.	
+
 
 2011-04-23  Robert Gleeson <rob@flowof.info>
 
