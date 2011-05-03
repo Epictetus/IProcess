@@ -52,7 +52,6 @@ module Barney
     end
 
     # Marks a variable or constant to be shared between two processes. 
-    # 
     # @param  [Symbol, #to_sym]  Variable  Accepts the name(s) of the variables or constants you want to share.
     # @return [Array<Symbol>]              Returns a list of all variables that are being shared.
     def share *variables
@@ -62,7 +61,6 @@ module Barney
     end
 
     # Removes a variable or constant from being shared between two processes.
-    # 
     # @param  [Symbol, #to_sym] Variable  Accepts the name(s) of the variables or constants you want to stop sharing.
     # @return [Array<Symbol>]             Returns a list of the variables that are still being shared.
     def unshare *variables
@@ -70,12 +68,10 @@ module Barney
         @streams.delete_if { |stream| stream.variable == variable }
         @variables.delete variable 
       end
-
       @variables
     end
 
     # Collect the status of all subprocesses spawned by a {Barney::Share Barney::Share} instance.
-    #
     # @return [void]
     def wait_all
       @pids.each do |pid|
@@ -112,8 +108,6 @@ module Barney
     end
 
     # Synchronizes data between the parent and child process.  
-    # It will block until the spawned child process has exited.
-    # 
     # @return [void]
     def synchronize 
       Barney::Share.mutex.synchronize do
