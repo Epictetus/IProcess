@@ -6,7 +6,7 @@ message = ""
 
 %w(r u b y).each do |letter|
   Barney.fork do 
-    message << letter
+    message += letter
   end
 end
 
