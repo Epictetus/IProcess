@@ -2,7 +2,7 @@ require 'barney/share'
 
 module Barney 
 
-  VERSION = '0.10.0'
+  VERSION = '0.10.1'
   @proxy  = Barney::Share.new
 
   class << self
