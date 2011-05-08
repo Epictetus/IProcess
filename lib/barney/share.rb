@@ -64,7 +64,8 @@ module Barney
     # @param  [Symbol, #to_sym] Variable  Accepts the name(s) of the variables or constants you want to stop sharing.
     # @return [Array<Symbol>]             Returns a list of the variables that are still being shared.
     def unshare *variables
-      variables.map(&:to_sym).each do |variable| 
+      variables.each do |variable|
+        variable = variable.to_sym
         @streams.delete_if { |stream| stream.variable == variable }
         @variables.delete variable 
       end
