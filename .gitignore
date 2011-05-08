@@ -4,3 +4,4 @@ doc/*
 .yardoc/*
 .DS_Store
 *.gem
+*.rbc
