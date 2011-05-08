@@ -99,7 +99,7 @@ module Barney
         block.call
         tmp_streams.each do |stream|
           stream.in.close  
-          stream.out.write Marshal.dump(eval("#{stream.variable}", @scope))
+          stream.out.write Marshal.dump(@scope.eval("#{stream.variable}"))
           stream.out.close
         end
       end
@@ -117,7 +117,7 @@ module Barney
           stream.out.close
           Barney::Share.value = Marshal.load stream.in.read
           stream.in.close
-          value = eval "#{stream.variable} = Barney::Share.value", @scope 
+          value = @scope.eval "#{stream.variable} = Barney::Share.value"
           @history.push HistoryItem.new(stream.variable, value)
         end
 
