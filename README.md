@@ -1,7 +1,7 @@
  ![Barney Picture](http://i.imgur.com/VblLQ.png)
 
 Barney makes sharing data between processes easy and natural by providing a simple and easy to use DSL.  
-Barney is developed against Ruby 1.9.1 and later, but it may work on earlier versions of Ruby as well.
+Barney is supported on any Ruby implementation that supports 1.8.7+, 1.9.1+, and that implements `Kernel.fork`.
 
 Limitations  
 -----------

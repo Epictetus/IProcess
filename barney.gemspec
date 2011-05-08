@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.rubyforge_project = '[none]'
   s.required_rubygems_version = '>= 1.3.6'
-  s.required_ruby_version = '>= 1.9.1'
 
   s.add_development_dependency 'yard'
   s.add_development_dependency 'bluecloth' # for yard+markdown.

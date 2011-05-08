@@ -1,3 +1,4 @@
+require 'thread'
 require 'barney/share' 
 
 module Barney 
