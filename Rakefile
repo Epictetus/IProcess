@@ -4,6 +4,9 @@ task :test do
   require 'barney'
   require 'minitest/spec'
   require 'minitest/autorun'
-  begin; require 'turn'; rescue LoadError; end
-  Dir.glob("test/suite/lib/**/*.rb").each { |test| require_relative test }
+  Dir.glob("test/suite/lib/**/*.rb").each { |test| require "./#{test}" }
+end
+
+task :rvm_test do
+  puts `rvm 1.8.7,rbx-1.2.2,1.9.2 exec rake test`
 end
