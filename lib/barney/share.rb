@@ -27,23 +27,19 @@ module Barney
     end
 
     # Returns a list of all variables or constants being shared for an instance of {Barney::Share}.
-    #
     # @return [Array<Symbol>] 
     attr_reader :variables
 
     # Returns the Process ID of the last forked process.
-    #
     # @return [Fixnum]
     attr_reader :pid
 
     # Returns an Array of {HistoryItem} objects.
-    #
     # @see HistoryItem
     # @return [Array<HistoryItem>]
     attr_reader :history
     
     # @yieldparam [Barney::Share] self Yields an instance of {Barney::Share}.
-    #
     # @return [Barney::Share]
     def initialize
       @streams   = []
@@ -56,7 +52,6 @@ module Barney
     end
 
     # Marks a variable or constant to be shared between two processes. 
-    #
     # @param  [Symbol, #to_sym]  Variable  Accepts the name(s) of the variables or constants you want to share.
     # @return [Array<Symbol>]              Returns a list of all variables that are being shared.
     def share *variables
@@ -66,7 +61,6 @@ module Barney
     end
 
     # Removes a variable or constant from being shared between two processes.
-    #
     # @param  [Symbol, #to_sym] Variable  Accepts the name(s) of the variables or constants you want to stop sharing.
     # @return [Array<Symbol>]             Returns a list of the variables that are still being shared.
     def unshare *variables
@@ -79,7 +73,6 @@ module Barney
     end
 
     # Collect the status of all subprocesses spawned by a {Barney::Share Barney::Share} instance.
-    #
     # @return [void]
     def wait_all
       @pids.each do |pid|
@@ -117,7 +110,6 @@ module Barney
     end
 
     # Synchronizes data between the parent and child process.  
-    #
     # @return [void]
     def synchronize 
       Barney::Share.mutex.synchronize do
@@ -128,6 +120,7 @@ module Barney
           value = @scope.eval "#{stream.variable} = Barney::Share.value"
           @history.push HistoryItem.new(stream.variable, value)
         end
+
         @streams.clear
       end 
     end
