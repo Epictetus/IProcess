@@ -79,6 +79,9 @@ I'm following the [Semantic Versioning](http://www.semver.org) policy.
 License
 --------
 
-Barney is released under the Lesser GPL(LGPL).  
+Barney is released under the [_MIT License_](http://en.wikipedia.org/wiki/MIT_License).  
+See [LICENSE](http://github.com/robgleeson/barney/blob/master/README.md) for details.  
+
+Prior to 0.13.0, Barney was released under the Lesser GPL(LGPL).
 
 

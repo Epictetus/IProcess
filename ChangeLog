@@ -1,10 +1,16 @@
+2011-05-09  Robert Gleeson <rob@flowof.info>
+
+	* LICENSE README.md:
+		Change license from Lesser GPL(LGPL) to the MIT license.  
+		See LICENSE for details.
+
 2011-05-03  Robert Gleeson <rob@flowof.info>
 
   * lib/barney.rb README.md ChangeLog:
-    Release 0.12.0
+    	Release 0.12.0
 
   * lib/barney.rb Rakefile.rb:
-    Add support for 1.8.7
+    	Add support for 1.8.7
 
 	* lib/barney.rb README.md ChangeLog:
 		Release 0.11.0
