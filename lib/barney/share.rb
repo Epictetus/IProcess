@@ -104,8 +104,8 @@ module Barney
         end
       end
       
-      @pids.push @pid
       @streams.push *tmp_streams
+      @pids.push @pid
       @pid
     end
 
@@ -120,7 +120,6 @@ module Barney
           value = @scope.eval "#{stream.variable} = Barney::Share.value"
           @history.push HistoryItem.new(stream.variable, value)
         end
-
         @streams.clear
       end 
     end
