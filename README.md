@@ -80,8 +80,7 @@ License
 --------
 
 Barney is released under the [_MIT License_](http://en.wikipedia.org/wiki/MIT_License).  
-See [LICENSE](http://github.com/robgleeson/barney/blob/master/README.md) for details.  
-
-Prior to 0.13.0, Barney was released under the Lesser GPL(LGPL).
+See [LICENSE](http://github.com/robgleeson/barney/blob/master/README.md) for details!  
+All versions before 0.13.0 are Lesser GPL(LGPL) licensed.
 
 
