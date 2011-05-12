@@ -46,6 +46,8 @@ module Barney
       @variables = []
       @history   = []
       @pids      = []
+      @pid       = nil
+      @scope     = nil
       yield self if block_given? 
     end
 
