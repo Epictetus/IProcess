@@ -46,8 +46,6 @@ module Barney
       @variables = []
       @history   = []
       @pids      = []
-      @pid       = nil
-      @scope     = nil
       yield self if block_given? 
     end
 
@@ -64,18 +62,14 @@ module Barney
     # @param  [Symbol, #to_sym] Variable  Accepts the name(s) of the variables or constants you want to stop sharing.
     # @return [Array<Symbol>]             Returns a list of the variables that are still being shared.
     def unshare *variables
-      variables.each do |variable|
-        @variables.delete variable.to_sym 
-      end
+      variables.each { |variable| @variables.delete variable.to_sym }
       @variables
     end
 
     # Collect the status of all subprocesses spawned by a {Barney::Share Barney::Share} instance.
     # @return [void]
     def wait_all
-      @pids.each do |pid|
-        Process.wait pid
-      end
+      @pids.each { |pid| Process.wait pid }
       @pids.clear
     end
 
