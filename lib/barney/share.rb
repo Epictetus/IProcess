@@ -65,9 +65,7 @@ module Barney
     # @return [Array<Symbol>]             Returns a list of the variables that are still being shared.
     def unshare *variables
       variables.each do |variable|
-        variable = variable.to_sym
-        @streams.delete_if { |stream| stream.variable == variable }
-        @variables.delete variable 
+        @variables.delete variable.to_sym 
       end
       @variables
     end
