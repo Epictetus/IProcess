@@ -1,3 +1,10 @@
+2011-05-12  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/share.rb: 
+		Barney::Share#unshare no longer removes streams from @shared.
+		This means a variable remains stops being shared at the next call 
+		Share#fork.
+
 2011-05-09  Robert Gleeson <rob@flowof.info>
 
 	* LICENSE README.md:
