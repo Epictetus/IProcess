@@ -1,10 +1,13 @@
 2011-05-12  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/share.rb: 
-		Barney::Share#unshare no longer removes streams from @shared.
-		This means a variable stops being shared at the next call Share#fork.
+	  	Barney::Share#unshare no longer removes streams from @shared.
+      	This means a variable stops being shared at the next call Share#fork.
 
 2011-05-09  Robert Gleeson <rob@flowof.info>
+
+	* README.md lib/barney.rb:
+		Release 0.13.0
 
 	* LICENSE README.md:
 		Change license from Lesser GPL(LGPL) to the MIT license.  
@@ -12,13 +15,13 @@
 
 2011-05-03  Robert Gleeson <rob@flowof.info>
 
-  * lib/barney.rb README.md ChangeLog:
+  	* lib/barney.rb README.md: 
     	Release 0.12.0
 
-  * lib/barney.rb Rakefile.rb:
+  	* lib/barney.rb Rakefile.rb:
     	Add support for 1.8.7
 
-	* lib/barney.rb README.md ChangeLog:
+	* lib/barney.rb README.md:
 		Release 0.11.0
 
 	* lib/barney/share.rb: 
@@ -36,13 +39,10 @@
 	* lib/barney.rb: 
 		Add Barney.respond_to? 
 
-	* ChangeLog:
-		Record Releases.
-
 	* lib/barney/share.rb:
 		Remove Barney::Share#spawn_pipes (private method).
 
-	* lib/barney.rb README.md ChangeLog:
+	* lib/barney.rb README.md:
 		Release 0.10.1
 
 	* lib/barney/share.rb:
