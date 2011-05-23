@@ -12,7 +12,9 @@ Gem::Specification.new do |s|
   s.summary      = "Barney tries to make the sharing of data between processes as easy and natural as possible."
   s.description  = s.summary
 
-  s.files        = [ 'Rakefile', 'LICENSE', '.yardopts', 'README.md', 'ChangeLog', '.gemtest', *Dir.glob("lib/**/*.rb") ]
+  s.files        = [ 'Rakefile', 'LICENSE', '.yardopts', 'README.md', 'ChangeLog', '.gemtest', 
+                     *Dir.glob("samples/*.rb"), *Dir.glob("lib/**/*.rb") ]
+
   s.test_files   = Dir.glob "test/**/*.rb"
 
   s.platform     = Gem::Platform::RUBY
