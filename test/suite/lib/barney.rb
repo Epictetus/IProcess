@@ -16,7 +16,7 @@ describe '#Barney' do
 
     Barney do
       share :name
-      fork { name.slice! 3..5 }
+      fork { name.slice! 3..5}
       fork { name.slice! 1..2 }
     end
 

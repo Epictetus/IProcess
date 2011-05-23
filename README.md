@@ -24,6 +24,9 @@ Usage
 
 __Magic "Barney" method__
 
+The magic "Barney" method handles synchronization of data between the child and parent process, something you normally do
+manually with the `Barney::Share#sync` method, and it also collects the status of any subprocesses you spawn.
+
     #!/usr/bin/env ruby
     # Magic "Barney" method
     require 'barney'
@@ -40,6 +43,9 @@ __Magic "Barney" method__
     p name # "Rob"
 
  __Barney module__
+
+The "Barney" module forwards requests onto a single instance of `Barney::Share`, where the DSL is implemented.  
+You can of course use `Barney::Share` directly, which ever method you prefer is entirely up to you and what your situation requires.
 
     #!/usr/bin/env ruby
     # Barney module sample
