@@ -19,31 +19,53 @@ Limitations
 Usage
 -----
 
+__Magic "Barney" method__
+
     #!/usr/bin/env ruby
+    #
+    # Magic "Barney" method
+
+    require 'barney'
+
+    Barney do
+      name = "Robert"
+      share :name
+
+      fork do
+        name.slice! 3..5
+      end
+    end
+
+    p name # "Rob"
+
+ __Barney module__
+
+    #!/usr/bin/env ruby
+    #
+    # Barney module sample
+    # Messages are forwarded onto a single instance of Barney::Share.
+    
     require 'barney'
 
     Barney.share :name
-    name = 'Robert'
-
-    pid = Barney.fork do 
-      name.slice! 0..2
+    
+    Barney.fork do 
+      name.slice! 3..5
     end
 
-    Process.wait pid
+    Barney.wait_all
     Barney.sync
 
-    puts name # "Rob"
+    p name # "Rob"
 
 * _More!_  
-  Check out the [samples](https://github.com/robgleeson/barney/tree/master/samples) directory or if you're looking 
-  for precise and detailed info, check out the API docs.
+  Check out the [samples](https://github.com/robgleeson/barney/tree/master/samples) directory.  
+  Check out the API docs, too.
 
-* _Notes!_  
-  It's worth mentioning that the _Barney_ module is passing method calls to an instance of _Barney::Share_, 
-  where the DSL is implemented. If you prefer, or your situation requires, feel free to create instance(s) of 
-  _Barney::Share_ yourself.  
-
-
+* _Notes_  
+  The DSL is implemented in _Barney::Share_.  
+  You can create instances of(or subclasses) of _Barney::Share_ if you need to.  
+  
 Documentation
 --------------
 
