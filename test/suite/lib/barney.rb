@@ -16,12 +16,11 @@ describe '#Barney' do
 
     Barney do
       share :name
-      fork do
-        name.slice! 3..5
-      end
+      fork { name.slice! 3..5 }
+      fork { name.slice! 1..2 }
     end
 
-    assert_equal "Rob", name
+    assert_equal "R", name
   end
 
 end

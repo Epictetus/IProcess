@@ -56,5 +56,4 @@ def Barney &block
   emptystate = Barney::EmptyState.new
   emptystate.instance_eval &block
   emptystate.__barney__.wait_all 
-  emptystate.__barney__.sync
 end
