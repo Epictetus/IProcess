@@ -3,6 +3,9 @@
 Barney makes sharing data between processes easy and natural by providing a simple and easy to use DSL.  
 Barney is supported on any Ruby implementation that supports 1.8.7+, 1.9.1+, and that implements `Kernel.fork`.
 
+If you're looking for a library to do parallel jobs, check out [Parallel](https://github.com/grosser/parallel).  
+While possible in Barney, it was never a design goal and I'd definitely recommend you check out _Parallel_ instead.
+
 Limitations  
 -----------
 
@@ -22,7 +25,6 @@ Usage
 __Magic "Barney" method__
 
     #!/usr/bin/env ruby
-    #
     # Magic "Barney" method
 
     require 'barney'
@@ -41,7 +43,6 @@ __Magic "Barney" method__
  __Barney module__
 
     #!/usr/bin/env ruby
-    #
     # Barney module sample
     # Messages are forwarded onto a single instance of Barney::Share.
     
