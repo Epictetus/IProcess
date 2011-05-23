@@ -26,7 +26,6 @@ __Magic "Barney" method__
 
     #!/usr/bin/env ruby
     # Magic "Barney" method
-
     require 'barney'
 
     Barney do
@@ -45,7 +44,6 @@ __Magic "Barney" method__
     #!/usr/bin/env ruby
     # Barney module sample
     # Messages are forwarded onto a single instance of Barney::Share.
-    
     require 'barney'
 
     Barney.share :name
