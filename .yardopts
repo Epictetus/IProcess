@@ -2,7 +2,6 @@
 --no-private
 --hide-void-return
 --no-cache
---main README.md
 - 
 LICENSE
 ChangeLog
