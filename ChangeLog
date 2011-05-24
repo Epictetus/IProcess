@@ -1,5 +1,8 @@
 2011-05-23  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney.rb:
+	Deprecate the Barney module responding to Barney::Share methods.
+
 	* lib/barney.rb lib/barney/jobs.rb:
 	Add Jobs() method.
 
