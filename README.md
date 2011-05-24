@@ -53,6 +53,7 @@ You can of course use `Barney::Share` directly, which ever method you prefer is 
     # Messages are forwarded onto a single instance of Barney::Share.
     require 'barney'
 
+    name = "Robert"
     Barney.share :name
     
     Barney.fork do 

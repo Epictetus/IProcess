@@ -5,6 +5,7 @@
 
 require 'barney'
 
+name = "Robert"
 Barney.share :name
 
 Barney.fork do 
