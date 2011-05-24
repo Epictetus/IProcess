@@ -19,46 +19,45 @@ Limitations
 Usage
 -----
 
-**Meet Barney**
+* **Barney()**
 
-The Barney() method is a _magic_ method you can use to share data between processes easily.  
-It provides an extremely simple and expressive way to share data.
+    The Barney() method is a method you can use to share data between processes easily.  
+    It provides an extremely simple and expressive way to share data.
 
 
-    require 'barney'
+        require 'barney'
+        
+        name = "Robert"
+        
+        Barney do
+          share :name
+
+          fork do
+            name.slice! 3..5
+          end
+        end
+
+        p name # "Rob"
+
+
+* **Jobs()**
+
+    The _Jobs_ method spawns a number of workers(represented by a block) as subprocesses.  
+    The return value of each block is returned to you in an array.
+
+    This method is especially designed for those who want to run jobs in parallel, usually for 
+    long computations or to take advantage of multiple cores, while still being able to share data.
+        
+        require 'barney'
+        result = Jobs(5) { 42 } # [ 42, 42, 42, 42, 42 ]
+
+* **… And finally!**
+
+    The DSL is implemented on top of the `Barney::Share` class, which can be of course used directly by you.  
+    The above methods are implemented using `Barney::Share` under the hood.  
+    To learn more, check out the [samples](https://github.com/robgleeson/barney/tree/master/samples),
+    [the wiki](https://github.com/robgleeson/barney/wiki), and of course the API docs.
     
-    name = "Robert"
-    
-    Barney do
-      share :name
-
-      fork do
-        name.slice! 3..5
-      end
-    end
-
-    p name # "Rob"
-
-
-**Parallel jobs**
-
-The _Jobs_ method spawns a number of workers(represented by a block) as subprocesses.  
-The return value of each block is returned to you in an array.
-
-This method is especially designed for those who want to run jobs in parallel, usually for 
-long computations or to take advantage of multiple cores, while still being able to share data.
-    
-    require 'barney'
-    result = Jobs(5) { 42 } # [ 42, 42, 42, 42, 42 ]
-
-**… And finally!**
-
-The _Jobs()_ method, and the _Barney()_ method are both implemented on top of the `Barney::Share` class.  
-The `Barney::Share` class is where the DSL is implemented - it can be used directly by you, 
-for subclassing  or whatever you want.  
-I want to keep the README short and brief, so check out [the samples](https://github.com/robgleeson/barney/tree/master/samples),
-[the wiki](https://github.com/robgleeson/barney/wiki), and of course the API docs to learn more about Barney.
-  
 Documentation
 --------------
 
