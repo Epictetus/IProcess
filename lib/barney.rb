@@ -1,5 +1,6 @@
 require 'thread'
-require 'barney/share' 
+require 'barney/share'
+require 'barney/jobs'
 require 'barney/emptystate'
 
 module Barney 
