@@ -3,9 +3,6 @@
 Barney makes sharing data between processes easy and natural by providing a simple and easy to use DSL.  
 Barney is supported on any Ruby implementation that supports 1.8.7+, 1.9.1+, and that implements `Kernel.fork`.
 
-If you're looking for a library to do parallel jobs, check out [Parallel](https://github.com/grosser/parallel).  
-While possible in Barney, it was never a design goal and I'd definitely recommend you check out _Parallel_ instead.
-
 Limitations  
 -----------
 
@@ -22,15 +19,17 @@ Limitations
 Usage
 -----
 
-__Magic "Barney" method__
+**Meet Barney**
 
-    #!/usr/bin/env ruby
-    # Magic "Barney" method
+The Barney() method is a _magic_ method you can use to share data between processes easily.  
+It provides an extremely simple and expressive way to share data.
+
 
     require 'barney'
-
+    
+    name = "Robert"
+    
     Barney do
-      name = "Robert"
       share :name
 
       fork do
@@ -40,32 +39,25 @@ __Magic "Barney" method__
 
     p name # "Rob"
 
- __Barney module__
 
-    #!/usr/bin/env ruby
-    # Barney module sample
-    # Messages are forwarded onto a single instance of Barney::Share.
+**Parallel jobs**
+
+The _Jobs_ method spawns a number of workers(represented by a block) as subprocesses.  
+The return value of each block is returned to you in an array.
+
+This method is especially designed for those who want to run jobs in parallel, usually for 
+long computations or to take advantage of multiple cores, while still being able to share data.
     
     require 'barney'
+    result = Jobs(5) { 42 } # [ 42, 42, 42, 42, 42 ]
 
-    Barney.share :name
-    
-    Barney.fork do 
-      name.slice! 3..5
-    end
+**… And finally!**
 
-    Barney.wait_all
-    Barney.sync
-
-    p name # "Rob"
-
-* _More!_  
-  Check out the [samples](https://github.com/robgleeson/barney/tree/master/samples) directory.  
-  Check out the API docs, too.
-
-* _Notes_  
-  The DSL is implemented in _Barney::Share_.  
-  You can create instances of(or subclasses) of _Barney::Share_ if you need to.  
+The _Jobs()_ method, and the _Barney()_ method are both implemented on top of the `Barney::Share` class.  
+The `Barney::Share` class is where the DSL is implemented - it can be used directly by you, 
+for subclassing  or whatever you want.  
+I want to keep the README short and brief, so check out [the samples](https://github.com/robgleeson/barney/tree/master/samples),
+[the wiki](https://github.com/robgleeson/barney/wiki), and of course the API docs to learn more about Barney.
   
 Documentation
 --------------
