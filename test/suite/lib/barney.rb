@@ -11,7 +11,7 @@ end
 
 describe '#Barney' do
 
-  it 'should..' do
+  it 'should synchronize data using the #Barney() method.' do
     name = 'Robert'
 
     Barney do
