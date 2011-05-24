@@ -30,9 +30,9 @@ manually with the `Barney::Share#sync` method, and it also collects the status o
     #!/usr/bin/env ruby
     # Magic "Barney" method
     require 'barney'
+    name = "Robert"
 
     Barney do
-      name = "Robert"
       share :name
 
       fork do

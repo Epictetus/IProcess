@@ -3,12 +3,14 @@
 # Magic "Barney" method
 
 require 'barney'
+name = 'Robert'
 
 Barney do
-  name = "Robert"
   share :name
 
   fork do
     name.slice! 3..5
   end
 end
+
+p name # "Rob"
