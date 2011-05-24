@@ -9,24 +9,11 @@ module Barney
 
   class << self
 
-    # Forward message to an instance of {Barney::Share Barney::Share}.
-    #
-    # @see Barney::Share Barney::Share.
-    def method_missing meth, *args, &blk
-      if @proxy.respond_to? meth
-        @proxy.send meth, *args, &blk
-      else
-        super
+    Barney::Share.instance_methods(false).each do |method|
+      define_method method do |*args, &block|
+        $stderr.puts "[WARNING] Barney.#{method} is deprecated and will be removed in the next release."
+        @proxy.send method, *args, &block
       end
-    end
-
-    # Ask {Barney} does it respond to _meth_.
-    #
-    # @param  [String, Symbol, #to_sym] Name  The method name.
-    # @param  [Boolean]                 Scope Pass true to extend scope to include private methods.
-    # @return [Boolean]                       Return true if {Barney} can respond to _meth_.
-    def respond_to? meth, with_private = false
-      super || @proxy.respond_to?(meth, with_private)
     end
 
   end
