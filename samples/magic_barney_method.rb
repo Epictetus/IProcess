@@ -3,6 +3,7 @@
 # Magic "Barney" method
 
 require 'barney'
+
 name = 'Robert'
 
 Barney do
