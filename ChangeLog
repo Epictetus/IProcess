@@ -1,3 +1,9 @@
+2011-05-25  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney.rb:
+	Release 0.15.0
+
+
 2011-05-23  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney.rb:
@@ -10,7 +16,7 @@
 	Release 0.14.0
 
 	* lib/barney.rb lib/barney/emptystate.rb test/suite/lib/barney.rb: 
-	Add magic "Barney" method.
+	Add Barney() method.
 
 2011-05-12  Robert Gleeson <rob@flowof.info>
 
