@@ -1,5 +1,14 @@
 2011-05-25  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney/core_ext.rb:
+	Add Barney() and Jobs() methods to lib/barney/core_ext.rb
+
+	* lib/barney.rb:
+	Remove Barney() method from lib/barney.rb
+
+	* lib/barney/jobs.rb:
+	Remove file.
+
 	* lib/barney.rb:
 	Release 0.15.1
 
