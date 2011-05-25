@@ -3,7 +3,7 @@
 Barney makes sharing data between processes easy and natural by providing a simple and easy to use DSL.  
 Barney is supported on any Ruby implementation that supports 1.8.7+, 1.9.1+, and that implements `Kernel.fork`.
 
-Underneath the hood, Barney is using the `Marshal` (the module) to serialize objects and send them across pipes created by `IO.pipe`.  
+Underneath the hood, Barney is using `Marshal` (the module) to serialize objects and send them across pipes created by `IO.pipe`.  
 If an object can't be serialized by `Marshal`, it can't be shared.  That means objects such as anonymous modules, 
 anonymous classes, and Proc objects can't be shared by Barney.
 
@@ -14,19 +14,19 @@ and everything else in much more depth.
 Usage
 -----
 
+    #!/usr/bin/env ruby
     require 'barney'
     
-    name = "Robert"
-    
     Barney do
+      name = "Robert"
       share :name
 
       fork do
         name.slice! 3..5
       end
-    end
 
-    p name # "Rob"
+      p name # "Rob"
+    end
 
 Documentation
 --------------
