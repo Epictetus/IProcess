@@ -24,8 +24,7 @@ def Barney &block
   emptystate.__barney__.wait_all 
 end
 
-# Returns an Array populated by the return value of a block.  
-# Each block is executed in a subprocess.
+# Runs _block_ in one or more subprocesses, returning the return value of each block in an Array.
 #
 # @example
 #   results = Jobs(5) { 42 }
@@ -33,10 +32,10 @@ end
 #
 # @param  [Proc]   Block      The block to execute in a subprocess. 
 # @param  [Fixnum] Processes  The number of subprocesses to spawn.
-# @raise  [ArgumentError]     If block is missing.
+# @raise  [ArgumentError]     If no block is supplied.
 # @return [Array<Object>] 
 def Jobs number, &block
-  raise ArgumentError, 'block expected' unless block_given?
+  raise ArgumentError, 'Block expected' unless block_given?
 
   barney = Barney::Share.new
   barney.share :queue
