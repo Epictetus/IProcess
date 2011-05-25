@@ -1,4 +1,4 @@
-script: 'ruby -I lib -r'rubygems' -r'bundler/setup' test/setup.rb'
+script: ruby -I lib -r'rubygems' -r'bundler/setup' test/setup.rb
 
 rvm: 
   - rbx-1.2.3
