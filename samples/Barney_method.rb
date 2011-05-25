@@ -1,17 +1,15 @@
 #!/usr/bin/env ruby
-#
-# Magic "Barney" method
-
 require 'barney'
 
-name = 'Robert'
-
 Barney do
+  name = "Robert"
   share :name
 
   fork do
     name.slice! 3..5
   end
+
+  p name # "Rob"
 end
 
-p name # "Rob"
+
