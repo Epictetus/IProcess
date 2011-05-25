@@ -1,0 +1,9 @@
+script: 'ruby -I lib -r'rubygems' -r'bundler/setup' test/setup.rb'
+
+rvm: 
+  - rbx-1.2.3
+  - 1.8.7
+  - 1.9.1
+  - 1.9.2
+  - ruby-head
+
