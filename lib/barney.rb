@@ -5,7 +5,7 @@ require 'barney/emptystate'
 
 module Barney 
 
-  VERSION = '0.15.0'
+  VERSION = '0.15.1'
   @proxy  = Barney::Share.new
 
   class << self

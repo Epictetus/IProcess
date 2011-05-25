@@ -1,6 +1,12 @@
 2011-05-25  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney.rb:
+	Release 0.15.1
+
+	* lib/barney/jobs.rb:
+	Jobs() should raise an ArgumentError if block is missing.
+
+	* lib/barney.rb:
 	Release 0.15.0
 
 
