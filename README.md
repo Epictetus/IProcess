@@ -7,7 +7,7 @@ Underneath the hood, Barney is using `Marshal` (the module) to serialize objects
 If an object can't be serialized by `Marshal`, it can't be shared.  That means objects such as anonymous modules, 
 anonymous classes, and Proc objects can't be shared by Barney.
 
-Below is an example of how _simple_ it is to use Barney, but please take the time to look at 
+Below is an example of how simple it is to use Barney, but please take the time to look at 
 [The Wiki](https://github.com/robgleeson/barney/wiki) if you're interested in Barney, because I cover other APIs 
 and everything else in much more depth.
 
@@ -31,7 +31,7 @@ Usage
 Documentation
 --------------
 
-**Wiki**  
+**Guides**  
 
 * [Wiki](https://github.com/robgleeson/barney/wiki)
 
