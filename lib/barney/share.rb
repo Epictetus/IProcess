@@ -12,20 +12,6 @@ module Barney
     # @attr [Object] value    The value of the variable.
     HistoryItem = Struct.new :variable, :value
 
-    @mutex = Mutex.new
-
-    class << self
-      # Returns the last value read from a spawned child process.
-      # @api private
-      # @return [Object]
-      attr_accessor :value
-
-      # Returns a Mutex that is used by the {Barney::Share#sync} method.
-      # @api private
-      # @return [Mutex] 
-      attr_reader :mutex
-    end
-
     # Returns a list of all variables or constants being shared for an instance of {Barney::Share}.
     # @return [Array<Symbol>] 
     attr_reader :variables
@@ -106,16 +92,15 @@ module Barney
     # Synchronizes data between the parent and child process.  
     # @return [void]
     def synchronize 
-      Barney::Share.mutex.synchronize do
-        @streams.each do |stream|
-          stream.out.close
-          Barney::Share.value = Marshal.load stream.in.read
-          stream.in.close
-          value = @scope.eval "#{stream.variable} = Barney::Share.value"
-          @history.push HistoryItem.new(stream.variable, value)
-        end
-        @streams.clear
-      end 
+      @streams.each do |stream|
+        stream.out.close
+        Thread.current[:'__BARNEY__'] = Marshal.load stream.in.read
+        stream.in.close
+        value = @scope.eval "#{stream.variable} = ::Thread.current[:'__BARNEY__']"
+        @history.push HistoryItem.new(stream.variable, value)
+      end
+      Thread.current[:'__BARNEY__'] = nil
+      @streams.clear
     end
     alias_method :sync, :synchronize
 

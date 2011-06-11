@@ -1,3 +1,9 @@
+2011-06-11  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/share.rb: 
+	Remove Mutex.
+	Remain thread-safe when one Barney::Share instance is used per-thread.
+
 2011-05-25  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/core_ext.rb:
