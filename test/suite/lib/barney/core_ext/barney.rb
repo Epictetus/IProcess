@@ -51,8 +51,8 @@ describe '#Barney' do
       fork {}
     end
 
-    Barney::MethodLookup.instance_methods(false).each do |method|
-      assert_raises(NoMethodError, "#{method} should be undefined!") { self.send(method) }
-    end
+    assert_equal false, self.respond_to?(:share)
+    assert_equal false, self.respond_to?(:unshare)
+    assert_equal false, self.respond_to?(:fork)
   end
 end
