@@ -1,8 +1,6 @@
 module Barney
   module MethodLookup
 
-    METHODS = [ :share, :unshare, :fork ]
-
     class << self 
       def inject! &block
         target = block.binding.eval "self"
@@ -15,7 +13,7 @@ module Barney
         target.instance_eval do
           @__barney__ = nil
           (class << self; self; end).instance_eval do 
-            METHODS.each { |method| undef_method(method) }
+            Barney::MethodLookup.instance_methods(false).each { |method| undef_method(method) }
           end
         end
       end
@@ -25,15 +23,21 @@ module Barney
       end
     end
 
-    METHODS.each do |method|
-      define_method method do |*args, &block|
-        @__barney__.send method, *args, &block
-      end
+    # @see Barney::Share#share
+    def share *args
+      @__barney__.share *args
+    end
 
-      define_method :fork do |*args, &block|
-        @__barney__.send :fork, *args, &block
-        @__barney__.sync
-      end
+    # @see Barney::Share#unshare    
+    def unshare *args
+      @__barney__.unshare *args
+    end
+
+    # @see Barney::Share#fork
+    def fork &block
+      @__barney__.fork &block
+      @__barney__.wait_all
+      @__barney__.sync
     end
 
   end

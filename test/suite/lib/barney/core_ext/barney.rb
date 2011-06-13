@@ -40,7 +40,7 @@ describe '#Barney' do
 
   it 'should define the methods specified by Barney::MethodLookup::METHODS on the calling object.' do
     Barney do
-      Barney::MethodLookup::METHODS.each do |method|
+      Barney::MethodLookup.instance_methods(false).each do |method|
         assert_equal Barney::MethodLookup, method(method).owner
       end
     end
@@ -51,7 +51,7 @@ describe '#Barney' do
       fork {}
     end
 
-    Barney::MethodLookup::METHODS.each do |method|
+    Barney::MethodLookup.instance_methods(false).each do |method|
       assert_raises(NoMethodError, "#{method} should be undefined!") { self.send(method) }
     end
   end
