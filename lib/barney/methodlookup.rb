@@ -1,12 +1,23 @@
 module Barney
   module MethodLookup
 
-    class << self 
+    class << self
+      
+      # Injects the instance methods of {Barney::MethodLookup} on the "self" referenced by _block_.
+      #
+      # @api private
+      # @param  [Proc] Block
+      # @return [void]
       def inject! &block
         target = block.binding.eval "self"
         target.instance_eval { extend Barney::MethodLookup }
       end
 
+      # Dejects(removes) the instance methods of {Barney::MethodLookup} on the "self" referenced by _block_.
+      #
+      # @api private
+      # @param  [Proc] Block
+      # @return [void]
       def deject! &block
         target    = block.binding.eval "self"
         singleton = block.binding.eval "class << self; self; end"  
@@ -18,21 +29,25 @@ module Barney
         end
       end
 
+      # @api private
       def extended object
         object.instance_eval { @__barney__ = Barney::Share.new }
       end
     end
 
+    # @api private
     # @see Barney::Share#share
     def share *args
       @__barney__.share *args
     end
 
+    # @api private
     # @see Barney::Share#unshare    
     def unshare *args
       @__barney__.unshare *args
     end
 
+    # @api private
     # @see Barney::Share#fork
     def fork &block
       @__barney__.fork &block
