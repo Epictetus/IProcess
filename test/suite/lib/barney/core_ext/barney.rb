@@ -28,10 +28,10 @@ describe '#Barney' do
 
     Barney do
       share :klass
-      fork { klass = self.class }
+      fork { klass = self.class.to_s }
     end
 
-    assert_equal klass, BarneySpec
+    assert_equal klass, self.class.to_s
   end
 
   it 'should define the methods of Barney::Share for the duration of its call.' do
