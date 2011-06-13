@@ -1,5 +1,8 @@
 2011-06-13  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney/methodlookup.rb:
+	The methods #share, #unshare, and #fork are the only methods available to a blocked passed to Barney().
+
 	* lib/barney.rb:
 	Remove deprecated methods from Barney module.
 

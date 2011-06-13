@@ -1,5 +1,9 @@
 describe '#Barney' do
 
+  before do
+    @foo = nil
+  end
+
   it 'should synchronize a local variable.' do
     name = 'Robert'
 
@@ -23,7 +27,7 @@ describe '#Barney' do
     assert_equal "baz", @foo
   end
 
-  it 'should evaluate the passed block in the context it is called in' do
+  it 'should evaluate the passed block in the context it is created in' do
     klass = nil
 
     Barney do
@@ -34,24 +38,21 @@ describe '#Barney' do
     assert_equal klass, self.class.to_s
   end
 
-  it 'should define the methods of Barney::Share for the duration of its call.' do
+  it 'should define the methods specified by Barney::MethodLookup::METHODS on the calling object.' do
     Barney do
-      self.methods.each do |meth|
-        if Barney::Share.instance_methods(false).include? meth
-          assert_equal Barney::MethodLookup, method(meth).owner
-        end
+      Barney::MethodLookup::METHODS.each do |method|
+        assert_equal Barney::MethodLookup, method(method).owner
       end
     end
   end
 
-  it 'should undefine any methods it defines for the context of a single call.' do
+  it 'should undefine the methods in Barney::MethodLookup::METHODS when finished.' do
     Barney do
-      share :@foo
-      fork { @foo = "bar" }
+      fork {}
     end
 
-    Barney::Share.instance_methods(false).each do |meth|
-      assert_raises(NoMethodError, "#{meth} should be undefined!") { self.send(meth) }
+    Barney::MethodLookup::METHODS.each do |method|
+      assert_raises(NoMethodError, "#{method} should be undefined!") { self.send(method) }
     end
   end
 end
