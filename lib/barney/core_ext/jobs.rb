@@ -1,29 +1,3 @@
-# Evaluates a block with access to all the methods available to a {Barney::Share Barney::Share} instance.  
-# Collecting the status of subprocesses and {Barney::Share#sync synchronization} is handled for you. 
-#
-# @example
-#    
-#   Barney do
-#     name = "Robert"
-#     share :name
-#
-#     fork do
-#       name.slice! 0..2
-#     end
-#
-#     p name # "Rob"
-#   end
-#
-#
-# @raise [ArgumentError] If no block is supplied.
-# @return [void]
-def Barney &block
-  raise ArgumentError, "Block expected" unless block_given?
-  emptystate = Barney::EmptyState.new
-  emptystate.instance_eval &block
-  emptystate.__barney__.wait_all 
-end
-
 # Runs _block_ in one or more subprocesses, returning the return value of each block in an Array.
 #
 # @example
@@ -52,4 +26,3 @@ def Jobs number, &block
 
   barney.history.map(&:value).flatten
 end
- 
