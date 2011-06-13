@@ -10,10 +10,10 @@ module Barney
       def deject! &block
         target    = block.binding.eval "self"
         singleton = block.binding.eval "class << self; self; end"  
-        
+        methods   = Barney::MethodLookup.instance_methods false
+
         target.instance_eval { @__barney__ = nil }
         singleton.instance_eval do
-          methods = Barney::MethodLookup.instance_methods false
           methods.each { |method| undef_method(method) }
         end
       end
