@@ -1,18 +1,17 @@
 2011-06-13  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/methodlookup.rb:
-	The methods #share, #unshare, and #fork are the only methods available to a blocked passed to Barney().
+	The methods #share, #unshare, and #fork are the only methods available to a block passed to Barney().
 
 	* lib/barney.rb:
 	Remove deprecated methods from Barney module.
 
-	* lib/barney/core_ext/barney.rb:
-	The block passed to Barney() has methods injected, and dejected from it
-	when Barney() has finished executing.
-
 	* lib/barney/methodlookup.rb:
 	Add Barney::MethodLookup.
-	
+
+	* lib/barney/emptystate.rb:
+	Remove Barney::EmptyState.
+
 	* lib/barney/core_ext.rb lib/barney/core_ext/barney.rb lib/barney/core_ext/jobs.rb:
 	Separate core_ext.rb into core_ext/barney.rb and core_ext/jobs.rb.
 	
@@ -38,7 +37,7 @@
 	Release 0.15.1
 
 	* lib/barney/jobs.rb:
-	Jobs() should raise an ArgumentError if block is missing.
+	Jobs() will raise an ArgumentError if block is missing.
 
 	* lib/barney.rb:
 	Release 0.15.0
