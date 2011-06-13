@@ -1,7 +1,20 @@
 2011-06-13  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney/core_ext/barney.rb:
+	The Barney() method evaluates itself in the scope of the passed block.  
+	
+	Methods used by Barney::Share are "injected" into the binding of the block,
+	and removed after the Barney() call has finished.
+
+	This change fixes a serious bug where some variables(instance variables)
+	could not be shared.
+
+	* lib/barney/methodlookup.rb:
+	Add Barney::MethodLookup.
+	
 	* lib/barney/core_ext.rb lib/barney/core_ext/barney.rb lib/barney/core_ext/jobs.rb:
 	Separate core_ext.rb into core_ext/barney.rb and core_ext/jobs.rb.
+	
 
 2011-06-11  Robert Gleeson <rob@flowof.info>
 

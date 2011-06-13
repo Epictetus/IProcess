@@ -1,6 +1,6 @@
 require 'thread'
 require 'barney/share'
-require 'barney/emptystate'
+require 'barney/methodlookup'
 require 'barney/core_ext/barney'
 require 'barney/core_ext/jobs'
 

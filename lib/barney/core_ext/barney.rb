@@ -19,7 +19,7 @@
 # @return [void]
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
-  emptystate = Barney::EmptyState.new
-  emptystate.instance_eval &block
-  emptystate.__barney__.wait_all 
+  Barney::MethodLookup.inject! &block
+  block.call
+  Barney::MethodLookup.deject! &block 
 end

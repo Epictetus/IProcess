@@ -11,7 +11,7 @@ end
 
 describe '#Barney' do
 
-  it 'should synchronize data using the #Barney() method.' do
+  it 'should synchronize a local variable.' do
     name = 'Robert'
 
     Barney do
@@ -21,6 +21,17 @@ describe '#Barney' do
     end
 
     assert_equal "R", name
+  end
+
+  it 'should synchronize an instance variable.' do
+    @foo = 'bar'
+
+    Barney do
+      share :@foo
+      fork { @foo = "baz" }
+    end
+
+    assert_equal "baz", @foo
   end
 
 end
