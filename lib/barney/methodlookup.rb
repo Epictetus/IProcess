@@ -1,5 +1,4 @@
 module Barney
-
   module MethodLookup
 
     class << self 
@@ -10,18 +9,19 @@ module Barney
 
       def deject! &block
         target = block.binding.eval "self" 
+        
         target.instance_eval do
-          Barney::Share.instance_methods(false).each do |meth|
-            @__barney__ = nil
-            (class << self; self; end).instance_eval { undef_method meth }
+          @__barney__ = nil
+          (class << self; self; end).instance_eval do 
+            Barney::Share.instance_methods(false).each do |meth|
+              undef_method meth
+            end
           end
         end
       end
 
       def extended object
-        object.instance_eval do
-          @__barney__ = Barney::Share.new
-        end
+        object.instance_eval { @__barney__ = Barney::Share.new }
       end
     end
 
@@ -37,6 +37,5 @@ module Barney
     end
 
   end
-
 end
 
