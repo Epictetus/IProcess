@@ -10,6 +10,7 @@ module Barney
       # @return [void]
       def inject! &block
         target = block.binding.eval "self"
+        target.instance_eval { @__barney__ = Barney::Share.new }
         target.instance_eval { extend Barney::MethodLookup }
       end
 
@@ -27,11 +28,6 @@ module Barney
         singleton.instance_eval do
           methods.each { |method| undef_method(method) }
         end
-      end
-
-      # @api private
-      def extended object
-        object.instance_eval { @__barney__ = Barney::Share.new }
       end
     end
 
