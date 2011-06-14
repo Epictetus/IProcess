@@ -3,52 +3,45 @@ module Barney
 
     class << self
       
-      # Injects the instance methods of {Barney::MethodLookup} on the "self" referenced by _block_.
+      # Extends the "self" referenced by _block_ with a _share_, _unshare_, and _fork_ method.
       #
       # @api private
       # @param  [Proc] Block
       # @return [void]
       def inject! &block
+        module_eval do
+          def share(*variables);   @__barney__.share(*variables);   end
+          def unshare(*variables); @__barney__.unshare(*variables); end
+          
+          def fork &block
+            @__barney__.fork &block
+            @__barney__.wait_all
+            @__barney__.sync
+          end
+        end
+
         target = block.binding.eval "self"
-        target.instance_eval { @__barney__ = Barney::Share.new }
-        target.instance_eval { extend Barney::MethodLookup }
+        target.instance_variable_set :@__barney__, Barney::Share.new
+        target.extend Barney::MethodLookup
       end
 
-      # Dejects(removes) the instance methods of {Barney::MethodLookup} on the "self" referenced by _block_.
-      #
+      # Removes _share_, _unshare_, and _fork_ from the "self" referenced by _block_.  
+      # 
+      # Future method calls for _share_, _unshare_, and _fork_ will be made against "self", 
+      # its superclasses, or modules it includes.
+      # 
       # @api private
       # @param  [Proc] Block
       # @return [void]
       def deject! &block
-        target    = block.binding.eval "self"
-        singleton = block.binding.eval "class << self; self; end"  
-        methods   = Barney::MethodLookup.instance_methods false
+        target = block.binding.eval "self"
+        target.instance_variable_set :@__barney__, nil
 
-        target.instance_eval { @__barney__ = nil }
-        singleton.instance_eval do
-          methods.each { |method| undef_method(method) }
-        end
+        remove_method :share
+        remove_method :unshare
+        remove_method :fork
       end
-    end
 
-    # @api private
-    # @see Barney::Share#share
-    def share *args
-      @__barney__.share *args
-    end
-
-    # @api private
-    # @see Barney::Share#unshare    
-    def unshare *args
-      @__barney__.unshare *args
-    end
-
-    # @api private
-    # @see Barney::Share#fork
-    def fork &block
-      @__barney__.fork &block
-      @__barney__.wait_all
-      @__barney__.sync
     end
 
   end
