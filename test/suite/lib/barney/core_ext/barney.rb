@@ -38,7 +38,7 @@ describe '#Barney' do
       assert_equal true, klass.run
     end
 
-    it 'should evaluate the passed block in the context it is created in.' do
+    it 'should evaluate the passed block in the context it was created in.' do
       klass = SelfScopeTest.new
       klass.execute
       
