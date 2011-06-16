@@ -2,7 +2,7 @@ module Barney
   module MethodLookup
 
     class << self
-      
+     
       # Extends the "self" referenced by _block_ with a _share_, _unshare_, and _fork_ method.
       #
       # @api private
@@ -13,7 +13,7 @@ module Barney
           def share(*variables);   @__barney__.share(*variables);   end
           def unshare(*variables); @__barney__.unshare(*variables); end
           
-          def fork &block
+          def fork &block 
             @__barney__.fork &block
             @__barney__.wait_all
             @__barney__.sync
@@ -25,8 +25,7 @@ module Barney
         target.extend Barney::MethodLookup
       end
 
-      # Removes _share_, _unshare_, and _fork_ from the "self" referenced by _block_.  
-      # 
+      # Removes _share_, _unshare_, and _fork_ from the "self" referenced by _block_.   
       # Future method calls for _share_, _unshare_, and _fork_ will be made against "self", 
       # its superclasses, or modules it includes.
       # 
