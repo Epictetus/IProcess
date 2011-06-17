@@ -8,25 +8,41 @@ If an object can't be serialized by `Marshal`, it can't be shared.  That means o
 anonymous classes, and Proc objects can't be shared by Barney.
 
 Below is an example of how simple it is to use Barney, but please take the time to look at 
-[The Wiki](https://github.com/robgleeson/barney/wiki) if you're interested in Barney, because I cover other APIs 
+[The Guides](https://github.com/robgleeson/barney/wiki) if you're interested in Barney, because I cover other APIs 
 and everything else in much more depth.
 
 Usage
 -----
 
-    #!/usr/bin/env ruby
-    require 'barney'
-    
-    Barney do
-      name = "Robert"
-      share :name
+The two main components of the DSL is the Barney method, and the Jobs method.  
+Which one you should use depends on what you want to do, but I'll show you an example of both. :)  
+(You can read about the differences and more by looking at [The Guides](http://github.com/robgleeson/barney/wiki)).
 
-      fork do
-        name.slice! 3..5
-      end
 
-      p name # "Rob"
-    end
+```ruby
+#!/usr/bin/env ruby
+require 'barney'
+
+Barney do
+  name = "Robert"
+  share :name
+
+  fork do
+    name.slice! 3..5
+  end
+
+  p name # "Rob"
+end
+```
+
+```ruby
+#!/usr/bin/env ruby
+require 'barney' 
+
+number  = 21
+results = Jobs(3) { number + number }
+p results # [42,42,42]
+```
 
 Documentation
 --------------
