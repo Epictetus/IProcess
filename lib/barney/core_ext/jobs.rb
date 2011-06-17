@@ -1,4 +1,4 @@
-# Runs _block_ in one or more subprocesses, returning the return value of each block in an Array.
+# Runs a block in one or more subprocesses, returning the return value of the block everytime it is executed. 
 #
 # @example
 #   results = Jobs(5) { 42 }
@@ -8,16 +8,16 @@
 # @param  [Fixnum] Processes  The number of subprocesses to spawn.
 # @raise  [ArgumentError]     If no block is supplied.
 # @return [Array<Object>] 
-def Jobs number, &block
+def Jobs processes
   raise ArgumentError, 'Block expected' unless block_given?
 
   barney = Barney::Share.new
   barney.share :queue
   queue = []
 
-  number.times do
+  processes.times do
     barney.fork do
-      queue << block.call
+      queue.push yield 
     end
   end
 
