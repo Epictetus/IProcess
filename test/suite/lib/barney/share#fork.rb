@@ -23,12 +23,12 @@ describe Barney::Share do
         obj.share :str
 
         %w(r u b y).each do |letter|
-          pids << obj.fork do 
+          obj.fork do 
             str << letter
           end
         end
 
-        pids.each { |pid| Process.wait pid }
+        obj.wait_all 
         obj.sync
 
         str = obj.history.map(&:value).join
