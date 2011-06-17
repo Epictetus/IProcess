@@ -14,11 +14,14 @@ and everything else in much more depth.
 Usage
 -----
 
-The two main components of the DSL is the Barney method, and the Jobs method.  
+The two main components of the DSL are the Barney method, and the Jobs method.  
 Which one you should use depends on what you want to do, but I'll show you an example of both. :)  
 
 
-_The Barney method_
+_The Barney method_  
+The Barney method executes each subprocess sequentially so shared data from the first subprocess is available to the next subprocess.  
+It is especially useful if you want to perform some operation that should be restricted to a separate address space, but be able to share the result 
+of that operation with the parent process.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -36,7 +39,9 @@ Barney do
 end
 ```
 
-_The Jobs method_
+_The Jobs method_  
+The Jobs method is especially designed for running multiple jobs in parallel.  
+The passed block is executed in one or more subprocesses, with the return value of each subprocess returned to you in an Array.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -47,8 +52,6 @@ results = Jobs(3) { number + number }
 p results # [42, 42, 42]
 ```
 
-
-… You can read about the differences and more by looking at [The Guides](http://github.com/robgleeson/barney/wiki)!
 
 Documentation
 --------------
