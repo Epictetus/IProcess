@@ -16,8 +16,9 @@ Usage
 
 The two main components of the DSL is the Barney method, and the Jobs method.  
 Which one you should use depends on what you want to do, but I'll show you an example of both. :)  
-(You can read about the differences and more by looking at [The Guides](http://github.com/robgleeson/barney/wiki)).
 
+
+_The Barney method_
 
 ```ruby
 #!/usr/bin/env ruby
@@ -35,14 +36,19 @@ Barney do
 end
 ```
 
+_The Jobs method_
+
 ```ruby
 #!/usr/bin/env ruby
 require 'barney' 
 
 number  = 21
 results = Jobs(3) { number + number }
-p results # [42,42,42]
+p results # [42, 42, 42]
 ```
+
+
+… You can read about the differences and more by looking at [The Guides](http://github.com/robgleeson/barney/wiki)!
 
 Documentation
 --------------
