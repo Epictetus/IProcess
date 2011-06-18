@@ -12,4 +12,9 @@ describe '#Jobs' do
     assert_equal [42, 42, 42, 42, 42], result
   end
 
+  it 'should return an array of arrays when an array is returned by a subprocess.' do
+    result = Jobs(2) { [1] }
+    assert_equal [[1], [1]], result
+  end
+
 end

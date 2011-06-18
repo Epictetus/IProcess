@@ -24,5 +24,5 @@ def Jobs processes
   barney.wait_all
   barney.sync
 
-  barney.history.map(&:value).flatten
+  barney.history.map(&:value).flatten 1
 end

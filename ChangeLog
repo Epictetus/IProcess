@@ -1,3 +1,8 @@
+2011-06-18  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/core_ext/jobs.rb:
+	Restrict Array#flatten from recursing more then once. Bug fix.
+
 2011-06-13  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/methodlookup.rb:
