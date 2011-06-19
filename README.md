@@ -1,4 +1,3 @@
-gem 'minitest'
  ![Barney Picture](http://i.imgur.com/VblLQ.png)
 
 Barney makes sharing data between processes easy and natural by providing a simple and easy to use DSL.  
