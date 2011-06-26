@@ -7,21 +7,17 @@ Underneath the hood, Barney is using `Marshal` (the module) to serialize objects
 If an object can't be serialized by `Marshal`, it can't be shared.  That means objects such as anonymous modules, 
 anonymous classes, and Proc objects can't be shared by Barney.
 
-Below is an example of how simple it is to use Barney, but please take the time to look at 
-[The Guides](https://github.com/robgleeson/barney/wiki) if you're interested in Barney, because I cover other APIs 
-and everything else in much more depth.
+I'll give a brief overview of the public API down below.  
+The [Guides](http://github.com/robgleeson/barney/wiki) and API documentation covers the public APIs with a bit more depth, though!
 
 Usage
 -----
 
-The two main components of the DSL are the Barney method, and the Jobs method.  
-Which one you should use depends on what you want to do, but I'll show you an example of both. :)  
-
-
-_The Barney method_  
+**The Barney method**  
 The Barney method executes each subprocess sequentially so shared data from the first subprocess is available to the next subprocess.  
-It is especially useful if you want to perform some operation that should be restricted to a separate address space, but be able to share the result 
-of that operation with the parent process.
+It is especially useful if you want to perform some operation that should be restricted to a separate process, but be able to share the result 
+of that operation with the parent process. A guide on the Barney method can be found 
+[here](http://github.com/robgleeson/barney/wiki/The-Barney-Method).
 
 ```ruby
 #!/usr/bin/env ruby
@@ -39,9 +35,10 @@ Barney do
 end
 ```
 
-_The Jobs method_  
+**The Jobs method**  
 The Jobs method is especially designed for running multiple jobs in parallel.  
-The passed block is executed in one or more subprocesses, with the return value of each subprocess returned to you in an Array.
+The passed block is executed in one or more subprocesses, with the return value of each subprocess returned to you in an Array.  
+A guide on the Jobs method can be found [here](http://github.com/robgleeson/barney/wiki/The-Jobs-Method). 
 
 ```ruby
 #!/usr/bin/env ruby
@@ -51,6 +48,7 @@ number  = 21
 results = Jobs(3) { number + number }
 p results # [42, 42, 42]
 ```
+ 
 
 
 Documentation
