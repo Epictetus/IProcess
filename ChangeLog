@@ -1,3 +1,8 @@
+2011-06-26  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/methodlookup.rb:
+	Raise a NameError if @__barney__ is defined in the calling scope of passed block.
+
 2011-06-18  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/core_ext/jobs.rb:

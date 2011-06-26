@@ -17,6 +17,7 @@
 #
 #
 # @raise [ArgumentError] If no block is supplied.
+# @raise [NameError]     If @__barney__ is defined in the binding for _block_.
 # @return [void]
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?

@@ -31,6 +31,13 @@ describe '#Barney' do
   end
 
   describe 'scope' do
+    it 'should raise a NameError when @__barney__ is already defined.' do
+      @__barney__ = nil
+      assert_raises NameError do
+        Barney {}
+      end
+    end
+
     it 'should be able to call methods in the calling scope.' do
       klass = MethodScopeTest.new
       klass.execute
