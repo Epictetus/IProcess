@@ -26,10 +26,12 @@ module Barney
           end
         end
 
-        target = block.binding.eval "self"
-        if target.instance_variable_defined? :@__barney__
-          raise NameError, "The instance variable @__barney__ has been defined in the calling scope." \
-                           "Barney is aborting to avoid unexpected behavior."
+        target         = block.binding.eval "self"
+        scope_polluted = target.instance_variable_defined? :@__barney__
+
+        if scope_polluted
+          raise NameError, "The instance variable @__barney__ has already been defined!\n" \
+                           "Barney would like to use it, but it looks like you are using it for something else."
         else
           target.instance_variable_set :@__barney__, Barney::Share.new
           target.extend Barney::MethodLookup
