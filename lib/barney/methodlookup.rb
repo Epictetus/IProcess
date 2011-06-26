@@ -47,7 +47,7 @@ module Barney
       # @return [void]
       def deject! &block
         target = block.binding.eval "self"
-        target.send :remove_instance_variable, :@__barney__
+        target.send :remove_instance_variable, :@__barney__ rescue nil
 
         remove_method :share
         remove_method :unshare

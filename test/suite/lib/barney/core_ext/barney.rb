@@ -38,6 +38,20 @@ describe '#Barney' do
       end
     end
 
+    it 'should always unpollute the calling scope, even if an exception is raised in the passed block.' do
+      begin 
+        Barney do
+          raise 
+        end
+      rescue
+      end
+      
+      assert_equal false , instance_variable_defined?(:@__barney__)
+      assert_equal Kernel, method(:fork).owner
+      assert_raises(NameError) { method(:share).owner }
+      assert_raises(NameError) { method(:unshare).owner }
+    end
+
     it 'should be able to call methods in the calling scope.' do
       klass = MethodScopeTest.new
       klass.execute

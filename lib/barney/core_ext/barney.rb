@@ -21,7 +21,11 @@
 # @return [void]
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
-  Barney::MethodLookup.inject! &block
-  block.call
-  Barney::MethodLookup.deject! &block 
+ 
+  begin
+    Barney::MethodLookup.inject! &block
+    block.call
+  ensure
+    Barney::MethodLookup.deject! &block 
+  end
 end
