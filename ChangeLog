@@ -1,3 +1,8 @@
+2011-06-29  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/share.rb: 
+	Rename Thread.current[:'__BARNEY__'] to Thread.current[:BARNEY_SERIALIZED_OBJECT]
+
 2011-06-26  Robert Gleeson <rob@flowof.info>
 
 	* lib/barney/methodlookup.rb:

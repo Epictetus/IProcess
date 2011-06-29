@@ -94,12 +94,13 @@ module Barney
     def synchronize 
       @streams.each do |stream|
         stream.out.close
-        Thread.current[:'__BARNEY__'] = Marshal.load stream.in.read
+        Thread.current[:BARNEY_SERIALIZED_OBJECT] = Marshal.load stream.in.read
         stream.in.close
-        value = @scope.eval "#{stream.variable} = ::Thread.current[:'__BARNEY__']"
+        value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEY_SERIALIZED_OBJECT]"
         @history.push HistoryItem.new(stream.variable, value)
       end
-      Thread.current[:'__BARNEY__'] = nil
+
+      Thread.current[:BARNEY_SERIALIZED_OBJECT] = nil
       @streams.clear
     end
     alias_method :sync, :synchronize
