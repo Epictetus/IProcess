@@ -8,7 +8,10 @@ If an object can't be serialized by `Marshal`, it can't be shared.  That means o
 anonymous classes, and Proc objects can't be shared by Barney.
 
 I'll give a brief overview of the public API down below.  
-The [Guides](http://github.com/robgleeson/barney/wiki) and API documentation covers the public APIs with a bit more depth, though!
+The README isn't meant to be the go-to for documentation, so if you'd like to learn more the [Guides](http://github.com/robgleeson/barney/wiki) 
+have been written to help you along your way.  
+The [API documentation](http://rubydoc.info/github/robgleeson/barney/master/) is written using YARD and takes full advantage of its features.
+
 
 Usage
 -----
@@ -16,8 +19,7 @@ Usage
 **The Barney method**  
 The Barney method executes each subprocess sequentially so shared data from the first subprocess is available to the next subprocess.  
 It is especially useful if you want to perform some operation that should be restricted to a separate process, but be able to share the result 
-of that operation with the parent process. A guide on the Barney method can be found 
-[here](http://github.com/robgleeson/barney/wiki/The-Barney-Method).
+of that operation with the parent process.  
 
 ```ruby
 #!/usr/bin/env ruby
@@ -38,7 +40,6 @@ end
 **The Jobs method**  
 The Jobs method is especially designed for running multiple jobs in parallel.  
 The passed block is executed in one or more subprocesses, with the return value of each subprocess returned to you in an Array.  
-A guide on the Jobs method can be found [here](http://github.com/robgleeson/barney/wiki/The-Jobs-Method). 
 
 ```ruby
 #!/usr/bin/env ruby
