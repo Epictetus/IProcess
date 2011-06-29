@@ -41,7 +41,7 @@ module Barney
     # @param  [Symbol, #to_sym]  Variable  Accepts the name(s) of the variables or constants you want to share.
     # @return [Array<Symbol>]              Returns a list of all variables that are being shared.
     def share *variables
-      @variables.push *variables.map(&:to_sym)
+      @variables.push(*variables.map(&:to_sym))
       @variables.uniq!
       @variables
     end
@@ -84,7 +84,7 @@ module Barney
         end
       end
       
-      @streams.push *streams
+      @streams.push(*streams)
       @pids.push @pid
       @pid
     end

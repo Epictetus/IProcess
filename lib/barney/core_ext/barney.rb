@@ -23,9 +23,9 @@ def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
  
   begin
-    Barney::MethodLookup.inject! &block
+    Barney::MethodLookup.inject!(&block)
     block.call
   ensure
-    Barney::MethodLookup.deject! &block 
+    Barney::MethodLookup.deject!(&block) 
   end
 end

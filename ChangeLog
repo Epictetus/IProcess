@@ -1,4 +1,8 @@
+
 2011-06-29  Robert Gleeson <rob@flowof.info>
+
+	* lib/barney/share.rb lib/barney/methodlookup.rb lib/barney/core_ext/barney.rb:
+	Don't emit warnings in -W2 mode.
 
 	* lib/barney/share.rb: 
 	Rename Thread.current[:'__BARNEY__'] to Thread.current[:BARNEY_SERIALIZED_OBJECT]
