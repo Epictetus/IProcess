@@ -11,11 +11,11 @@ module Barney
       # @return [void]
       def inject! &block
         module_eval do
-          def share(*variables) 
+          def share *variables 
             @__barney__.share *variables
           end
 
-          def unshare(*variables)
+          def unshare *variables
             @__barney__.unshare *variables
           end
           
