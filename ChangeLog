@@ -1,6 +1,9 @@
 
 2011-06-29  Robert Gleeson <rob@flowof.info>
 
+	* test/suite/warnings.rb test/setup.rb:
+	Assert warnings will not be emitted.
+
 	* lib/barney/share.rb lib/barney/methodlookup.rb lib/barney/core_ext/barney.rb:
 	Don't emit warnings in -W2 mode.
 
