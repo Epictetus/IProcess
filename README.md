@@ -62,6 +62,7 @@ Documentation
 **API**  
 
 * [master (git)](http://rubydoc.info/github/robgleeson/barney/master/)
+* [0.16.0](http://rubydoc.info/gems/barney/0.16.0/)
 * [0.15.1](http://rubydoc.info/gems/barney/0.15.0/)
 * [0.15.0](http://rubydoc.info/gems/barney/0.15.0/)
 * [0.14.0](http://rubydoc.info/gems/barney/0.14.0/)

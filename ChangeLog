@@ -1,6 +1,9 @@
 
 2011-06-29  Robert Gleeson <rob@flowof.info>
 
+	* lib/barney.rb:
+	Release 0.16.0
+
 	* test/suite/warnings.rb test/setup.rb:
 	Assert warnings will not be emitted.
 
