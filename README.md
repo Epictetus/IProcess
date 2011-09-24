@@ -11,7 +11,7 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  A Domain Specific Language(DSL) to share data between processes on UNIX-like operating systems.  
+  A Domain Specific Language(DSL) for sharing data between processes on UNIX-like operating systems.  
   See the Wiki and API documentation for more information.
 
 

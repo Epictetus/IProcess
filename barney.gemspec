@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors      = ["Rob Gleeson"]
   s.email        = 'rob@flowof.info'
   s.homepage     = 'https://github.com/robgleeson/barney'
-  s.summary      = 'A Domain Specific Language(DSL) to share data between processes on UNIX-like operating systems.'  
+  s.summary      = 'A Domain Specific Language(DSL) for sharing data between processes on UNIX-like operating systems.'  
   s.description  = s.summary
 
   s.files        = `git ls-files`.each_line.map(&:chomp)
