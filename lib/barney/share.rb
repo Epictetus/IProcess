@@ -44,7 +44,6 @@ class Barney::Share
     variables.each do |variable| 
       @variables.delete(variable.to_sym) 
     end
-
     @variables
   end
 
