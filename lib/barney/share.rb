@@ -3,10 +3,6 @@ class Barney::Share
   attr_reader :variables
   attr_reader :history
  
-  #
-  # @yieldparam [Barney::Share] _self 
-  #   An instance of {Barney::Share}.
-  #
   def initialize
     @streams   = []
     @history   = []
@@ -16,6 +12,8 @@ class Barney::Share
     yield(self) if block_given? 
   end
 
+  # @return [Fixnum] 
+  #   The process ID of the last spawned subprocess.
   def pid
     @streams.last.pid
   end
@@ -50,11 +48,8 @@ class Barney::Share
     @variables
   end
 
-  #
-  # Collect the status of all subprocesses spawned by a {Barney::Share Barney::Share} instance.
-  #
+  # Collect the status of all subprocesses.
   # @return [void]
-  #
   def wait_all
     @streams.each do |stream|
       begin
@@ -102,11 +97,8 @@ class Barney::Share
     pid
   end
 
-  #
   # Synchronizes data between the parent and child process.  
-  #
   # @return [void]
-  #
   def synchronize 
     @streams.each do |stream|
       stream.out.close
