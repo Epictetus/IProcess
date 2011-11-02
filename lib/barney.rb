@@ -2,6 +2,7 @@ module Barney
 end
 
 require 'thread'
+require 'barney/streampair'
 require 'barney/share'
 require 'barney/methodlookup'
 require 'barney/core_ext/barney'

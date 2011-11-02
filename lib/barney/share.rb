@@ -2,27 +2,6 @@ require 'set'
 
 class Barney::Share
 
-  #
-  # @attr [Symbol] variable 
-  #   The name of the variable associated with _in_, and _out_.
-  #
-  # @attr [IO] in       
-  #   The pipe which is used to read data.  
-  #
-  # @attr [IO] out      
-  #   The pipe which is used to write data.
-  # 
-  # @attr [Object] value
-  #   The value read from a subprocess.
-  #
-  # @attr [Fixnum] pid
-  #   The subprocess ID associated with this StreamPair.
-  #
-  # @api private
-  # 
-  StreamPair = Struct.new :variable, :in, :out, :value, :pid
-
-
   attr_reader :variables
   attr_reader :history
  
@@ -108,7 +87,7 @@ class Barney::Share
     @collected = false
 
     streams = @variables.map do |name|
-      StreamPair.new(name, *IO.pipe)
+      Barney::StreamPair.new(name, *IO.pipe)
     end
 
     pid = Kernel.fork do
