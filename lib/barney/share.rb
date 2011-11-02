@@ -40,8 +40,11 @@ class Barney::Share
     @variables.subtract variables.map(&:to_sym)
   end
 
+  #
   # Collect the status of all subprocesses.
+  #
   # @return [void]
+  #
   def wait_all
     @history.each do |stream|
       begin
@@ -61,7 +64,7 @@ class Barney::Share
   # @raise [ArgumentError] 
   #   Raises an ArgumentError if a block or Proc object isn't supplied. 
   #
-  # @return [Fixnum]        
+  # @return [Fixnum] 
   #   Returns the Process ID(PID) of the spawned child process. 
   #
   def fork &block
@@ -89,8 +92,11 @@ class Barney::Share
     pid
   end
 
+  #
   # Synchronizes data between the parent and child process.  
+  #
   # @return [void]
+  #
   def synchronize 
     @streams.each do |stream|
       stream.out.close
