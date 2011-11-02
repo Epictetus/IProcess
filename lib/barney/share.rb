@@ -1,5 +1,3 @@
-require 'set'
-
 class Barney::Share
 
   attr_reader :variables

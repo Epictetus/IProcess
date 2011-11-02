@@ -1,6 +1,7 @@
 module Barney 
 end
 
+require 'set'
 require 'thread'
 require 'barney/streampair'
 require 'barney/share'
