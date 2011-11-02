@@ -14,7 +14,6 @@ class Barney::Share
     @history   = []
     @variables = SortedSet.new
     @scope     = nil
-    @collected = false
 
     yield(self) if block_given? 
   end
@@ -60,12 +59,11 @@ class Barney::Share
   #
   def wait_all
     @streams.each do |stream|
-      if @collected == false
+      begin
         Process.wait(stream.pid)
+      rescue Errno::ECHILD
       end
     end
-
-    @collected = true
   end
 
   #
@@ -84,7 +82,6 @@ class Barney::Share
   def fork &block
     raise ArgumentError, "A block or Proc object is expected" unless block_given?
     @scope     = block.binding
-    @collected = false
 
     streams = @variables.map do |name|
       Barney::StreamPair.new(name, *IO.pipe)
