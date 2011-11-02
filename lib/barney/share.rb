@@ -9,7 +9,9 @@ class Barney::Share
     @variables = SortedSet.new
     @scope     = nil
 
-    yield(self) if block_given? 
+    if block_given?
+      yield(self)
+    end
   end
 
   #
@@ -67,7 +69,7 @@ class Barney::Share
   #
   def fork &block
     raise ArgumentError, "A block or Proc object is expected" unless block_given?
-    @scope     = block.binding
+    @scope = block.binding
 
     streams = @variables.map do |name|
       Barney::StreamPair.new(name, *IO.pipe)
