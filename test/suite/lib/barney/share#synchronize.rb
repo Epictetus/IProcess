@@ -68,11 +68,11 @@ describe Barney::Share do
 
       @instance.share :x
       @instance.fork { }
-      Process.wait @instance.pid
+      @instance.wait_all
 
       @instance.share :y 
       @instance.fork { b = 6 }
-      Process.wait @instance.pid
+      @instance.wait_all
 
       @instance.sync # will raise NoMethodError if fails. 
     end
@@ -83,7 +83,7 @@ describe Barney::Share do
 
       @instance.share :x, :y
       @instance.fork { }
-      Process.wait @instance.pid
+      @instance.wait_all
       @instance.sync
 
       assert_equal 4, @instance.history[0].value

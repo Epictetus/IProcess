@@ -12,12 +12,6 @@ class Barney::Share
     yield(self) if block_given? 
   end
 
-  # @return [Fixnum] 
-  #   The process ID of the last spawned subprocess.
-  def pid
-    @streams.last.pid
-  end
-
   #
   # Marks a variable or constant to be shared between two processes. 
   #
@@ -50,7 +44,7 @@ class Barney::Share
   # Collect the status of all subprocesses.
   # @return [void]
   def wait_all
-    @streams.each do |stream|
+    @history.each do |stream|
       begin
         Process.wait(stream.pid)
       rescue Errno::ECHILD
