@@ -1,3 +1,5 @@
+require 'set'
+
 class Barney::Share
 
   #
@@ -24,7 +26,7 @@ class Barney::Share
   HistoryItem = Struct.new :variable, :value
 
   #
-  # @return [Array<Symbol>] 
+  # @return [SortedSet<Symbol>] 
   #   A list of variables being shared for a instance of {Barney::Share}.
   #
   attr_reader :variables
@@ -49,7 +51,7 @@ class Barney::Share
   #
   def initialize
     @streams   = []
-    @variables = []
+    @variables = SortedSet.new
     @history   = []
     @pids      = []
     @pid       = nil
@@ -63,13 +65,11 @@ class Barney::Share
   # @param [#to_sym] variables  
   #   Accepts the name(s) of the variables or constants you want to share.
   #
-  # @return [Array<Symbol>] 
+  # @return [SortedSet<Symbol>] 
   #   Returns a list of all variables that are being shared.
   #
   def share *variables
-    @variables.push(*variables.map(&:to_sym))
-    @variables.uniq!
-    @variables
+    @variables.merge variables.map(&:to_sym)
   end
 
   #
@@ -78,11 +78,14 @@ class Barney::Share
   # @param [#to_sym] variables  
   #   Accepts the name(s) of the variables or constants you want to stop sharing.
   #
-  # @return [Array<Symbol>]             
+  # @return [SortedSet<Symbol>]             
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
-    variables.each { |variable| @variables.delete variable.to_sym }
+    variables.each do |variable| 
+      @variables.delete(variable.to_sym) 
+    end
+
     @variables
   end
 
@@ -92,7 +95,10 @@ class Barney::Share
   # @return [void]
   #
   def wait_all
-    @pids.each { |pid| Process.wait pid }
+    @pids.each do |pid| 
+      Process.wait(pid)
+    end
+
     @pids.clear
   end
 
@@ -113,8 +119,8 @@ class Barney::Share
     raise ArgumentError, "A block or Proc object is expected" unless block_given?
     @scope = block.binding
 
-    streams = Array.new @variables.size do |index|
-      StreamPair.new @variables[index], *IO.pipe
+    streams = @variables.map do |name|
+      StreamPair.new(name, *IO.pipe)
     end
 
     @pid = Kernel.fork do
