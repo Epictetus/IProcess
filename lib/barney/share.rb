@@ -12,37 +12,18 @@ class Barney::Share
   # @attr [IO] out      
   #   The pipe which is used to write data.
   # 
+  # @attr [Object] value
+  #   The value read from a subprocess.
+  #
+  # @attr [Fixnum] pid
+  #   The subprocess ID associated with this StreamPair.
+  #
   # @api private
   # 
-  StreamPair = Struct.new :variable, :in, :out
+  StreamPair = Struct.new :variable, :in, :out, :value, :pid
 
-  #
-  # @attr [Symbol] variable 
-  #   The variable name.
-  #
-  # @attr [Object] value    
-  #   The value of the variable.
-  #
-  HistoryItem = Struct.new :variable, :value
 
-  #
-  # @return [SortedSet<Symbol>] 
-  #   A list of variables being shared for a instance of {Barney::Share}.
-  #
   attr_reader :variables
-
-  #
-  # @return [Fixnum]
-  #   The Process ID of the last forked process.
-  #
-  attr_reader :pid
-
-  #
-  # @see HistoryItem
-  #
-  # @return [Array<HistoryItem>]
-  #   An Array of {HistoryItem} objects.
-  #
   attr_reader :history
  
   #
@@ -51,12 +32,16 @@ class Barney::Share
   #
   def initialize
     @streams   = []
-    @variables = SortedSet.new
     @history   = []
-    @pids      = []
-    @pid       = nil
+    @variables = SortedSet.new
     @scope     = nil
-    yield self if block_given? 
+    @collected = false
+
+    yield(self) if block_given? 
+  end
+
+  def pid
+    @streams.last.pid
   end
 
   #
@@ -95,11 +80,13 @@ class Barney::Share
   # @return [void]
   #
   def wait_all
-    @pids.each do |pid| 
-      Process.wait(pid)
+    @streams.each do |stream|
+      if @collected == false
+        Process.wait(stream.pid)
+      end
     end
 
-    @pids.clear
+    @collected = true
   end
 
   #
@@ -117,13 +104,14 @@ class Barney::Share
   #
   def fork &block
     raise ArgumentError, "A block or Proc object is expected" unless block_given?
-    @scope = block.binding
+    @scope     = block.binding
+    @collected = false
 
     streams = @variables.map do |name|
       StreamPair.new(name, *IO.pipe)
     end
 
-    @pid = Kernel.fork do
+    pid = Kernel.fork do
       block.call
       streams.each do |stream|
         stream.in.close  
@@ -131,10 +119,13 @@ class Barney::Share
         stream.out.close
       end
     end
-    
+   
+    streams.each do |stream|
+      stream.pid = pid
+    end
+
     @streams.push(*streams)
-    @pids.push @pid
-    @pid
+    pid
   end
 
   #
@@ -147,8 +138,8 @@ class Barney::Share
       stream.out.close
       Thread.current[:BARNEY_SERIALIZED_OBJECT] = Marshal.load stream.in.read
       stream.in.close
-      value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEY_SERIALIZED_OBJECT]"
-      @history.push HistoryItem.new(stream.variable, value)
+      stream.value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEY_SERIALIZED_OBJECT]"
+      @history.push(stream)
     end
 
     Thread.current[:BARNEY_SERIALIZED_OBJECT] = nil
