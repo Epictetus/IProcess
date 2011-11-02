@@ -37,10 +37,7 @@ class Barney::Share
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
-    variables.each do |variable| 
-      @variables.delete(variable.to_sym) 
-    end
-    @variables
+    @variables.subtract(variables)
   end
 
   # Collect the status of all subprocesses.
