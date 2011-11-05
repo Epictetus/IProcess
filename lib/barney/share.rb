@@ -2,7 +2,13 @@ class Barney::Share
 
   attr_reader :variables
   attr_reader :history
- 
+
+  #
+  # @yieldparam [Barney::Share] _self 
+  #   Passes 'self' onto a block if given.
+  #
+  # @return [Barney::Share]
+  #
   def initialize
     @streams   = []
     @history   = []
