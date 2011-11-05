@@ -106,13 +106,13 @@ class Barney::Share
   def synchronize 
     @streams.each do |stream|
       stream.out.close
-      Thread.current[:BARNEY_SERIALIZED_OBJECT] = Marshal.load stream.in.read
+      Thread.current[:BARNEYS_SERIALIZED_OBJECT] = Marshal.load stream.in.read
       stream.in.close
-      stream.value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEY_SERIALIZED_OBJECT]"
+      stream.value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEYS_SERIALIZED_OBJECT]"
       @history.push(stream)
     end
 
-    Thread.current[:BARNEY_SERIALIZED_OBJECT] = nil
+    Thread.current[:BARNEYS_SERIALIZED_OBJECT] = nil
     @streams.clear
   end
   alias_method :sync, :synchronize
