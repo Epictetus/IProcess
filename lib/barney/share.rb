@@ -17,7 +17,7 @@ class Barney::Share
   #
   # Marks a variable or constant to be shared between two processes. 
   #
-  # @param [#to_sym] variables  
+  # @param [Array<#to_sym>] variables  
   #   Accepts the name(s) of the variables or constants you want to share.
   #
   # @return [SortedSet<Symbol>] 
@@ -30,7 +30,7 @@ class Barney::Share
   #
   # Removes a variable or constant from being shared between two processes.
   #
-  # @param [#to_sym] variables  
+  # @param [Array<#to_sym>] variables  
   #   Accepts the name(s) of the variables or constants you want to stop sharing.
   #
   # @return [SortedSet<Symbol>]             
