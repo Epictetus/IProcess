@@ -1,6 +1,6 @@
-# Evaluates a block in the calling scope but provides access to the {Barney::Share#share}, 
-# {Barney::Share#unshare}, and {Barney::Share#fork} methods.  
-# Collecting the status of subprocesses and {Barney::Share#sync synchronization} is handled for you. 
+# Evaluates a block in the calling scope but provides access to the {Barney::Process#share}, 
+# {Barney::Process#unshare}, and {Barney::Process#fork} methods.  
+# Collecting the status of subprocesses and {Barney::Process#sync synchronization} is handled for you. 
 #
 # @example
 #    

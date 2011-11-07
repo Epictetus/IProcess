@@ -32,7 +32,7 @@ module Barney::MethodLookup
         raise NameError, "The instance variable @__barney__ has already been defined!\n" \
                          "Barney would like to use it, but it looks like you are using it for something else."
       else
-        target.instance_variable_set :@__barney__, Barney::Share.new
+        target.instance_variable_set :@__barney__, Barney::Process.new
         target.extend Barney::MethodLookup
       end
     end

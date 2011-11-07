@@ -1,9 +1,9 @@
-describe Barney::Share do
+describe Barney::Process do
   
   describe '#unshare' do
 
     before do
-      @instance = Barney::Share.new
+      @instance = Barney::Process.new
     end
 
     it 'should assert a variable can be unshared before a subprocess is spawned.' do

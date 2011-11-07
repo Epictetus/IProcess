@@ -11,7 +11,7 @@
 def Jobs processes
   raise ArgumentError, 'Block expected' unless block_given?
 
-  barney = Barney::Share.new
+  barney = Barney::Process.new
   barney.share :queue
   queue = []
 

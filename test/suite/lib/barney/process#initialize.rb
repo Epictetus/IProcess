@@ -1,11 +1,11 @@
-describe Barney::Share do
+describe Barney::Process do
   
   describe '#initialize' do
   
     it 'should take a block' do
       called = false
       
-      Barney::Share.new do |obj| 
+      Barney::Process.new do |obj| 
         called = true 
       end
 

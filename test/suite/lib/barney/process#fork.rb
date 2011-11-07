@@ -1,16 +1,16 @@
-describe Barney::Share do
+describe Barney::Process do
   
   describe '#fork' do
 
     it 'should return the Process ID(PID) on success.' do
-      pid = Barney::Share.new.fork { }
+      pid = Barney::Process.new.fork { }
       Process.wait pid
       assert_equal Fixnum, pid.class
     end
 
     it 'should raise an ArgumentError without a block or Proc.' do
       assert_raises ArgumentError do
-        Barney::Share.new.fork
+        Barney::Process.new.fork
       end
     end
 
@@ -19,7 +19,7 @@ describe Barney::Share do
         str = ""
         pids = []
 
-        obj = Barney::Share.new
+        obj = Barney::Process.new
         obj.share :str
 
         %w(r u b y).each do |letter|

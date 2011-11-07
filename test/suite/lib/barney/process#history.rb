@@ -1,9 +1,9 @@
-describe Barney::Share do
+describe Barney::Process do
   
   describe '#history' do
 
     it 'should provide the correct history.' do     
-      object = Barney::Share.new
+      object = Barney::Process.new
       object.share :message
       message = ""
 

@@ -4,7 +4,7 @@ end
 require 'set'
 require 'thread'
 require 'barney/streampair'
-require 'barney/share'
+require 'barney/process'
 require 'barney/methodlookup'
 require 'barney/core_ext/barney'
 require 'barney/core_ext/jobs'
