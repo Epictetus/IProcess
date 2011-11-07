@@ -61,14 +61,13 @@ class Barney::Share
   end
 
   #
-  # Spawns a child process.  
-  # It can be treated like the Kernel.fork method, but a block or Proc object is a required argument.
-  # 
+  # Spawns a child process.   
+  #
   # @param [Proc] &block
-  #   A block or Proc object that will be executed in a child process.
+  #   A Proc or block that will be executed in a child process.
   #
   # @raise [ArgumentError] 
-  #   Raises an ArgumentError if a block or Proc object isn't supplied. 
+  #   Raises an ArgumentError if a Proc or block is not given.
   #
   # @return [Fixnum] 
   #   Returns the Process ID(PID) of the spawned child process. 
