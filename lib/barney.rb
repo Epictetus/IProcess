@@ -8,6 +8,7 @@ require 'barney/process'
 require 'barney/methodlookup'
 require 'barney/core_ext/barney'
 require 'barney/core_ext/jobs'
+require 'barney/core_ext/symbol'
 require 'barney/version'
 
 # Ruby Enterprise Edition(REE).
