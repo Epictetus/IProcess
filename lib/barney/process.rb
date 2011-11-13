@@ -83,9 +83,9 @@ class Barney::Process
     pid = Kernel.fork do
       block.call
       streams.each do |stream|
-        stream.in.close  
-        stream.out.write Marshal.dump(@scope.eval("#{stream.variable}"))
-        stream.out.close
+        stream.input.close  
+        stream.output.write Marshal.dump(@scope.eval("#{stream.variable}"))
+        stream.output.close
       end
     end
    
@@ -104,9 +104,9 @@ class Barney::Process
   #
   def synchronize 
     @streams.each do |stream|
-      stream.out.close
-      Thread.current[:BARNEYS_SERIALIZED_OBJECT] = Marshal.load stream.in.read
-      stream.in.close
+      stream.output.close
+      Thread.current[:BARNEYS_SERIALIZED_OBJECT] = Marshal.load stream.input.read
+      stream.input.close
       stream.value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEYS_SERIALIZED_OBJECT]"
       @history.push(stream)
     end
