@@ -2,7 +2,7 @@ module Barney
   
   #
   # @attr [Symbol] variable 
-  #   The name of the variable associated with _in_, and _out_.
+  #   The name of the variable associated with _input_, and _output_.
   #
   # @attr [IO] input     
   #   The pipe which is used to read data.  
