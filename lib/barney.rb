@@ -3,9 +3,10 @@ end
 
 require 'set'
 require 'thread'
+require 'mixit'
 require 'barney/streampair'
 require 'barney/process'
-require 'barney/methodlookup'
+require 'barney/natural_language'
 require 'barney/core_ext/barney'
 require 'barney/core_ext/jobs'
 require 'barney/core_ext/symbol'

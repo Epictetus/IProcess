@@ -31,13 +31,6 @@ describe '#Barney' do
   end
 
   describe 'scope' do
-    it 'should raise a NameError when @__barney__ is already defined.' do
-      @__barney__ = nil
-      assert_raises NameError do
-        Barney {}
-      end
-    end
-
     it 'should always unpollute the calling scope, even if an exception is raised in the passed block.' do
       begin 
         Barney do
@@ -64,20 +57,6 @@ describe '#Barney' do
       klass.execute
       
       assert_equal "SelfScopeTest", klass.self 
-    end
-
-    it 'should inject and then deject #share, #unshare and #fork on the calling self.' do
-      Barney do
-        assert_equal "#Barney::scope"    , self.class.to_s
-        assert_equal Barney::MethodLookup, method(:share).owner
-        assert_equal Barney::MethodLookup, method(:unshare).owner
-        assert_equal Barney::MethodLookup, method(:fork).owner
-      end
-
-      assert_equal "#Barney::scope", self.class.to_s
-      assert_raises(NameError) { method(:share) }
-      assert_raises(NameError) { method(:unshare) }
-      assert_equal Kernel, method(:fork).owner
     end
   end
 

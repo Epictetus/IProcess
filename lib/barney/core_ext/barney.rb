@@ -21,11 +21,8 @@
 # @return [void]
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
- 
-  begin
-    Barney::MethodLookup.inject!(&block)
+  
+  Mixit.mix(Barney::NaturalLanguage, block) do 
     block.call
-  ensure
-    Barney::MethodLookup.deject!(&block) 
   end
 end
