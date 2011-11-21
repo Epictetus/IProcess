@@ -1,5 +1,13 @@
 require 'delegate'
 
+#
+# Earlier versions of Ruby (<1.9) don't implement Symbol#<=>.
+# I want to avoid monkey patching Symbol on 1.8, and so: Barney::Symbol.
+#
+# I hope when 1.8 becomes obsolete I can remove this file because it creates
+# one object for every Symbol, although there is a cache so two objects are 
+# never created for one Symbol.
+#
 class Barney::Symbol < Delegator
  
   class << self
