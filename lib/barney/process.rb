@@ -30,7 +30,9 @@ class Barney::Process
   #   Returns a list of all variables that are being shared.
   #
   def share *variables
-    @variables.merge variables.map(&:to_sym)
+    @variables.merge variables.map { |var|
+      Barney::Symbol.new(var)
+    }
   end
 
   #
@@ -43,7 +45,9 @@ class Barney::Process
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
-    @variables.subtract variables.map(&:to_sym)
+    @variables.subtract variables.map { |var|
+      Barney::Symbol.new(var)
+    }
   end
 
   #

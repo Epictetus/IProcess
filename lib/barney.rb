@@ -6,10 +6,10 @@ require 'thread'
 require 'mixit'
 require 'barney/streampair'
 require 'barney/process'
+require 'barney/symbol'
 require 'barney/natural_language'
 require 'barney/core_ext/barney'
 require 'barney/core_ext/jobs'
-require 'barney/core_ext/symbol'
 require 'barney/version'
 
 # Ruby Enterprise Edition(REE).
