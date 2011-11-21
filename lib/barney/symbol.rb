@@ -23,11 +23,10 @@ class Barney::Symbol < Delegator
     @symbol.hash
   end
 
-  if RUBY_VERSION[0..2] == "1.8"
-    def <=>(other)
-      return unless other.kind_of? Barney::Symbol
-      to_s <=> other.to_s
-    end
+  # < Ruby 1.9 cannot compare Symbols.
+  def <=>(other)
+    return unless other.kind_of? Barney::Symbol
+    to_s <=> other.to_s
   end
 
 end
