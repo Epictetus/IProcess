@@ -24,7 +24,7 @@ class Barney::Process
   # Marks a variable or constant to be shared between two processes. 
   #
   # @param [Array<#to_sym>] variables  
-  #   Accepts the name(s) of the variables or constants you want to share.
+  #   Accepts the name(s) of the variables or constants to share.
   #
   # @return [SortedSet<Symbol>] 
   #   Returns a list of all variables that are being shared.
@@ -37,7 +37,7 @@ class Barney::Process
   # Removes a variable or constant from being shared between two processes.
   #
   # @param [Array<#to_sym>] variables  
-  #   Accepts the name(s) of the variables or constants you want to stop sharing.
+  #   Accepts the name(s) of the variables or constants to stop sharing.
   #
   # @return [SortedSet<Symbol>]             
   #   Returns a list of the variables that are still being shared.
@@ -73,7 +73,10 @@ class Barney::Process
   #   Returns the Process ID(PID) of the spawned child process. 
   #
   def fork &block
-    raise ArgumentError, "A block or Proc object is expected" unless block_given?
+    unless block_given?
+      raise ArgumentError, "A block or Proc object is expected" 
+    end
+
     @scope = block.binding
 
     streams = @variables.map do |name|
@@ -104,14 +107,17 @@ class Barney::Process
   #
   def synchronize 
     @streams.each do |stream|
+      expr = "#{stream.variable} = ::Thread.current[:__barney__]"
+      
       stream.output.close
-      Thread.current[:BARNEYS_SERIALIZED_OBJECT] = Marshal.load stream.input.read
+      Thread.current[:__barney__] = Marshal.load(stream.input.read)
       stream.input.close
-      stream.value = @scope.eval "#{stream.variable} = ::Thread.current[:BARNEYS_SERIALIZED_OBJECT]"
+      stream.value = @scope.eval(expr)   
+      
       @history.push(stream)
     end
 
-    Thread.current[:BARNEYS_SERIALIZED_OBJECT] = nil
+    Thread.current[:__barney__] = nil
     @streams.clear
   end
   alias_method :sync, :synchronize
