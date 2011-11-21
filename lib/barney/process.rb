@@ -83,9 +83,9 @@ class Barney::Process
 
     @scope = block.binding
 
-    streams = @variables.map do |name|
+    streams = @variables.map { |name|
       Barney::StreamPair.new(name, *IO.pipe)
-    end
+    }
 
     pid = Kernel.fork do
       block.call
@@ -98,9 +98,9 @@ class Barney::Process
    
     streams.each do |stream|
       stream.pid = pid
+      @streams.push(stream)
     end
 
-    @streams.push(*streams)
     pid
   end
 
