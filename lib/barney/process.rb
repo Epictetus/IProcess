@@ -26,7 +26,7 @@ class Barney::Process
   # @param [Array<#to_sym>] variables  
   #   Accepts the name(s) of the variables or constants to share.
   #
-  # @return [SortedSet<Symbol>] 
+  # @return [SortedSet<Barney::Symbol>] 
   #   Returns a list of all variables that are being shared.
   #
   def share *variables
@@ -41,7 +41,7 @@ class Barney::Process
   # @param [Array<#to_sym>] variables  
   #   Accepts the name(s) of the variables or constants to stop sharing.
   #
-  # @return [SortedSet<Symbol>]             
+  # @return [SortedSet<Barney::Symbol>]             
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
