@@ -22,7 +22,7 @@
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
   
-  Mixit.mix(Barney::NaturalLanguage, block) do 
+  Mixit.temporarily(Barney::NaturalLanguage, block) do 
     block.call
   end
 end
