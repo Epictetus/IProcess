@@ -1,10 +1,27 @@
 require 'delegate'
 
 class Barney::Symbol < Delegator
-  
+ 
+  class << self
+    def find var
+      cache.find { |item|
+        item == var
+      }
+    end
+
+    def cache 
+      @cache = @cache || []
+    end
+
+    def clear_cache
+      @cache.clear
+    end
+  end
+
   def initialize symbol
     @symbol = symbol.to_sym
     super(@symbol)
+    Barney::Symbol.cache.push(self)
   end
 
   def __getobj__

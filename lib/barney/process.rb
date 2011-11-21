@@ -31,7 +31,7 @@ class Barney::Process
   #
   def share *variables
     @variables.merge variables.map { |var|
-      Barney::Symbol.new(var)
+      Barney::Symbol.find(var) || Barney::Symbol.new(var)
     }
   end
 
@@ -46,7 +46,7 @@ class Barney::Process
   #
   def unshare *variables
     @variables.subtract variables.map { |var|
-      Barney::Symbol.new(var)
+      Barney::Symbol.find(var) || Barney::Symbol.new(var)
     }
   end
 
