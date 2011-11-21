@@ -1,9 +1,5 @@
-# Evaluates a block in the calling scope but provides access to the {Barney::Process#share}, 
-# {Barney::Process#unshare}, and {Barney::Process#fork} methods.  
-# Collecting the status of subprocesses and {Barney::Process#sync synchronization} is handled for you. 
 #
-# @example
-#    
+# @example   
 #   Barney do
 #     name = "Robert"
 #     share :name
@@ -16,9 +12,11 @@
 #   end
 #
 #
-# @raise [ArgumentError] If no block is supplied.
-# @raise [NameError]     If @__barney__ is defined in the binding for _block_.
+# @raise [ArgumentError] 
+#   If no block is supplied.
+#
 # @return [void]
+#
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
   
