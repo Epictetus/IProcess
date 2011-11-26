@@ -1,4 +1,13 @@
 module Barney::NaturalLanguage
+  
+  class << self
+    def cleanup! scope
+      if scope.instance_variable_defined? :@__barney__
+        scope.send(:remove_instance_variable, :@__barney__)
+      end
+    end
+  end
+
   def share *variables 
     __barney__.share(*variables)
   end
