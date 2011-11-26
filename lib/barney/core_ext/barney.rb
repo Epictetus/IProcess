@@ -25,6 +25,6 @@ def Barney &block
       block.call
     end
   else
-    yield(Barney::Process.new)
+    yield Barney::Process.new
   end
 end
