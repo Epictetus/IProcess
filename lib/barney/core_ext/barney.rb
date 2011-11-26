@@ -20,11 +20,11 @@
 def Barney &block
   raise ArgumentError, "Block expected" unless block_given?
  
-  if block.arity != 0
+  if block.arity == 1
+    yield Barney::Process.new
+  else
     Mixit.temporarily Barney::NaturalLanguage, :scope => block do 
       block.call
     end
-  else
-    yield Barney::Process.new
   end
 end
