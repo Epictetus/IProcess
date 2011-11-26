@@ -8,24 +8,18 @@ module Barney::NaturalLanguage
     end
   end
 
-  #
   # @see Barney::Process#share
-  #
   def share *variables 
     __barney__.share(*variables)
   end
 
 
-  #
-  # @see Barney::Process#unshare
-  # 
+  # @see Barney::Process#unshare 
   def unshare *variables
     __barney__.unshare(*variables)
   end
   
-  #
   # @see Barney::Process#fork
-  #
   def fork &block 
     __barney__.fork(&block)
     __barney__.wait_all
