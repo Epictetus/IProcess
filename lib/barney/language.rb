@@ -1,4 +1,4 @@
-module Barney::NaturalLanguage
+module Barney::Language
   
   class << self
     def cleanup! scope

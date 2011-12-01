@@ -23,7 +23,7 @@ def Barney &block
   if block.arity == 1
     yield Barney::Process.new
   else
-    Mixit.temporarily Barney::NaturalLanguage, :scope => block do 
+    Mixit.temporarily :modules => [Barney::Language], :scope => block do 
       block.call
     end
   end
