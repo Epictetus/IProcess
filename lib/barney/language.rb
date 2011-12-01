@@ -8,18 +8,39 @@ module Barney::Language
     end
   end
 
-  # @see Barney::Process#share
+  #
+  # @param *variables
+  #   (see Barney::Process#share)
+  #
+  # @return 
+  #   (see Barney::Process#share)
+  #
   def share *variables 
     __barney__.share(*variables)
   end
 
 
-  # @see Barney::Process#unshare 
+  #
+  # @param *variables
+  #   (see Barney::Process#share)
+  #
+  # @return
+  #   (see Barney::Process#unshare)
+  #
   def unshare *variables
     __barney__.unshare(*variables)
   end
   
-  # @see Barney::Process#fork
+  #
+  # Spawns a subprocess, and handles synchronization of shared variables.  
+  # The status of the subprocess is also collected for you.
+  #
+  # @param &block
+  #   (see Barney::Process#fork)
+  #
+  # @return 
+  #   (see Barney::Process#fork)
+  #
   def fork &block 
     __barney__.fork(&block)
     __barney__.wait_all
