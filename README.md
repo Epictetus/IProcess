@@ -11,8 +11,20 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  A Domain Specific Language(DSL) for sharing data between processes on UNIX-like operating systems.  
+  A Domain Specific Language(DSL) for sharing data between processes on 
+  UNIX-like operating systems.  
   See the Wiki and API documentation for more information.
+
+
+__WHY?__
+
+* To spawn a subprocess, apply a restrictions to the subprocess,   
+  then collect and send data back to the parent process. 
+
+* Spawn multiple parallel jobs, then collect and return data.  
+
+The first motiviation is solved through the example down below.  
+The second  motivation is solved by the Jobs() method. Wiki has more info :)
 
 
 __EXAMPLES__
