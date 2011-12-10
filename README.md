@@ -18,10 +18,12 @@ __DESCRIPTION__
 
 __WHY?__
 
-* To spawn a subprocess, apply a restrictions to the subprocess,   
-  then collect and send data back to the parent process. 
+So I could:
 
-* To spawn multiple parallel jobs, then collect and return data.  
+* Spawn a subprocess, apply restrictions, then collect and send data back   
+  to the parent process.
+
+* Spawn multiple parallel jobs, then collect and return data.  
 
 The first motiviation is solved through the example down below.  
 The second  motivation is solved by the Jobs() method. Wiki has more info :)
