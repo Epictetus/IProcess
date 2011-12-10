@@ -11,8 +11,8 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  A Domain Specific Language(DSL) for sharing data between processes on 
-  UNIX-like operating systems.  
+  A Domain Specific Language(DSL) that can be used to share data between 
+  processes on UNIX-like operating systems.  
   See the Wiki and API documentation for more information.
 
 
@@ -21,7 +21,7 @@ __WHY?__
 So I could:
 
 * Spawn a subprocess, apply restrictions, then collect and send data back   
-  to the parent process.
+  to the parent process (that was for a IRC bot evaluating Ruby code).
 
 * Spawn multiple parallel jobs, then collect and return data.  
 
@@ -30,6 +30,10 @@ The second  motivation is solved by the Jobs() method. Wiki has more info :)
 
 
 __EXAMPLES__
+
+__1.__
+
+Sequential in nature (each subprocess must finish before another can execute):
 
     name = "rob"
 
@@ -43,6 +47,15 @@ __EXAMPLES__
 
     p name # => "Rob"
     
+__2.__
+
+A subprocess is spawned 5 times, in parallel:
+
+    workload = Jobs(5) {
+      1 + 1
+    }
+
+    p workload # [2, 2, 2, 2, 2]
 
 __INSTALL__
 
