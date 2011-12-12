@@ -11,19 +11,21 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  A Domain Specific Language(DSL) that can be used to share data between 
-  processes on UNIX-like operating systems.  
+  A Domain Specific Language(DSL) that can be used to share Ruby objects 
+  between processes on UNIX-like operating systems.  
   See the Wiki and API documentation for more information.
 
 
 __WHY?__
 
-So I could:
+I wanted to be able to do a few things, like: 
 
-* Spawn a subprocess, apply restrictions, then collect and send data back   
-  to the parent process (that was for a IRC bot evaluating Ruby code).
+* Spawn a subprocess, apply restrictions to that subprocess, then collect 
+  and send Ruby objects back  to the parent process.  
+  (that was for a IRC bot evaluating Ruby code).
 
-* Spawn multiple parallel jobs, then collect and return data.  
+* Spawn multiple parallel jobs, then collect and send back Ruby objects to the
+  parent process.
 
 
 __PLATFORM SUPPORT__
