@@ -25,8 +25,18 @@ So I could:
 
 * Spawn multiple parallel jobs, then collect and return data.  
 
-The first motiviation is solved through the example down below.  
-The second  motivation is solved by the Jobs() method. Wiki has more info :)
+
+__PLATFORM SUPPORT__
+
+_supported_
+
+  * Rubinius
+  * CRuby (1.8 / 1.9)
+
+_unsupported_
+  
+  * MacRuby
+  * JRuby
 
 
 __EXAMPLES__
