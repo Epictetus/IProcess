@@ -28,19 +28,6 @@ I wanted to be able to do a few things, like:
   parent process.
 
 
-__PLATFORM SUPPORT__
-
-_supported_
-
-  * Rubinius
-  * CRuby (1.8 / 1.9)
-
-_unsupported_
-  
-  * MacRuby
-  * JRuby
-
-
 __EXAMPLES__
 
 __1.__
@@ -68,6 +55,18 @@ A subprocess is spawned 5 times, in parallel:
     }
 
     p workload # [2, 2, 2, 2, 2]
+
+__PLATFORM SUPPORT__
+
+_supported_
+
+  * Rubinius
+  * CRuby (1.8 / 1.9)
+
+_unsupported_
+  
+  * MacRuby
+  * JRuby
 
 __INSTALL__
 
