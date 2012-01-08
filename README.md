@@ -4,7 +4,6 @@ __OVERVIEW__
 | Project         | IProcess    
 |:----------------|:--------------------------------------------------
 | Homepage        | https://github.com/robgleeson/iprocess
-| Wiki            | https://github.com/robgleeson/iprocess/wiki
 | Documentation   | http://rubydoc.info/gems/iprocess/frames 
 | Author          | Rob Gleeson             
 
@@ -13,8 +12,8 @@ __DESCRIPTION__
 
   IProcess, short for _Inter Process Communication(IPC) Process_, is a    
   Domain Specific Language(DSL) that can be used to share Ruby objects     
-  between processes on UNIX-like operating systems. The wiki has guide-style  
-  tutorials you might want to check out, but the README covers the basics.  
+  between processes on UNIX-like operating systems. The README covers the   
+  basics, and there is the API documentation for everything else.
 
   This project was formerly known as 'Barney'.
 
@@ -38,10 +37,10 @@ Sequential in nature (each subprocess must finish before another can execute):
 
     name = "rob"
 
-    IProcess.new do
-      share :name
+    IProcess.new do |process|
+      process.share :name
       
-      fork do 
+      process.fork do 
         name.capitalize!
       end
     end
