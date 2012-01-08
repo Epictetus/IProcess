@@ -1,10 +1,38 @@
 context IProcess do
 
+  context 'initialize' do
+    it 'must call block if given.' do
+      mock = MiniTest::Mock.new
+      mock.expect :ok, nil
+
+      IProcess.new do
+        mock.ok
+      end
+    end
+  end
+
   context 'share' do
+    it 'must share a variable.' do
+      IProcess.new do |iprocess|
+        iprocess.share :a
+        iprocess.variables.must_equal [:a]
+      end
+    end
+
     it "must not store duplicate variables" do
       IProcess.new do |iprocess|
         iprocess.share :a, :a, :a, :a
         iprocess.variables.must_equal([:a])
+      end
+    end
+  end
+
+  context 'unshare' do
+    it "must unshare a variable." do
+      IProcess.new do |iprocess|
+        iprocess.share :a
+        iprocess.unshare :a
+        iprocess.variables.must_be_empty
       end
     end
   end
