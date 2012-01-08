@@ -29,11 +29,12 @@ class IProcess
   # @param [Array<#to_sym>] variables
   #   Accepts the name(s) of the variables or constants to share.
   #
-  # @return [SortedSet<IProcess::Symbol>]
+  # @return [Array<Symbol>]
   #   Returns a list of all variables that are being shared.
   #
   def share *variables
     @variables.merge variables.map(&:to_sym)
+    @variables.to_a
   end
 
   #
@@ -42,11 +43,12 @@ class IProcess
   # @param [Array<#to_sym>] variables
   #   Accepts the name(s) of the variables or constants to stop sharing.
   #
-  # @return [SortedSet<IProcess::Symbol>]
+  # @return [Array<Symbol>]
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
     @variables.subtract variables.map(&:to_sym)
+    @variables.to_a
   end
 
   #
