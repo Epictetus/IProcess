@@ -15,7 +15,7 @@ class IProcess
         yield(self)
       else
         @scope = block.binding
-        IProcess::Context.new(self).instance_eval(&block)
+        IProcess::Delegate.new(self).instance_eval(&block)
       end
     end
   end
@@ -87,14 +87,13 @@ class IProcess
       end
     end
 
+    @scope = nil
     Process.wait(pid)
 
     @variables.each.with_index do |name, i|
       Thread.current[:__iprocess_obj__] = channels[i].recv
       @scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
     end
-
-    @scope = nil
 
     pid
   end
@@ -105,4 +104,4 @@ require 'set'
 require 'iprocess/version'
 require 'iprocess/channel'
 require 'iprocess/job'
-require 'iprocess/context'
+require 'iprocess/delegate'

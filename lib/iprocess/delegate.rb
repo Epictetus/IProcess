@@ -1,4 +1,4 @@
-class IProcess::Context
+class IProcess::Delegate
 
   def initialize delegate
     @__delegate__ = delegate
