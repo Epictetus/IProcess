@@ -23,4 +23,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'redcarpet', '~> 1.17' 
   s.add_development_dependency 'minitest' , '~> 2.6'
   s.add_development_dependency 'rake'     , '~> 0.9.2'
+  s.add_development_dependency 'minitest-pry'
+
 end

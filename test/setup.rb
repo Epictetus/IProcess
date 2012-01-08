@@ -1,6 +1,7 @@
 require 'iprocess'
 require 'minitest/spec'
 require 'minitest/autorun'
+require 'minitest/pry'
 
 alias :context :describe
 
