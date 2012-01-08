@@ -1,3 +1,3 @@
-module IProcess
+class IProcess
   VERSION = '0.16.0'
 end
