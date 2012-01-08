@@ -49,7 +49,8 @@ __2.__
 
 A subprocess is spawned 5 times, in parallel:
 
-    workload = Jobs(5) {
+    workload = Barney::Job.spawn(5) {
+      # Replace this with heavily CPU-bound code ;-) 
       1 + 1
     }
 
