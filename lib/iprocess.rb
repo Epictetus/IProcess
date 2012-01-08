@@ -16,6 +16,14 @@ class IProcess
   end
 
   #
+  # @return [Array<String>]
+  #   Returns a list of shared variables.
+  #
+  def variables
+    @variables.to_a
+  end
+
+  #
   # Marks a variable or constant to be shared between two processes.
   #
   # @param [Array<#to_sym>] variables
