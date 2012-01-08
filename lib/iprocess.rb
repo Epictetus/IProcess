@@ -95,5 +95,7 @@ class IProcess
 end
 
 require 'set'
-require 'iprocess/channel'
 require 'iprocess/version'
+require 'iprocess/channel'
+require 'iprocess/job'
+
