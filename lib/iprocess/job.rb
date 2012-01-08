@@ -1,4 +1,4 @@
-class IPrcoess::Job
+class IProcess::Job
 
   #
   # Spawn one or more jobs to be run in parallel.
