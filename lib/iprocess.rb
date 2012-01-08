@@ -87,7 +87,6 @@ class IProcess
       end
     end
 
-    @scope = nil
     Process.wait(pid)
 
     @variables.each.with_index do |name, i|
@@ -95,6 +94,7 @@ class IProcess
       @scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
     end
 
+    @scope = nil
     pid
   end
 
