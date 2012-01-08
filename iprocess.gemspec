@@ -1,12 +1,12 @@
 $LOAD_PATH.unshift './lib'
-require 'barney/version'
+require 'iprocess/version'
 
 Gem::Specification.new do |s|
-  s.name         = 'barney'
-  s.version      = Barney::VERSION
+  s.name         = 'iprocess'
+  s.version      = IProcess::VERSION
   s.authors      = ["Rob Gleeson"]
   s.email        = 'rob@flowof.info'
-  s.homepage     = 'https://github.com/robgleeson/barney'
+  s.homepage     = 'https://github.com/robgleeson/iprocess'
   s.summary      = 'A Domain Specific Language(DSL) for sharing data between processes on UNIX-like operating systems.'  
   s.description  = s.summary
 
@@ -18,8 +18,6 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = '[none]'
   s.required_rubygems_version = '>= 1.3.6'
   s.required_ruby_version     = '~> 1.9.1'
-
-  s.add_runtime_dependency 'mixit', '0.5.0'
 
   s.add_development_dependency 'yard'     , '~> 0.7'
   s.add_development_dependency 'redcarpet', '~> 1.17' 

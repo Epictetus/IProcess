@@ -1,13 +1,13 @@
-class Barney::Process
+class IProcess::Process
 
   attr_reader :variables
   attr_reader :history
 
   #
-  # @yieldparam [Barney::Process] _self
+  # @yieldparam [IProcess::Process] _self
   #   Passes 'self' onto a block if given.
   #
-  # @return [Barney::Process]
+  # @return [IProcess::Process]
   #
   def initialize
     @streams   = []
@@ -26,7 +26,7 @@ class Barney::Process
   # @param [Array<#to_sym>] variables
   #   Accepts the name(s) of the variables or constants to share.
   #
-  # @return [SortedSet<Barney::Symbol>]
+  # @return [SortedSet<IProcess::Symbol>]
   #   Returns a list of all variables that are being shared.
   #
   def share *variables
@@ -39,7 +39,7 @@ class Barney::Process
   # @param [Array<#to_sym>] variables
   #   Accepts the name(s) of the variables or constants to stop sharing.
   #
-  # @return [SortedSet<Barney::Symbol>]
+  # @return [SortedSet<IProcess::Symbol>]
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
@@ -80,7 +80,7 @@ class Barney::Process
     @scope = block.binding
 
     streams = @variables.map { |name|
-      Barney::StreamPair.new(name, *IO.pipe)
+      IProcess::StreamPair.new(name, *IO.pipe)
     }
 
     pid = Kernel.fork do

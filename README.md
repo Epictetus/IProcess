@@ -1,7 +1,7 @@
 __OVERVIEW__
 
 
-| Project         | barney    
+| Project         | IProcess    
 |:----------------|:--------------------------------------------------
 | Homepage        | https://github.com/robgleeson/barney
 | Wiki            | https://github.com/robgleeson/barney/wiki
@@ -11,9 +11,12 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  A Domain Specific Language(DSL) that can be used to share Ruby objects   
+  IProcess, short for Inter Process Communication(IPC) Process, is a    
+  Domain Specific Language(DSL) that can be used to share Ruby objects     
   between processes on UNIX-like operating systems. The wiki has guide-style  
   tutorials you might want to check out, but the README covers the basics.  
+
+  This project was formerly known as 'IProcess'.
 
 __WHY?__
 
@@ -35,10 +38,10 @@ Sequential in nature (each subprocess must finish before another can execute):
 
     name = "rob"
 
-    Barney do
-      share :name
+    IProcess do |process|
+      process.share :name
       
-      fork do 
+      process.fork do 
         name.capitalize!
       end
     end
@@ -49,10 +52,10 @@ __2.__
 
 A subprocess is spawned 5 times, in parallel:
 
-    workload = Barney::Job.spawn(5) {
+    workload = IProcess::Job.spawn(5) do
       # Replace this with heavily CPU-bound code ;-) 
       1 + 1
-    }
+    end
 
     p workload # [2, 2, 2, 2, 2]
 

@@ -1,4 +1,4 @@
-class Barney::Job
+class IPrcoess::Job
 
   #
   # Spawn one or more jobs to be run in parallel.
@@ -15,7 +15,7 @@ class Barney::Job
   def self.spawn number_of_jobs = 1, &worker
     jobs =
     Array.new(number_of_jobs) do
-      job = Barney::Job.new(&worker)
+      job = IProcess::Job.new(&worker)
       job.execute
       job
     end
@@ -32,7 +32,7 @@ class Barney::Job
   # @raise [ArgumentError]
   #   If a worker is not given.
   #
-  # @return [Barney::Job]
+  # @return [IProcess::Job]
   #   Returns self.
   #
   def initialize &worker
@@ -52,7 +52,7 @@ class Barney::Job
   #   The process ID of the spawned subprocess.
   #
   def execute
-    @channel = Barney::Channel.new
+    @channel = IProcess::Channel.new
     @pid = fork { @channel.put(@worker.call) }
   end
 

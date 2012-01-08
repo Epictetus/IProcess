@@ -1,4 +1,4 @@
-require 'barney'
+require 'iprocess'
 require 'open3'
 gem 'minitest'
 require 'minitest/spec'

@@ -1,9 +1,9 @@
-describe Barney::Process do
-  
+describe IProcess::Process do
+
   describe '#history' do
 
-    it 'should provide the correct history.' do     
-      object = Barney::Process.new
+    it 'should provide the correct history.' do
+      object = IProcess::Process.new
       object.share :message
       message = ""
 
@@ -16,7 +16,7 @@ describe Barney::Process do
 
       history = object.history
       assert_equal true, history.all? { |item| item.variable == :message }
-      assert_equal "abc", history.map { |item| item.value }.join 
+      assert_equal "abc", history.map { |item| item.value }.join
     end
 
   end

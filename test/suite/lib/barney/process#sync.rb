@@ -1,9 +1,9 @@
-describe Barney::Process do
-  
+describe IProcess::Process do
+
   describe '#sync' do
-    
-    before do 
-      @instance = Barney::Process.new
+
+    before do
+      @instance = IProcess::Process.new
     end
 
     it 'should assert a variable can be synced.' do
@@ -11,15 +11,15 @@ describe Barney::Process do
 
       @instance.share :x
       pid = @instance.fork do
-        x = 6 
+        x = 6
       end
       Process.wait pid
-      @instance.sync 
-      
+      @instance.sync
+
       assert_equal 6, x
     end
 
-    it 'should assert a variable can  be synced after mutation' do  
+    it 'should assert a variable can  be synced after mutation' do
       message = 'foo'
 
       @instance.share :message
@@ -30,7 +30,7 @@ describe Barney::Process do
       assert_equal 'bar', message
     end
 
-    it 'should assert two variables can be synced.' do      
+    it 'should assert two variables can be synced.' do
       x = 10
       y = 20
 
@@ -70,11 +70,11 @@ describe Barney::Process do
       @instance.fork { }
       @instance.wait_all
 
-      @instance.share :y 
+      @instance.share :y
       @instance.fork { b = 6 }
       @instance.wait_all
 
-      @instance.sync # will raise NoMethodError if fails. 
+      @instance.sync # will raise NoMethodError if fails.
     end
 
     it 'should fix GitHub Issue #3' do
@@ -103,4 +103,4 @@ describe Barney::Process do
   end
 
 end
-  
+

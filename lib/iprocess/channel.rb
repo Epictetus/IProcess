@@ -1,7 +1,7 @@
-class Barney::Channel
+class IProcess::Channel
 
   #
-  # @yieldparam [Barney::Channel] _self
+  # @yieldparam [IProcess::Channel] _self
   #   Yields self.
   #
   def initialize
