@@ -76,14 +76,14 @@ class IProcess
     pid = Kernel.fork do
       block.call
       @variables.each.with_index do |name, i|
-        channels[i].put @scope.eval("#{name}")
+        channels[i].write @scope.eval("#{name}")
       end
     end
 
     Process.wait(pid)
 
     @variables.each.with_index do |name, i|
-      Thread.current[:__iprocess_obj__] = channels[i].get
+      Thread.current[:__iprocess_obj__] = channels[i].recv
       @scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
     end
 

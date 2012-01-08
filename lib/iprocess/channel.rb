@@ -13,24 +13,24 @@ class IProcess::Channel
   end
 
   #
-  # Add a object to the channel.
+  # Write a object to the channel.
   #
   # @param [Object] object
   #   A object to add to the channel.
   #
-  def put object
+  def write object
     @reader.close
     @writer.write Marshal.dump(object)
     @writer.close
   end
 
   #
-  # Get a object from the channel.
+  # Receive a object from the channel.
   #
   # @return [Object]
   #   The object added to the channel.
   #
-  def get
+  def recv
     @writer.close
     obj = Marshal.load(@reader.read)
     @reader.close

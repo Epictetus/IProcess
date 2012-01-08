@@ -53,7 +53,7 @@ class IProcess::Job
   #
   def execute
     @channel = IProcess::Channel.new
-    @pid = fork { @channel.put(@worker.call) }
+    @pid = fork { @channel.write(@worker.call) }
   end
 
   #
@@ -62,7 +62,7 @@ class IProcess::Job
   #
   def result
     Process.wait(@pid)
-    @channel.get
+    @channel.write
   end
 
 end
