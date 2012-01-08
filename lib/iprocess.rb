@@ -14,7 +14,6 @@ class IProcess
       if block.arity == 1
         yield(self)
       else
-        @variables = SortedSet.new
         @scope = block.binding
         IProcess::Context.new(self).instance_eval(&block)
       end
@@ -100,28 +99,8 @@ class IProcess
 
 end
 
-class IProcess::Context
-
-  def initialize delegate
-    @__delegate__ = delegate
-  end
-
-  def share *args
-    @__delegate__.share *args
-  end
-
-  def unshare *args
-    @__delegate__.unshare *args
-  end
-
-  def fork(&block)
-    @__delegate__.fork(&block)
-  end
-
-end
-
 require 'set'
 require 'iprocess/version'
 require 'iprocess/channel'
 require 'iprocess/job'
-
+require 'iprocess/context'
