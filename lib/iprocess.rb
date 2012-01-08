@@ -75,10 +75,7 @@ class IProcess
     end
 
     @scope = @scope || block.binding
-
-    channels = @variables.map {
-      IProcess::Channel.new
-    }
+    channels = @variables.map { IProcess::Channel.new }
 
     pid = Kernel.fork do
       @scope.eval("self").instance_eval(&block)
