@@ -63,11 +63,12 @@ __PLATFORM SUPPORT__
 
 _supported_
 
-  * Rubinius
-  * CRuby (1.8 / 1.9)
+  * Rubinius (1.9 mode) 
+  * CRuby (1.9)
 
 _unsupported_
   
+  * CRuby 1.8
   * MacRuby
   * JRuby
 
