@@ -3,20 +3,20 @@ __OVERVIEW__
 
 | Project         | IProcess    
 |:----------------|:--------------------------------------------------
-| Homepage        | https://github.com/robgleeson/barney
-| Wiki            | https://github.com/robgleeson/barney/wiki
-| Documentation   | http://rubydoc.info/gems/barney/frames 
+| Homepage        | https://github.com/robgleeson/iprocess
+| Wiki            | https://github.com/robgleeson/iprocess/wiki
+| Documentation   | http://rubydoc.info/gems/iprocess/frames 
 | Author          | Rob Gleeson             
 
 
 __DESCRIPTION__
 
-  IProcess, short for Inter Process Communication(IPC) Process, is a    
+  IProcess, short for _Inter Process Communication(IPC) Process_, is a    
   Domain Specific Language(DSL) that can be used to share Ruby objects     
   between processes on UNIX-like operating systems. The wiki has guide-style  
   tutorials you might want to check out, but the README covers the basics.  
 
-  This project was formerly known as 'IProcess'.
+  This project was formerly known as 'Barney'.
 
 __WHY?__
 
@@ -73,7 +73,7 @@ _unsupported_
 
 __INSTALL__
 
-  gem install barney
+  gem install iprocess
 
 __LICENSE__
 
