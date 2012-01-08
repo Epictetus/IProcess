@@ -94,6 +94,8 @@ class IProcess
       @scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
     end
 
+    @scope = nil
+
     pid
   end
 
