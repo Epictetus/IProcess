@@ -6,12 +6,18 @@ class IProcess
   #
   # @return [IProcess::Process]
   #
-  def initialize
+  def initialize &block
     @variables = SortedSet.new
-    @scope     = nil
+    @scope = nil
 
     if block_given?
-      yield(self)
+      if block.arity == 1
+        yield(self)
+      else
+        @variables = SortedSet.new
+        @scope = block.binding
+        IProcess::Context.new(self).instance_eval(&block)
+      end
     end
   end
 
@@ -69,14 +75,14 @@ class IProcess
       raise ArgumentError, "No block given."
     end
 
-    @scope = block.binding
+    @scope = @scope || block.binding
 
     channels = @variables.map {
       IProcess::Channel.new
     }
 
     pid = Kernel.fork do
-      block.call
+      @scope.eval("self").instance_eval(&block)
       @variables.each.with_index do |name, i|
         channels[i].write @scope.eval("#{name}")
       end
@@ -90,6 +96,26 @@ class IProcess
     end
 
     pid
+  end
+
+end
+
+class IProcess::Context
+
+  def initialize delegate
+    @__delegate__ = delegate
+  end
+
+  def share *args
+    @__delegate__.share *args
+  end
+
+  def unshare *args
+    @__delegate__.unshare *args
+  end
+
+  def fork(&block)
+    @__delegate__.fork(&block)
   end
 
 end
