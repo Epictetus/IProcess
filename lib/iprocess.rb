@@ -1,10 +1,10 @@
 class IProcess
 
   #
-  # @yieldparam [IProcess::Process] _self
+  # @yieldparam [IProcess] _self
   #   Passes 'self' onto a block if given.
   #
-  # @return [IProcess::Process]
+  # @return [IProcess]
   #
   def initialize &block
     @variables = SortedSet.new
@@ -21,7 +21,7 @@ class IProcess
   end
 
   #
-  # @return [Array<String>]
+  # @return [Array<Symbol>]
   #   Returns a list of shared variables.
   #
   def variables
