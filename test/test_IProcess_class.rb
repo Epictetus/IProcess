@@ -13,26 +13,26 @@ context IProcess do
 
   context 'share' do
     it 'must share a variable.' do
-      IProcess.new do |iprocess|
-        iprocess.share :a
-        iprocess.variables.must_equal [:a]
+      IProcess.new do
+        share :a
+        variables.must_equal [:a]
       end
     end
 
     it "must not store duplicate variables" do
-      IProcess.new do |iprocess|
-        iprocess.share :a, :a, :a, :a
-        iprocess.variables.must_equal([:a])
+      IProcess.new do
+        share :a, :a
+        variables.must_equal([:a])
       end
     end
   end
 
   context 'unshare' do
     it "must unshare a variable." do
-      IProcess.new do |iprocess|
-        iprocess.share :a
-        iprocess.unshare :a
-        iprocess.variables.must_be_empty
+      IProcess.new do
+        share :a
+        unshare :a
+        variables.must_be_empty
       end
     end
   end
@@ -52,9 +52,9 @@ context IProcess do
     it 'must synchronize a shared variable.' do
       variable = :o_O
 
-      IProcess.new do |iprocess|
-        iprocess.share :variable
-        iprocess.fork { variable = :ok }
+      IProcess.new do
+        share :variable
+        fork { variable = :ok }
       end
 
       variable.must_equal(:ok)
@@ -64,9 +64,9 @@ context IProcess do
       variable1 = :o_O
       variable2 = :UnF
 
-      IProcess.new do |iprocess|
-        iprocess.share :variable1, :variable2
-        iprocess.fork do
+      IProcess.new do
+        share :variable1, :variable2
+        fork do
           variable1 = 123
           variable2 = 456
         end

@@ -1,22 +1,16 @@
 class IProcess
 
   #
-  # @yieldparam [IProcess] _self
-  #   Passes 'self' onto a block if given.
-  #
   # @return [IProcess]
   #
   def initialize &block
     @variables = SortedSet.new
-    @scope = nil
 
     if block_given?
-      if block.arity == 1
-        yield(self)
-      else
-        @scope = block.binding
-        IProcess::Delegate.new(self).instance_eval(&block)
-      end
+      @scope = block.binding
+      IProcess::Delegate.new(self).instance_eval(&block)
+    else
+      @scope = nil
     end
   end
 
@@ -74,13 +68,13 @@ class IProcess
       raise ArgumentError, "No block given."
     end
 
-    @scope = @scope || block.binding
+    scope = @scope || block.binding
     channels = @variables.map { IProcess::Channel.new }
 
     pid = Kernel.fork do
-      @scope.eval("self").instance_eval(&block)
+      scope.eval("self").instance_eval(&block)
       @variables.each.with_index do |name, i|
-        channels[i].write @scope.eval("#{name}")
+        channels[i].write scope.eval("#{name}")
       end
     end
 
@@ -88,10 +82,9 @@ class IProcess
 
     @variables.each.with_index do |name, i|
       Thread.current[:__iprocess_obj__] = channels[i].recv
-      @scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
+      scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
     end
 
-    @scope = nil
     pid
   end
 
