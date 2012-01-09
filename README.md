@@ -37,10 +37,10 @@ Sequential in nature (each subprocess must finish before another can execute):
 
     name = "rob"
 
-    IProcess.new do |process|
-      process.share :name
+    IProcess.new do
+      share :name
       
-      process.fork do 
+      fork do 
         name.capitalize!
       end
     end
