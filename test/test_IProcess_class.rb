@@ -75,6 +75,20 @@ context IProcess do
       variable1.must_equal(123)
       variable2.must_equal(456)
     end
+
+    it 'must synchronize a instance variable.' do
+      @ivar = :o_O
+
+      IProcess.new do
+        share :@ivar
+
+        fork do
+          @ivar = :ok
+        end
+      end
+
+      @ivar.must_equal(:ok)
+    end
   end
 
 end
