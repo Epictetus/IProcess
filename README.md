@@ -3,8 +3,8 @@ __OVERVIEW__
 
 | Project         | IProcess    
 |:----------------|:--------------------------------------------------
-| Homepage        | https://github.com/robgleeson/iprocess
-| Documentation   | http://rubydoc.info/gems/iprocess/frames 
+| Homepage        | https://github.com/robgleeson/IProcess
+| Documentation   | http://rubydoc.info/gems/IProcess/frames 
 | Author          | Rob Gleeson             
 
 
