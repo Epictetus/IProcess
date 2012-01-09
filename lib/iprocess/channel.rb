@@ -1,11 +1,14 @@
 class IProcess::Channel
 
+  attr_reader :name
+
   #
   # @yieldparam [IProcess::Channel] _self
   #   Yields self.
   #
-  def initialize
+  def initialize name = nil
     @reader, @writer = IO.pipe
+    @name = name
 
     if block_given?
       yield self
