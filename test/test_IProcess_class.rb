@@ -3,7 +3,7 @@ context IProcess do
   context 'initialize' do
     it 'must call block if given.' do
       mock = MiniTest::Mock.new
-      mock.expect :ok, nil
+      mock.expect :ok
 
       IProcess.new do
         mock.ok
@@ -22,7 +22,7 @@ context IProcess do
     it "must not store duplicate variables" do
       IProcess.new do
         share :a, :a
-        variables.must_equal([:a])
+        variables.must_equal [:a]
       end
     end
   end
