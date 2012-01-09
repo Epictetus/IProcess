@@ -62,7 +62,7 @@ class IProcess::Job
   #
   def result
     Process.wait(@pid)
-    @channel.write
+    @channel.recv
   end
 
 end
