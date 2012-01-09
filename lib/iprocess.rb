@@ -69,20 +69,20 @@ class IProcess
     end
 
     scope = @scope || block.binding
-    channels = @variables.map { IProcess::Channel.new }
+    channels = @variables.map { |name| IProcess::Channel.new(name) }
 
     pid = Kernel.fork do
       scope.eval("self").instance_eval(&block)
-      @variables.each.with_index do |name, i|
-        channels[i].write scope.eval("#{name}")
+      channels.each do |channel|
+        channel.write @scope.eval(channel.name.to_s)
       end
     end
 
     Process.wait(pid)
 
-    @variables.each.with_index do |name, i|
-      Thread.current[:__iprocess_obj__] = channels[i].recv
-      scope.eval("#{name} = Thread.current[:__iprocess_obj__]")
+    channels.each do |channel|
+      Thread.current[:__iprocess_obj__] = channel.recv
+      scope.eval("#{channel.name} = Thread.current[:__iprocess_obj__]")
     end
 
     pid
