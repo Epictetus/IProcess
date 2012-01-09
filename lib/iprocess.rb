@@ -74,7 +74,7 @@ class IProcess
     pid = Kernel.fork do
       scope.eval("self").instance_eval(&block)
       channels.each do |channel|
-        channel.write @scope.eval(channel.name.to_s)
+        channel.write scope.eval(channel.name.to_s)
       end
     end
 
