@@ -12,6 +12,10 @@ class IProcess::Delegate
     @__delegate__.unshare *args
   end
 
+  def variables
+    @__delegate__.variables
+  end
+
   def fork(&block)
     @__delegate__.fork(&block)
   end
