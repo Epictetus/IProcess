@@ -3,7 +3,7 @@ context IProcess do
   context 'initialize' do
     it 'must call block if given.' do
       mock = MiniTest::Mock.new
-      mock.expect :ok
+      mock.expect :ok, nil
 
       IProcess.new do
         mock.ok
