@@ -4,7 +4,7 @@ __OVERVIEW__
 | Project         | IProcess    
 |:----------------|:--------------------------------------------------
 | Homepage        | https://github.com/robgleeson/IProcess
-| Documentation   | http://rubydoc.info/gems/IProcess/frames 
+| Documentation   | http://rubydoc.info/gems/iprocess/frames 
 | Author          | Rob Gleeson             
 
 
