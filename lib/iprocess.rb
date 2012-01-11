@@ -85,6 +85,7 @@ class IProcess
       scope.eval("#{channel.name} = Thread.current[:__iprocess_obj__]")
     end
 
+    Thread.current[:__iprocess_obj__] = nil
     pid
   end
 
