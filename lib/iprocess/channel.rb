@@ -16,15 +16,37 @@ class IProcess::Channel
   end
 
   #
+  # Is the channel closed?
+  #
+  # @return [Boolean]
+  #   Returns true if the channel is closed.
+  #
+  def closed?
+    @reader.closed? && @writer.closed?
+  end
+
+  #
+  # Is the channel open?
+  #
+  # @return [Boolean]
+  #   Returns true if the channel is open.
+  #
+  def open?
+    !closed?
+  end
+
+  #
   # Write a object to the channel.
   #
   # @param [Object] object
   #   A object to add to the channel.
   #
   def write object
-    @reader.close
-    @writer.write Marshal.dump(object)
-    @writer.close
+    if open?
+      @reader.close
+      @writer.write Marshal.dump(object)
+      @writer.close
+    end
   end
 
   #
@@ -34,10 +56,12 @@ class IProcess::Channel
   #   The object added to the channel.
   #
   def recv
-    @writer.close
-    obj = Marshal.load(@reader.read)
-    @reader.close
-    obj
+    if open?
+      @writer.close
+      obj = Marshal.load(@reader.read)
+      @reader.close
+      obj
+    end
   end
 
 end
