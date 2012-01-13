@@ -5,12 +5,11 @@ class IProcess
   #
   def initialize &block
     @variables = SortedSet.new
+    @scope = nil
 
     if block_given?
       @scope = block.binding
       IProcess::Delegate.new(self).instance_eval(&block)
-    else
-      @scope = nil
     end
   end
 
