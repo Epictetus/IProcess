@@ -1,4 +1,4 @@
-class IProcess::Delegate
+class IProcess::Delegator
 
   #
   # @param [IProcess] delegate

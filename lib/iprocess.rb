@@ -9,7 +9,7 @@ class IProcess
 
     if block_given?
       @scope = block.binding
-      IProcess::Delegate.new(self).instance_eval(&block)
+      IProcess::Delegator.new(self).instance_eval(&block)
     end
   end
 
@@ -94,4 +94,4 @@ require 'set'
 require 'iprocess/version'
 require 'iprocess/channel'
 require 'iprocess/job'
-require 'iprocess/delegate'
+require 'iprocess/delegator'
