@@ -44,8 +44,10 @@ context IProcess do
     end
 
     it 'must raise a ArgumentError if a block is not given.' do
+      obj = IProcess.new
+
       assert_raises ArgumentError do
-        IProcess.new.fork
+        obj.fork
       end
     end
 
