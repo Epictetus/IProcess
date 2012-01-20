@@ -1,7 +1,7 @@
 class IProcess::Job
 
   #
-  # @overload spawn(number_of_jobs, worker)
+  # @overload spawn(number_of_jobs = 1, worker)
   #
   #   Spawn one or more jobs to be run in parallel.
   #
