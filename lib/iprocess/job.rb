@@ -1,21 +1,25 @@
 class IProcess::Job
 
   #
-  # Spawn one or more jobs to be run in parallel.
+  # @overload spawn(number_of_jobs, worker)
   #
-  # @param [Integer] number_of_jobs
-  #   The number of jobs to spawn.
+  #   Spawn one or more jobs to be run in parallel.
   #
-  # @param [Proc] worker
-  #   The unit of work to execute in one or more jobs.
+  #   @param [Integer] number_of_jobs
+  #     The number of jobs to spawn.
   #
-  # @return [Array<Object>]
-  #   The return value of one or more workers.
+  #   @param [#call] worker
+  #     The unit of work to execute in one or more jobs.
   #
-  def self.spawn number_of_jobs = 1, &worker
+  #   @return [Array<Object>]
+  #     The return value of one or more workers.
+  #
+  def self.spawn number_of_jobs = 1, obj = nil, &worker
+    worker = obj || worker
+
     jobs =
     Array.new(number_of_jobs) do
-      job = IProcess::Job.new(&worker)
+      job = IProcess::Job.new(worker)
       job.execute
       job
     end
@@ -26,7 +30,7 @@ class IProcess::Job
   end
 
   #
-  # @param [Proc] worker
+  # @param [#call] worker
   #   The unit of work to execute in a subprocess.
   #
   # @raise [ArgumentError]
@@ -35,14 +39,15 @@ class IProcess::Job
   # @return [IProcess::Job]
   #   Returns self.
   #
-  def initialize &worker
-    unless block_given?
-      raise ArgumentError, 'No block given.'
-    end
-
+  def initialize worker
     @worker  = worker
     @channel = nil
     @pid     = nil
+
+    unless @worker.respond_to?(:call)
+      raise ArgumentError,
+            "Expected worker to implement #{@worker.class}#call"
+    end
   end
 
   #
