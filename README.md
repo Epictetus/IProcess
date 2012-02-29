@@ -28,6 +28,19 @@ I wanted to be able to:
 * Spawn multiple parallel jobs, then collect and send back Ruby objects to the  
   parent process.
 
+ 
+__COST?__
+     
+  If you're using IProcess for parallelism, a subprocess will cost you more than   
+  a thread (in terms of time to create the subprocess, and the memory it consumes   
+  - no implementation IProcess supports has a CoW-friendly garbage collector).  
+
+  Despite the GIL on CRuby, for IO bound operations it can run threads in    
+  parallel and may perform better. You should benchmark IProcess      
+  and threads for your use-case before choosing either. IProcess may be better,   
+  or it may be worse. Normally, for long running non-IO bound operations,   
+  parallel subprocesses outperform CRuby threads. Profile, benchmark, and I hope     
+  IProcess is useful to you :)  
 
 __EXAMPLES__
 
