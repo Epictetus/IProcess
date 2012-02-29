@@ -35,12 +35,11 @@ __COST?__
   a thread (in terms of time to create the subprocess, and the memory it consumes   
   - no implementation IProcess supports has a CoW-friendly garbage collector).  
 
-  Despite the GIL on CRuby, for IO bound operations it can run threads in    
-  parallel and may perform better. You should benchmark IProcess      
-  and threads for your use-case before choosing either. IProcess may be better,   
-  or it may be worse. Normally, for long running non-IO bound operations,   
-  parallel subprocesses outperform CRuby threads. Profile, benchmark, and I hope     
-  IProcess is useful to you :)  
+  Despite the GIL on CRuby, for IO bound operations it can run threads in  
+  parallel and may perform better. For long running non-IO bound operations,  
+  though, parallel subprocesses usually outperform CRuby threads. You should   
+  profile and benchmark IProcess and threads for your use-case before choosing   
+  either. IProcess may be better, or it may be worse.  
 
 __EXAMPLES__
 
