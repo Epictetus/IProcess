@@ -15,16 +15,8 @@ __DESCRIPTION__
   between processes on UNIX-like operating systems. The README covers the   
   basics, and there is the API documentation for everything else.
 
-  This project was formerly known as 'Barney'.
+  This project was formerly known as 'Barney'. 
 
-__WHY?__
-
-I wanted to be able to:  
-
-* Share Ruby objects between a subprocess and its parent process.
-* Share Ruby objects between multiple subprocesses running in parallel and their parent.  
-
- 
 __COST?__
      
   If you're using IProcess for parallelism, a subprocess will cost you more than   
