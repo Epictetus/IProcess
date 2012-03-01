@@ -21,12 +21,8 @@ __WHY?__
 
 I wanted to be able to:  
 
-* Spawn a subprocess, apply restrictions to that subprocess, then collect   
-  and send Ruby objects back  to the parent process.  
-  (that was for a IRC bot evaluating Ruby code).
-
-* Spawn multiple parallel jobs, then collect and send back Ruby objects to the  
-  parent process.
+* Share Ruby objects between a subprocess and its parent process.
+* Share Ruby objects between multiple subprocesses running in parallel and their parent.  
 
  
 __COST?__
