@@ -64,7 +64,7 @@ class IProcess
   #
   def fork &block
     unless block_given?
-      raise ArgumentError, "No block given."
+      raise ArgumentError, "Wrong number of arguments (0 for 1)"
     end
 
     scope = @scope || block.binding

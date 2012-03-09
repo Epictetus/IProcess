@@ -91,6 +91,17 @@ context IProcess do
 
       @ivar.must_equal(:ok)
     end
+
+    it 'must provide access to a local variable.' do
+      local = :local
+
+      IProcess.new do
+        fork do
+          local.must_equal(:local)
+        end
+      end
+    end
+
   end
 
 end
