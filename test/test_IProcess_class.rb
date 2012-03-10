@@ -4,10 +4,12 @@ context IProcess do
     it 'must call block if given.' do
       mock = MiniTest::Mock.new
       mock.expect :ok, nil
-
+      
       IProcess.new do
         mock.ok
       end
+
+      mock.verify
     end
   end
 
