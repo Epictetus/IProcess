@@ -1,7 +1,7 @@
 context IProcess do
 
   context 'initialize' do
-    it 'must call block if given.' do
+    it 'calls a block, if given.' do
       mock = MiniTest::Mock.new
       mock.expect :ok, nil
       
@@ -14,14 +14,14 @@ context IProcess do
   end
 
   context 'share' do
-    it 'must share a variable.' do
+    it 'shares a variable.' do
       IProcess.new do
         share :a
         variables.must_equal [:a]
       end
     end
 
-    it "must not store duplicate variables" do
+    it "does not store duplicate variables" do
       IProcess.new do
         share :a, :a
         variables.must_equal [:a]
@@ -30,7 +30,7 @@ context IProcess do
   end
 
   context 'unshare' do
-    it "must unshare a variable." do
+    it "unshares a variable." do
       IProcess.new do
         share :a
         unshare :a
@@ -40,61 +40,61 @@ context IProcess do
   end
 
   context 'fork' do
-    it 'must return the PID on success.' do
+    it 'returns the Process ID(PID) on success.' do
       pid = IProcess.new.fork { }
       assert_equal Fixnum, pid.class
     end
 
-    it 'must raise a ArgumentError if a block is not given.' do
+    it 'raises if no block is given.' do
       obj = IProcess.new
 
-      assert_raises ArgumentError do
+      assert_raises(ArgumentError) do
         obj.fork
       end
     end
 
-    it 'must synchronize a shared variable.' do
-      variable = :o_O
+    it 'synchronizes a shared variable.' do
+      local = 1
 
       IProcess.new do
-        share :variable
-        fork { variable = :ok }
+        share :local
+        fork { local = 2 }
       end
 
-      variable.must_equal(:ok)
+      local.must_equal(2)
     end
 
-    it 'must synchronize two shared variables.' do
-      variable1 = :o_O
-      variable2 = :UnF
+    it 'synchronizes two shared variables.' do
+      local1, local2 = 1, 2
 
       IProcess.new do
-        share :variable1, :variable2
+        share :local1, :local2
+
         fork do
-          variable1 = 123
-          variable2 = 456
+          local1 = 5
+          local2 = 9
         end
       end
 
-      variable1.must_equal(123)
-      variable2.must_equal(456)
+      local1.must_equal(5)
+      local2.must_equal(9)
     end
 
-    it 'must synchronize a instance variable.' do
-      @ivar = :o_O
+    it 'synchronizes a instance variable.' do
+      @ivar = :ivar
 
       IProcess.new do
         share :@ivar
 
         fork do
-          @ivar = :ok
+          @ivar = 2
         end
       end
 
-      @ivar.must_equal(:ok)
+      @ivar.must_equal(2)
     end
 
-    it 'must provide access to a local variable.' do
+    it 'provide access to surrounding local variables.' do
       local = :local
 
       IProcess.new do
@@ -103,7 +103,6 @@ context IProcess do
         end
       end
     end
-
   end
 
 end
