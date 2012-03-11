@@ -1,5 +1,11 @@
 class IProcess
 
+  require 'set'
+  require_relative 'iprocess/version'
+  require_relative 'iprocess/channel'
+  require_relative 'iprocess/job'
+  require_relative 'iprocess/delegator'
+
   #
   # @return [IProcess]
   #
@@ -89,9 +95,3 @@ class IProcess
   end
 
 end
-
-require 'set'
-require 'iprocess/version'
-require 'iprocess/channel'
-require 'iprocess/job'
-require 'iprocess/delegator'
