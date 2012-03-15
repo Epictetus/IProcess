@@ -23,11 +23,18 @@ __COST?__
   a thread (in terms of time to create the subprocess, and the memory it consumes   
   - no implementation IProcess supports has a CoW-friendly garbage collector).  
 
-  Despite the GIL on CRuby, for IO bound operations it can run threads in  
-  parallel and may perform better. For long running non-IO bound operations,  
-  though, parallel subprocesses usually outperform CRuby threads. You should   
-  profile and benchmark IProcess and threads for your use-case before choosing   
-  either. IProcess may be better, or it may be worse.  
+  Even with the Global Interpreter Lock(GIL) on CRuby, for IO bound operations  
+  it can run threads in parallel and may perform better. For long running  
+  non-IO bound operations, though, parallel subprocesses usually outperform  
+  CRuby threads. You should benchmark IProcess and threads for your  
+  use-case before choosing either. IProcess may be better, or it may be worse.  
+
+__OBJECTS__
+
+  Not all Ruby objects can be shared but the majority can be. Proc objects,  
+  anonymous classes, anonymous modules, and perhaps others I do  
+  not know of cannot be shared. In short, if a object can be serialized through  
+  the Ruby Marshal module then it can be shared by IProcess.
 
 __EXAMPLES__
 
@@ -79,6 +86,3 @@ __LICENSE__
 
   
   See LICENSE.txt
-
-
- 
