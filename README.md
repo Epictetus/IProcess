@@ -17,18 +17,6 @@ __DESCRIPTION__
 
   This project was formerly known as 'Barney'. 
 
-__COST?__
-     
-  If you're using IProcess for parallelism, a subprocess will cost you more than   
-  a thread (in terms of time to create the subprocess, and the memory it consumes   
-  - no implementation IProcess supports has a CoW-friendly garbage collector).  
-
-  Even with the Global Interpreter Lock(GIL) on CRuby, for IO bound operations  
-  it can run threads in parallel and may perform better. For long running  
-  non-IO bound operations, though, parallel subprocesses usually outperform  
-  CRuby threads. You should benchmark IProcess and threads for your  
-  use-case before choosing either. IProcess may be better, or it may be worse.  
-
 __OBJECTS__
 
   Not all Ruby objects can be shared but the majority can be. Proc objects,  
