@@ -17,13 +17,6 @@ __DESCRIPTION__
 
   This project was formerly known as 'Barney'. 
 
-__OBJECTS__
-
-  Not all Ruby objects can be shared but the majority can be. Proc objects,  
-  anonymous classes, anonymous modules, and perhaps others I do  
-  not know of cannot be shared. In short, if a object can be serialized through  
-  the Ruby Marshal module then it can be shared by IProcess.
-
 __EXAMPLES__
 
 __1.__
