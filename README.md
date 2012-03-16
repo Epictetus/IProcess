@@ -39,10 +39,11 @@ __2.__
 
 A subprocess is spawned 5 times, in parallel:
 
-    workload = IProcess::Job.spawn(5) do
+    workload = 
+    IProcess::Job.spawn(5) {
       # Replace this with heavily CPU-bound code ;-) 
       1 + 1
-    end
+    }
 
     p workload # [2, 2, 2, 2, 2]
 
@@ -61,9 +62,6 @@ _unsupported_
 
 __INSTALL__
 
-  gem install iprocess
 
-__LICENSE__
 
-  
-  See LICENSE.txt
+__OVERVIEW__
