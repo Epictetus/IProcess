@@ -11,7 +11,7 @@ __OVERVIEW__
 __DESCRIPTION__
 
   IProcess, short for _Inter Process Communication(IPC) Process_, is a    
-  Domain Specific Language(DSL) that you can use to share Ruby objects     
+  Domain Specific Language(DSL) that you can use to transport Ruby objects     
   between processes on UNIX-like operating systems. The README covers the   
   basics, and there is the API documentation for everything else.
 
