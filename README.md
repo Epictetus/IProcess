@@ -10,12 +10,15 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  IProcess, short for _Inter Process Communication(IPC) Process_, is a    
-  Domain Specific Language(DSL) that you can use to transport Ruby objects     
-  between processes on UNIX-like operating systems. The README covers the   
-  basics, and there is the API documentation for everything else.
+  IProcess, short for _Inter Process Communication(IPC) Process_, is a  
+  Domain Specific Language(DSL) that you can use to transport Ruby objects  
+  between processes on UNIX-like operating systems. Objects are (de)serialized  
+  using the Marshal module included with Ruby and transported across pipes.  
 
-  This project was formerly known as 'Barney'. 
+  It can be thought of as a high-level approach to IPC or an abstraction on top  
+  of IPC primitives. None of the nitty gritty details of IPC are exposed in the  
+  public interface. The project was formerly known as 'Barney', and is one of  
+  the many  experimentations I've had on mechanisms for IPC in Ruby.
 
 __EXAMPLES__
 
