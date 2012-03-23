@@ -37,7 +37,6 @@ class IProcess
   #
   def share *variables
     @variables |= variables.map(&:to_sym)
-    @variables.dup
   end
 
   #
@@ -51,7 +50,6 @@ class IProcess
   #
   def unshare *variables
     @variables -= variables.map(&:to_sym)
-    @variables.dup
   end
 
   #
