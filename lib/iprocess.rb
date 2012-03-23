@@ -1,6 +1,5 @@
 class IProcess
 
-  require 'set'
   require_relative 'iprocess/version'
   require_relative 'iprocess/channel'
   require_relative 'iprocess/job'
@@ -10,7 +9,7 @@ class IProcess
   # @return [IProcess]
   #
   def initialize &block
-    @variables = SortedSet.new
+    @variables = []
     @scope = nil
 
     if block_given?
@@ -24,7 +23,7 @@ class IProcess
   #   Returns a list of shared variables.
   #
   def variables
-    @variables.to_a
+    @variables.dup
   end
 
   #
@@ -37,8 +36,8 @@ class IProcess
   #   Returns a list of all variables that are being shared.
   #
   def share *variables
-    @variables.merge variables.map(&:to_sym)
-    @variables.to_a
+    @variables |= variables.map(&:to_sym)
+    @variables.dup
   end
 
   #
@@ -51,8 +50,8 @@ class IProcess
   #   Returns a list of the variables that are still being shared.
   #
   def unshare *variables
-    @variables.subtract variables.map(&:to_sym)
-    @variables.to_a
+    @variables -= variables.map(&:to_sym)
+    @variables.dup
   end
 
   #
