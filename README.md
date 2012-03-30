@@ -15,11 +15,6 @@ __DESCRIPTION__
   between processes on UNIX-like operating systems. Objects are (de)serialized  
   using the Marshal module included with Ruby and transported across pipes.  
 
-  It can be thought of as a high-level approach to IPC or an abstraction on top  
-  of IPC primitives. None of the nitty gritty details of IPC are exposed in the  
-  public interface. The project was formerly known as 'Barney', and is one of  
-  the many  experimentations I've had on mechanisms for IPC in Ruby.
-
 __EXAMPLES__
 
 __1.__
@@ -43,12 +38,27 @@ __2.__
 A subprocess is spawned 5 times, in parallel:
 
     workload = 
-    IProcess::Job.spawn(5) {
+    IProcess::Job.spawn(5) do
       # Replace this with heavily CPU-bound code ;-) 
       1 + 1
-    }
+    end
 
-    p workload # [2, 2, 2, 2, 2]
+    p workload # => [2, 2, 2, 2, 2]
+
+But a job does not need to be a block, it could be any object that responds to  
+`#call`:
+
+    class Job
+      def initialize
+        @num = 1
+      end
+
+      def call
+        @num + 1
+      end
+    end
+
+    IProcess::Job.spawn(5, Job.new) # => [2, 2, 2, 2, 2]
 
 __PLATFORM SUPPORT__
 
