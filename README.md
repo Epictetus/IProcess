@@ -45,8 +45,7 @@ A subprocess is spawned 5 times, in parallel:
 
     p workload # => [2, 2, 2, 2, 2]
 
-But a job does not need to be a block, it could be any object that  
-responds to `#call`:
+But a job does not need to be a block, it could be any object that responds to `#call`:
 
     class Job
       def initialize
