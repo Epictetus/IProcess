@@ -10,45 +10,25 @@ __OVERVIEW__
 
 __DESCRIPTION__
 
-  IProcess, short for _Inter Process Communication(IPC) Process_, is a
-  Domain Specific Language(DSL) and set of classes you can use to transport
-  Ruby objects between processes running on UNIX-like operating systems. 
-  It features a simple and expressive DSL, alongside a set of classes for 
-  performing tasks in parallel.
+  IProcess, short for _Inter Process Communication(IPC) Process_, is a collection 
+  of classes you can use to transport Ruby objects between processes running on 
+  UNIX-like operating systems. 
 
 __EXAMPLES__
 
 __1.__
 
-Sequential in nature (each subprocess must finish before another can execute):
+A single subprocess is spawned:
+  
+    message = IProcess.spawn { [:yes, :no] }
+    p message # => [[:yes, :no]]
 
-    name = "rob"
-
-    IProcess.new do
-      share :name
-      
-      fork do 
-        name.capitalize!
-      end
-    end
-
-    p name # => "Rob"
-    
 __2.__
 
-A subprocess is spawned 5 times, in parallel:
+A unit of work does not need to be a block, though, and the number of 
+subprocesses you can spawn is variable (5, in this example):
 
-    workload = 
-    IProcess::Job.spawn(5) do
-      # Replace this with heavily CPU-bound code ;-) 
-      1 + 1
-    end
-
-    p workload # => [2, 2, 2, 2, 2]
-
-But a job does not need to be a block, it could be any object that responds to `#call`:
-
-    class Job
+    class Worker
       def initialize
         @num = 1
       end
@@ -58,7 +38,8 @@ But a job does not need to be a block, it could be any object that responds to `
       end
     end
 
-    IProcess::Job.spawn(5, Job.new) # => [2, 2, 2, 2, 2]
+    IProcess.spawn(5, Worker.new) # => [2, 2, 2, 2, 2]
+
 
 __PLATFORM SUPPORT__
 

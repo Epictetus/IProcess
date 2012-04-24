@@ -2,93 +2,74 @@ class IProcess
 
   require_relative 'iprocess/version'
   require_relative 'iprocess/channel'
-  require_relative 'iprocess/job'
-  require_relative 'iprocess/delegator'
-
+  
   #
-  # @return [IProcess]
+  # @overload spawn(number_of_jobs = 1, worker)
   #
-  def initialize &block
-    @variables = []
-    @scope = nil
+  #   Spawn one or more jobs to be run in parallel.
+  #
+  #   @param [Integer] number_of_jobs
+  #     The number of jobs to spawn.
+  #
+  #   @param [#call] worker
+  #     The unit of work to execute in one or more jobs.
+  #
+  #   @return [Array<Object>]
+  #     The return value of one or more workers.
+  #
+  def self.spawn(number_of = 1, obj = nil, &worker)
+    worker = obj || worker
 
-    if block_given?
-      @scope = block.binding
-      IProcess::Delegator.new(self).instance_eval(&block)
+    jobs =
+    Array.new(number_of) do
+      job = IProcess.new(worker)
+      job.execute
+      job
+    end
+
+    jobs.map do |job|
+      job.result
     end
   end
 
   #
-  # @return [Array<Symbol>]
-  #   Returns a list of shared variables.
-  #
-  def variables
-    @variables.dup
-  end
-
-  #
-  # Marks a variable or constant to be shared between two processes.
-  #
-  # @param [Array<#to_sym>] variables
-  #   Accepts the name(s) of the variables or constants to share.
-  #
-  # @return [Array<Symbol>]
-  #   Returns a list of all variables that are being shared.
-  #
-  def share *variables
-    @variables |= variables.map(&:to_sym)
-  end
-
-  #
-  # Removes a variable or constant from being shared between two processes.
-  #
-  # @param [Array<#to_sym>] variables
-  #   Accepts the name(s) of the variables or constants to stop sharing.
-  #
-  # @return [Array<Symbol>]
-  #   Returns a list of the variables that are still being shared.
-  #
-  def unshare *variables
-    @variables -= variables.map(&:to_sym)
-  end
-
-  #
-  # Spawns a subprocess.
-  # The subprocess is waited on via Process.wait().
-  #
-  # @param [Proc] &block
-  #   A block executed within a subprocess.
+  # @param [#call] worker
+  #   The unit of work to execute in a subprocess.
   #
   # @raise [ArgumentError]
-  #   If no block is given.
+  #   If a worker is not given.
   #
-  # @return [Fixnum]
-  #   The Process ID(PID) of the subprocess.
+  # @return [IProcess::Job]
+  #   Returns self.
   #
-  def fork &block
-    unless block_given?
-      raise ArgumentError, "Wrong number of arguments (0 for 1)"
+  def initialize(worker)
+    @worker  = worker
+    @channel = nil
+    @pid     = nil
+
+    unless @worker.respond_to?(:call)
+      raise ArgumentError,
+            "Expected worker to implement #{@worker.class}#call"
     end
-
-    scope = @scope || block.binding
-    channels = @variables.map { |name| IProcess::Channel.new(name) }
-
-    pid = Kernel.fork do
-      scope.eval("self").instance_eval(&block)
-      channels.each do |channel|
-        channel.write scope.eval(channel.name.to_s)
-      end
-    end
-
-    Process.wait(pid)
-
-    channels.each do |channel|
-      Thread.current[:__iprocess_obj__] = channel.recv
-      scope.eval("#{channel.name} = Thread.current[:__iprocess_obj__]")
-    end
-
-    Thread.current[:__iprocess_obj__] = nil
-    pid
   end
 
+  #
+  # Executes a unit of work in a subprocess.
+  #
+  # @return [Fixnum]
+  #   The process ID of the spawned subprocess.
+  #
+  def execute
+    @channel = IProcess::Channel.new
+    @pid = fork { @channel.write(@worker.call) }
+  end
+
+  #
+  # @return [Object]
+  #   Returns the return value of the unit of work.
+  #
+  def result
+    Process.wait(@pid)
+    @channel.recv
+  end
 end
