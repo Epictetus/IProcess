@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors      = ["Rob Gleeson"]
   s.email        = 'rob@flowof.info'
   s.homepage     = 'https://github.com/robgleeson/iprocess'
-  s.summary      = 'A Domain Specific Language(DSL) for sharing Ruby objects' \
+  s.summary      = 'A set of classes you can use to transport ruby objects ' \
                    'between processes on UNIX-like operating systems.'  
   s.description  = s.summary
 
