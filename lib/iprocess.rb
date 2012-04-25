@@ -4,18 +4,18 @@ class IProcess
   require_relative 'iprocess/channel'
   
   #
-  # @overload spawn(number_of_jobs = 1, worker)
+  # @overload spawn(number_of = 1, worker)
   #
-  #   Spawn one or more jobs to be run in parallel.
+  #   Spawn one or more subprocesses.
   #
-  #   @param [Integer] number_of_jobs
-  #     The number of jobs to spawn.
+  #   @param [Integer] number_of
+  #     The number of subprocesses to spawn.
   #
   #   @param [#call] worker
-  #     The unit of work to execute in one or more jobs.
+  #     The unit of work to execute in a subprocess.
   #
   #   @return [Array<Object>]
-  #     The return value of one or more workers.
+  #     The return value of the unit if worker.
   #
   def self.spawn(number_of = 1, obj = nil, &worker)
     worker = obj || worker
