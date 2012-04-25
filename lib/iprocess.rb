@@ -39,7 +39,7 @@ class IProcess
   # @raise [ArgumentError]
   #   If a worker is not given.
   #
-  # @return [IProcess::Job]
+  # @return [IProcess]
   #   Returns self.
   #
   def initialize(worker)

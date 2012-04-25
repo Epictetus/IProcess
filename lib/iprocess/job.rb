@@ -1,5 +1,0 @@
-class IProcess::Job
-
-
-
-end
