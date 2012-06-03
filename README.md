@@ -49,13 +49,13 @@ __3.__
 A single subprocess is spawned asynchronously.  
 When the subprocess completes, ':hi' is sent to `obj#recv` from another thread.
 
-  obj = Object.new
-  def obj.recv(msg)
-    msg.to_s.captialize!
-  end
+    obj = Object.new
+    def obj.recv(msg)
+      msg.to_s.captialize!
+    end
 
-  jobs = IProcess.spawn! { :hi }
-  jobs.map { |job| job.defer(listener) }
+    jobs = IProcess.spawn! { :hi }
+    jobs.map { |job| job.defer(listener) }
 
 
 __PLATFORM SUPPORT__
