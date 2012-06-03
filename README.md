@@ -55,7 +55,7 @@ When the subprocess completes, ':hi' is sent to `obj#recv` from another thread.
     end
 
     jobs = IProcess.spawn! { :hi }
-    jobs.map { |job| job.defer(listener) }
+    jobs.map { |job| job.defer(obj) }
 
 
 __PLATFORM SUPPORT__
