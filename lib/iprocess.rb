@@ -1,35 +1,49 @@
 class IProcess
-
   require_relative 'iprocess/version'
   require_relative 'iprocess/channel'
   
-  #
-  # @overload spawn(number_of = 1, worker)
-  #
-  #   Spawn one or more subprocesses.
-  #
-  #   @param [Integer] number_of
-  #     The number of subprocesses to spawn.
-  #
-  #   @param [#call] worker
-  #     The unit of work to execute in a subprocess.
-  #
-  #   @return [Array<Object>]
-  #     The return value of the unit if worker.
-  #
-  def self.spawn(number_of = 1, obj = nil, &worker)
-    worker = obj || worker
-
-    jobs =
-    Array.new(number_of) do
-      job = IProcess.new(worker)
-      job.execute
-      job
+  class << self
+    #
+    # @overload spawn(number_of = 1, worker)
+    #
+    #   Spawn one or more subprocesses.
+    #
+    #   @param [Integer] number_of
+    #     The number of subprocesses to spawn.
+    #
+    #   @param [#call] worker
+    #     The unit of work to execute in a subprocess.
+    #
+    #   @return [Array<Object>]
+    #     The return value of the unit if worker.
+    #
+    def spawn(*args, &worker)
+      fork(*args, &worker).map(&:result)
     end
 
-    jobs.map do |job|
-      job.result
+    #
+    # @overload
+    #   
+    #   Spawn one or more subprocesses asynchronously.
+    #
+    #   @param
+    #     (see IProcess.spawn)
+    #
+    #   @return [Array<IProcess>]
+    #     An array of IProcess objects. See {#defer}.
+    #
+    def spawn!(*args, &worker)
+      fork *args, &worker
     end
+  
+    def fork(number_of = 1, obj = nil, &worker)
+      worker = obj || worker
+
+      Array.new(number_of) do
+        IProcess.new(worker).tap { |job| job.execute }
+      end
+    end
+    private :fork
   end
 
   #
@@ -50,6 +64,19 @@ class IProcess
     unless @worker.respond_to?(:call)
       raise ArgumentError,
             "Expected worker to implement #{@worker.class}#call"
+    end
+  end
+
+  #
+  # @param [#recv] listener
+  #   The listener.
+  #
+  # @return [void]
+  #
+  def defer(listener)
+    Thread.new do
+      Process.wait @pid
+      listener.recv @channel.recv
     end
   end
 
